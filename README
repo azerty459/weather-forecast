@@ -1,0 +1,40 @@
+    /**
+     * donne la météo des prochains jours pour une ville
+     * @param ville
+     * @return
+     */
+    http://localhost:8080/weather/{ville}
+
+
+    /**
+     * donne le jours le plus chaud de la semaine
+     * @param ville
+     * @return
+     */
+    http://localhost:8080/weather/hottestdayinWeek/{ville}
+    
+
+    /**
+     * donne uniquement les jours où il pleut
+     * @param ville
+     * @return
+     */
+    http:/localhost:8080/weather/rainy/{ville}
+    
+
+    /**
+     *  donne les villes où il fait le plus chaud dans un périmètre
+     * @param perimetre
+     * @return
+     */
+    http://localhost:8080/weather/hotterthanin/{ville}/{perimetre}
+   
+
+
+    /**
+     * donne l'humidité actuelle et celle moyenne de la semaine
+     * @param ville
+     * @return
+     */
+    http://localhost:8080/weather/humidity/{ville}
+    
