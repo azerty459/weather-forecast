@@ -2,12 +2,14 @@ package nxt.weather.service.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WeatherDto {
     
     private final CityDto city;
     private final ConditionDto currentCondition;
-    private final ForecastDayDto[] forecastDays = new ForecastDayDto[5];
+    private final List<ForecastDayDto> forecastDays = new ArrayList<>();
     
     /*
     Indique à Jackson d'utiliser ce constructeur (et non celui par defaut) pour
@@ -25,11 +27,11 @@ public class WeatherDto {
       @JsonProperty("fcst_day_4") ForecastDayDto fcst_day_4) {
         this.city = city_info;
         this.currentCondition =  current_condition;
-        this.forecastDays[0] = fcst_day_0;
-        this.forecastDays[1] = fcst_day_1;
-        this.forecastDays[2] = fcst_day_2;
-        this.forecastDays[3] = fcst_day_3;
-        this.forecastDays[4] = fcst_day_4;
+        this.forecastDays.add(fcst_day_0);
+        this.forecastDays.add(fcst_day_1);
+        this.forecastDays.add(fcst_day_2);
+        this.forecastDays.add(fcst_day_3);
+        this.forecastDays.add(fcst_day_4);
     }
 
     public CityDto getCity() {
@@ -40,15 +42,15 @@ public class WeatherDto {
         return currentCondition;
     }
 
-    public ForecastDayDto[] getForecastDays() {
+    public List<ForecastDayDto> getForecastDays() {
         return forecastDays;
     }
     
     public ForecastDayDto getForecastDays(int index) {
-        if(index < 0 || index >= forecastDays.length) {
+        if(index < 0 || index >= forecastDays.size()) {
             return null;
         }
-        return forecastDays[index];
+        return forecastDays.get(index);
     }
     
 }

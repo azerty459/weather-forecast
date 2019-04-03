@@ -2,6 +2,7 @@ package nxt.weather.service;
 
 import nxt.weather.service.api.WeatherApiService;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import nxt.weather.controller.dto.ForecastDto;
 import nxt.weather.service.api.dto.ForecastDayDto;
@@ -25,38 +26,30 @@ public class WeatherInfoService {
         WeatherDto weather = api.getInformations(city);
         List<ForecastDto> days = new ArrayList<>();
 
-        for (ForecastDayDto fd : weather.getForecastDays()) {
+        weather.getForecastDays().forEach(fd -> {
             days.add(new ForecastDto(
                     fd.getDate(),
                     fd.getDay(),
                     fd.getCondition(),
                     fd.getTempMin(),
                     fd.getTempMax()));
-        }
+        });
 
         return days;
     }
 
     public ForecastDto heat(String city) {
-        WeatherDto weather = api.getInformations(city);
+        WeatherDto weather = api.getInformations(city); 
         
-        int max = 0;
-        int index = 0;
-        for (int i = 0; i < 5; i++) {
-            if (i == 0) {
-                max = weather.getForecastDays(i).getTempMax();
-                index = i;
-            } else if (weather.getForecastDays(i).getTempMax() > max) {
-                max = weather.getForecastDays(i).getTempMax();
-                index = i;
-            }
-        }
+        Comparator<ForecastDayDto> comp = Comparator.comparing(ForecastDayDto::getTempMax);
+        ForecastDayDto fd = weather.getForecastDays().stream().max(comp).get();
+        
         ForecastDto d = new ForecastDto(
-                weather.getForecastDays(index).getDate(),
-                weather.getForecastDays(index).getDay(),
-                weather.getForecastDays(index).getCondition(),
-                weather.getForecastDays(index).getTempMin(),
-                weather.getForecastDays(index).getTempMax());
+                fd.getDate(),
+                fd.getDay(),
+                fd.getCondition(),
+                fd.getTempMin(),
+                fd.getTempMax());
 
         return d;
     }
@@ -81,6 +74,8 @@ public class WeatherInfoService {
 
     public HumidityDto humidity(String city) {
         WeatherDto weather = api.getInformations(city);
+
+        //double avg = weather.getForecastDays().stream().mapToDouble(fd -> fd.getHourly().entrySet().stream().mapToDouble(h -> h.getValue().getHumidity()).average().getAsDouble()).average().getAsDouble();
         
         int actual = weather.getCurrentCondition().getHumidity();
         boolean dry = true;
