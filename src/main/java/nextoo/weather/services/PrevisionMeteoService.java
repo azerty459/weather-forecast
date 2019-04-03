@@ -24,7 +24,8 @@ public class PrevisionMeteoService {
 
     public Stream<PrevisionDTO> getRainyDays(String name) {
         List<PrevisionDTO> previsions = previsionMeteoApiService.findCityPrevision(name).getPrevisionList();
-        return previsions.stream().filter(p -> p.getCondition().toLowerCase().contains("pluie"));
+        Stream<PrevisionDTO> rainyDays = previsions.stream().filter(p -> (p.getHourlyData().values().stream().mapToDouble(pr -> pr.getPrecipitation()).average().getAsDouble()) > 0);
+        return rainyDays;
     }
 
     public HumidityDTO getCurrentHumidity(String name){
