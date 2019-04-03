@@ -1,6 +1,7 @@
 package com.nextoo.weather.entities;
 
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -29,6 +30,8 @@ public class PrevisionResponseDTO {
 
 	@JsonProperty("fcst_day_4")
 	Prevision previsionJour4;
+	
+	List<Prevision> previsionSemaine = new ArrayList<>();
 
 
 	public VilleInfos getVilleInfos() {
@@ -99,5 +102,22 @@ public class PrevisionResponseDTO {
 	public void setPrevisionJour4(Prevision previsionJour4) {
 		this.previsionJour4 = previsionJour4;
 	}
+
+
+	public List<Prevision> getPrevisionSemaine() {
+		previsionSemaine.add(previsionJour0);
+		previsionSemaine.add(previsionJour1);
+		previsionSemaine.add(previsionJour2);
+		previsionSemaine.add(previsionJour3);
+		previsionSemaine.add(previsionJour4);
+		return previsionSemaine;
+	}
+
+
+	public void setPrevisionSemaine(List<Prevision> previsionSemaine) {
+		this.previsionSemaine = previsionSemaine;
+	}
+	
+	
 	
 }

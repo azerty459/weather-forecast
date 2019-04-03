@@ -14,6 +14,9 @@ public class ConditionActuel {
 	
 	@JsonProperty("condition")
 	String condition;
+	
+	@JsonProperty("humidity")
+	private double humidite;
 
 	
 	public ConditionActuel() {
@@ -58,6 +61,16 @@ public class ConditionActuel {
 
 	public void setCondition(String condition) {
 		this.condition = condition;
+	}
+
+
+	public double getHumidite() {
+		return humidite;
+	}
+
+
+	public void setHumidite(double humidite) {
+		this.humidite = humidite;
 	}
 
 	

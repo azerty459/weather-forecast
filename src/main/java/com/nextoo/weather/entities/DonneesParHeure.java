@@ -11,6 +11,9 @@ public class DonneesParHeure {
 	@JsonSetter("CONDITION")
 	private String condition;
 	
+	@JsonSetter("RH2m")
+	private double humidite;
+	
 	public Float getPrecipitation() {
 		return precipitation;
 	}
@@ -26,6 +29,13 @@ public class DonneesParHeure {
 	public void setCondition(String condition) {
 		this.condition = condition;
 	}
-	
-	
+
+	public double getHumidite() {
+		return humidite;
+	}
+
+	public void setHumidite(double humidite) {
+		this.humidite = humidite;
+	}
+
 }

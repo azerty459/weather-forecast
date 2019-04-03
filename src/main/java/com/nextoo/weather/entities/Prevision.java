@@ -22,8 +22,7 @@ public class Prevision {
 	private String condition;
 	
 	@JsonProperty("hourly_data")
-	//HashMap<String, DonneesParHeure> donneesParHeure;
-	private DonneesParHeureListe donneesParHeure;
+	HashMap<String, DonneesParHeure> donneesParHeure;
 	
 	public Prevision() {
 		super();
@@ -69,13 +68,12 @@ public class Prevision {
 		this.condition = condition;
 	}
 
-	public DonneesParHeureListe getDonneesParHeure() {
+	public HashMap<String, DonneesParHeure> getDonneesParHeure() {
 		return donneesParHeure;
 	}
 
-	public void setDonneesParHeure(DonneesParHeureListe donneesParHeure) {
+	public void setDonneesParHeure(HashMap<String, DonneesParHeure> donneesParHeure) {
 		this.donneesParHeure = donneesParHeure;
-	}	
-	
+	}
 	
 }
