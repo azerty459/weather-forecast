@@ -45,9 +45,9 @@ public class MeteoServiceImpl implements MeteoService {
 		MeteoDto meteo = meteoApiService.getMeteo(ville);
 
 		return meteo.getPrevisionsList().stream()
-						  .filter(p -> p.getCondition().toLowerCase().contains("pluie"))
-						  .map(jourPluie -> jourPluie.convertToJourReponseDto())
-						  .collect(Collectors.toList());
+					.filter(p -> p.getCondition().toLowerCase().contains("pluie"))
+					.map(jourPluie -> jourPluie.convertToJourReponseDto())
+					.collect(Collectors.toList());
 		
 	}
 

@@ -1,25 +1,21 @@
 package nextoo.julien.meteo.controller.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class ConditionCouranteReponseDto {
-	
-	@JsonProperty("humidity")
-	private double humidity;
-	
-	@JsonProperty("tmp")
+
+	private double humidite;
+
 	private double temperatureActuelle;
 
 	public ConditionCouranteReponseDto() {
 		super();
 	}
 
-	public double getHumidity() {
-		return humidity;
+	public double getHumidite() {
+		return humidite;
 	}
 
-	public void setHumidity(double humidity) {
-		this.humidity = humidity;
+	public void setHumidite(double humidite) {
+		this.humidite = humidite;
 	}
 
 	public double getTemperatureActuelle() {
@@ -29,11 +25,5 @@ public class ConditionCouranteReponseDto {
 	public void setTemperatureActuelle(double temperatureActuelle) {
 		this.temperatureActuelle = temperatureActuelle;
 	}
-
-	
-	
-	
-	
-	
 
 }

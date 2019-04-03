@@ -35,7 +35,7 @@ public class ConditionCouranteDto {
 	public ConditionCouranteReponseDto convertToCondiCouranteReponseDto() {
 		ConditionCouranteReponseDto conditionCourantReponse = new ConditionCouranteReponseDto();
 		
-		conditionCourantReponse.setHumidity(this.humidity);
+		conditionCourantReponse.setHumidite(this.humidity);
 		conditionCourantReponse.setTemperatureActuelle(this.temperatureActuelle);
 		
 		return conditionCourantReponse;
