@@ -1,5 +1,7 @@
 package nextoo.julien.meteo.services.api.dto;
 
+import java.util.HashMap;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -26,8 +28,11 @@ public class PrevisionDto {
 	@JsonProperty("icon")
 	private String icone;
 	
+//	@JsonProperty("hourly_data")
+//	private PrevisionsParHeureDto previsionsParHeure;
+	
 	@JsonProperty("hourly_data")
-	private PrevisionsParHeureDto previsionsParHeure;
+	private HashMap<String, PrevisionHeureDto> previsionsParHeure;
 
 	public PrevisionDto() {
 		super();
@@ -72,15 +77,33 @@ public class PrevisionDto {
 	public void setCondition(String condition) {
 		this.condition = condition;
 	}
+	
+	
 
-	public PrevisionsParHeureDto getPrevisionsParHeure() {
+//	public PrevisionsParHeureDto getPrevisionsParHeure() {
+//		return previsionsParHeure;
+//	}
+//
+//	public void setPrevisionsParHeure(PrevisionsParHeureDto previsionsParHeure) {
+//		this.previsionsParHeure = previsionsParHeure;
+//	}
+	
+	public String getIcone() {
+		return icone;
+	}
+
+	public void setIcone(String icone) {
+		this.icone = icone;
+	}
+
+	public HashMap<String, PrevisionHeureDto> getPrevisionsParHeure() {
 		return previsionsParHeure;
 	}
 
-	public void setPrevisionsParHeure(PrevisionsParHeureDto previsionsParHeure) {
+	public void setPrevisionsParHeure(HashMap<String, PrevisionHeureDto> previsionsParHeure) {
 		this.previsionsParHeure = previsionsParHeure;
 	}
-	
+
 	public JourReponseDto convertToJourReponseDto() {
 		
 		JourReponseDto jourReponse = new JourReponseDto();
