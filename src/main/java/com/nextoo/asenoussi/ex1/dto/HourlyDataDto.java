@@ -1,4 +1,4 @@
-package com.nextoo.asenoussi.ex1.entities;
+package com.nextoo.asenoussi.ex1.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

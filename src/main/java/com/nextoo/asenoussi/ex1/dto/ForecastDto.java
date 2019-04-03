@@ -1,4 +1,4 @@
-package com.nextoo.asenoussi.ex1.entities;
+package com.nextoo.asenoussi.ex1.dto;
 
 import java.util.Map;
 
@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class PrevisionDto {
+public class ForecastDto {
 	@JsonProperty("date")
 	String date;
 	
@@ -54,7 +54,7 @@ public class PrevisionDto {
 		this.condition = condition;
 	}
 
-	public double getTemperatureMoyenne() {
+	public double getAverageTemperature() {
 		return (tempMax + tempMin) / 2; 
 	}
 

@@ -2,68 +2,55 @@ package com.nextoo.asenoussi.ex1.service;
 
 import java.util.Comparator;
 
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-import com.nextoo.asenoussi.ex1.entities.HumidityResponseDto;
-import com.nextoo.asenoussi.ex1.entities.PrevisionDto;
-import com.nextoo.asenoussi.ex1.entities.ResponseDto;
+import com.nextoo.asenoussi.ex1.api.service.ApiService;
+import com.nextoo.asenoussi.ex1.dto.HumidityResponseDto;
+import com.nextoo.asenoussi.ex1.dto.ForecastDto;
+import com.nextoo.asenoussi.ex1.dto.ResponseApiDto;
 
 @Service
-public class MeteoServiceImpl implements MeteoService{
-	
-	private static final String URL = "http://www.prevision-meteo.ch/services/json/";
-	
-	public ResponseDto getDataFromCityName(String cityName) {
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<ResponseDto> response
-		  = restTemplate.getForEntity(URL + cityName, ResponseDto.class);
-        return response.getBody();
-	}
+public class MeteoServiceImpl implements WeatherService{
+	@Autowired
+	ApiService apiService;
 	
 	@Override
-	public PrevisionDto getMostHotDayOfWeek(String cityName) {
-		ResponseDto response = getDataFromCityName(cityName);
-/*		Prevision prevision = response.getPrevisions().stream().max( 
-				(Prevision p1, Prevision p2) -> 
-				Double.compare(p1.getTemperatureMoyenne(), p2.getTemperatureMoyenne())
-		).get();*/
-		
-		PrevisionDto prevision = response.getPrevisions().stream().max(
-				Comparator.comparingDouble(PrevisionDto::getTemperatureMoyenne)
+	public ForecastDto getMostHotDayOfWeek(String cityName) {
+		ResponseApiDto response = apiService.getDataFromCityName(cityName);
+		return response.getForecasts().stream().max(
+				Comparator.comparingDouble(ForecastDto::getAverageTemperature)
 		).get();
-		
-		
-		return prevision;
 	}
 	
-	public PrevisionDto[] getDayWithRain(String cityName){
-		ResponseDto response = getDataFromCityName(cityName);
-		PrevisionDto[] previsions = response.getPrevisions().stream().filter(
-				(p) -> (p.getCondition().toLowerCase().contains("pluie")
-		)).toArray(PrevisionDto[]::new);
-		return previsions;
+	public ForecastDto[] getDayWithRain(String cityName){
+		ResponseApiDto response = apiService.getDataFromCityName(cityName);
+		return response.getForecasts().stream().filter(
+				p -> (p.getCondition().toLowerCase().contains("pluie")
+		)).toArray(ForecastDto[]::new);
 	}
 	
-	public HumidityResponseDto humidity(String cityName) {
-		ResponseDto response = getDataFromCityName(cityName);
+	public HumidityResponseDto getHumidityData(String cityName) {
+		ResponseApiDto response = apiService.getDataFromCityName(cityName);
 		HumidityResponseDto humidityResponse = new HumidityResponseDto();
 		
 		humidityResponse.setCurrentHumidity(response.getCurrentCondition().getHumidity());
 		
-		
-		
-		Double humidityAvg = response.getPrevisions().stream().mapToDouble(
+		Double humidityAvg = response.getForecasts().stream().mapToDouble(
 				
 				p -> p.getHourlyData().values().stream().mapToDouble(
 						hourly -> hourly.getHumidity()
-				).average().getAsDouble()
+				).average().getAsDouble() // avg humididty for all forecast(day of week)
 				
-		).average().getAsDouble();
+		).average().getAsDouble(); // avg humidity for all day in week
 		
 		humidityResponse.setWeekAvgHumidity(humidityAvg);
 		return humidityResponse;
+	}
+
+	@Override
+	public ResponseApiDto getAllDataFromCityName(String cityName) {
+		return apiService.getDataFromCityName(cityName);
 	}
 	
 }

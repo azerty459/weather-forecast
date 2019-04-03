@@ -1,31 +1,35 @@
-package com.nextoo.asenoussi.ex1.entities;
+package com.nextoo.asenoussi.ex1.dto;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class ResponseDto {
+public class ResponseApiDto {
 	
 	@JsonProperty("city_info")
 	CityInfoDto cityInfo;
 	
 	@JsonProperty("fcst_day_0")
-	PrevisionDto j0;
+	ForecastDto forecastJ0;
 	
 	@JsonProperty("fcst_day_1")
-	PrevisionDto j1;
+	ForecastDto forecastJ1;
 	
 	@JsonProperty("fcst_day_2")
-	PrevisionDto j2;
+	ForecastDto forecastJ2;
 	
 	@JsonProperty("fcst_day_3")
-	PrevisionDto j3;
+	ForecastDto forecastJ3;
 	
-	List<PrevisionDto> previsions = new ArrayList<>();
+	List<ForecastDto> forecasts = new ArrayList<>();
+	
+	@JsonProperty("fcst_day_%d")
+	Map<String, ForecastDto> prevs;
 	
 	@JsonProperty("current_condition")
 	CurrentConditionDto currentCondition;
@@ -37,46 +41,14 @@ public class ResponseDto {
 	public void setCityInfo(CityInfoDto cityInfo) {
 		this.cityInfo = cityInfo;
 	}
-
-	public PrevisionDto getJ0() {
-		return j0;
-	}
-
-	public void setJ0(PrevisionDto j0) {
-		this.j0 = j0;
-	}
-
-	public PrevisionDto getJ1() {
-		return j1;
-	}
-
-	public void setJ1(PrevisionDto j1) {
-		this.j1 = j1;
-	}
-
-	public PrevisionDto getJ2() {
-		return j2;
-	}
-
-	public void setJ2(PrevisionDto j2) {
-		this.j2 = j2;
-	}
-
-	public PrevisionDto getJ3() {
-		return j3;
-	}
-
-	public void setJ3(PrevisionDto j3) {
-		this.j3 = j3;
-	}
 	
-	public Collection<PrevisionDto> getPrevisions(){
-		previsions.clear();
-		previsions.add(j0);
-		previsions.add(j1);
-		previsions.add(j2);
-		previsions.add(j3);
-		return previsions;
+	public Collection<ForecastDto> getForecasts(){
+		forecasts.clear();
+		forecasts.add(forecastJ0);
+		forecasts.add(forecastJ1);
+		forecasts.add(forecastJ2);
+		forecasts.add(forecastJ3);
+		return forecasts;
 	}
 
 	public CurrentConditionDto getCurrentCondition() {

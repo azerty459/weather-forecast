@@ -1,4 +1,4 @@
-package com.nextoo.asenoussi.ex1.entities;
+package com.nextoo.asenoussi.ex1.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CityInfoDto {
 	
 	@JsonProperty("name")
-	String nomLocalite;
+	String nomLocale;
 	
 	@JsonProperty("latitude")
 	String latitude;
@@ -16,11 +16,11 @@ public class CityInfoDto {
 	String longitude;
 
 	public String getNomLocalite() {
-		return nomLocalite;
+		return nomLocale;
 	}
 
 	public void setNomLocalite(String nomLocalite) {
-		this.nomLocalite = nomLocalite;
+		this.nomLocale = nomLocalite;
 	}
 
 	public String getLatitude() {
