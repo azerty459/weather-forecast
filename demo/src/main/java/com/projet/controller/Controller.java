@@ -1,14 +1,14 @@
 package com.projet.controller;
-import java.io.IOException;
 
+import java.io.IOException;
+import java.util.List;
 import javax.validation.constraints.NotNull;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.projet.dto.FcstDayDto;
 import com.projet.dto.MeteoCityDto;
-import com.projet.services.ServiceMeteo;
+import servicesMeteo.ServiceMeteo;
 
 @RestController
 public class Controller {
@@ -25,6 +25,12 @@ public class Controller {
 	public FcstDayDto getHotestDay(@PathVariable @NotNull String city) {
 		
 		return monService.getHotestDayOfWeek(city);
+	}
+	
+	@RequestMapping("/meteo/{city}/rain")
+	public List<FcstDayDto> getRainDay(@PathVariable @NotNull String city) {
+		
+		return monService.getDaysOfRain(city);
 	}
 }
  

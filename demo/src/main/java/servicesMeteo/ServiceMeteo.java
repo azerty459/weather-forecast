@@ -1,15 +1,13 @@
-package com.projet.services;
+package servicesMeteo;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-
-
-
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-
 import com.projet.dto.FcstDayDto;
 import com.projet.dto.MeteoCityDto;
 
@@ -57,5 +55,32 @@ public class ServiceMeteo {
 		
 		return day;
 
+	}
+	
+	/*
+	 * Obtenir les jour pluvieux de la semaine via une ville donnée
+	 * @param une ville donnée
+	 */
+	public List<FcstDayDto> getDaysOfRain(String city) {
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<MeteoCityDto> response = restTemplate.getForEntity((URL+city), MeteoCityDto.class);
+		
+		//liste contenant les cinq jours de la semaine
+		List<FcstDayDto> list = Arrays.asList(
+				response.getBody().getFcstDay0(),
+				response.getBody().getFcstDay1(), 
+				response.getBody().getFcstDay2(),
+				response.getBody().getFcstDay3(),
+				response.getBody().getFcstDay4()
+				);
+
+		Stream<FcstDayDto> sp = list.stream();
+		
+		//list contenant les jours de la semaine où le mot "pluie" figure
+		list = sp.filter(x -> x.getCondition().toLowerCase().contains("pluie"))
+				.map(x -> x)
+				.collect(Collectors.toList());
+		
+		return list;
 	}
 }
