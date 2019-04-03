@@ -2,6 +2,8 @@ package nxt.weather.service.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.HashMap;
+import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ForecastDayDto {
@@ -12,7 +14,7 @@ public class ForecastDayDto {
     private int tempMax;
     private String condition;
     private String conditionKey;
-    private HourlyDto hourly;
+    private Map<String, HourlyDataDto> hourly = new HashMap<>();
 
     public String getDate() {
         return date;
@@ -66,12 +68,12 @@ public class ForecastDayDto {
         this.conditionKey = condition_key;
     }
 
-    public HourlyDto getHourly() {
+    public Map<String, HourlyDataDto> getHourly() {
         return hourly;
     }
 
     @JsonProperty("hourly_data")
-    public void setHourly(HourlyDto hourly_data) {
+    public void setHourly(Map<String, HourlyDataDto> hourly_data) {
         this.hourly = hourly_data;
     }  
     
