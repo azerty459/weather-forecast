@@ -39,7 +39,7 @@ public class MeteoServiceImpl implements MeteoService {
 		PrevisionDto previsionJourChaud = 
 				prev.stream()
 					.max(comp)
-//					.map(jourChaud -> new JourReponseDto(jourChaud.get, date, tmpMin, tmpMax, condition)))
+//					.map(jourChaud -> new JourReponseDto(jourChaud.getJours(), date, tmpMin, tmpMax, condition))
 					.get();
 		
 		JourReponseDto jourPlusChaud = new JourReponseDto();
@@ -85,22 +85,22 @@ public class MeteoServiceImpl implements MeteoService {
 
 		double moyenneJ0 = previsionsJ0.stream().mapToDouble(p -> p.getHumidite()).average().getAsDouble();
 
-		Collection<PrevisionHeureDto> previsionsJ1 = meteo.getPrevision_j0().getPrevisionsParHeure()
+		Collection<PrevisionHeureDto> previsionsJ1 = meteo.getPrevision_j1().getPrevisionsParHeure()
 				.previsionsHeureToListe();
 
 		double moyenneJ1 = previsionsJ1.stream().mapToDouble(p -> p.getHumidite()).average().getAsDouble();
 
-		Collection<PrevisionHeureDto> previsionsJ2 = meteo.getPrevision_j0().getPrevisionsParHeure()
+		Collection<PrevisionHeureDto> previsionsJ2 = meteo.getPrevision_j2().getPrevisionsParHeure()
 				.previsionsHeureToListe();
 
 		double moyenneJ2 = previsionsJ2.stream().mapToDouble(p -> p.getHumidite()).average().getAsDouble();
 
-		Collection<PrevisionHeureDto> previsionsJ3 = meteo.getPrevision_j0().getPrevisionsParHeure()
+		Collection<PrevisionHeureDto> previsionsJ3 = meteo.getPrevision_j3().getPrevisionsParHeure()
 				.previsionsHeureToListe();
 
 		double moyenneJ3 = previsionsJ3.stream().mapToDouble(p -> p.getHumidite()).average().getAsDouble();
 
-		Collection<PrevisionHeureDto> previsionsJ4 = meteo.getPrevision_j0().getPrevisionsParHeure()
+		Collection<PrevisionHeureDto> previsionsJ4 = meteo.getPrevision_j4().getPrevisionsParHeure()
 				.previsionsHeureToListe();
 
 		double moyenneJ4 = previsionsJ4.stream().mapToDouble(p -> p.getHumidite()).average().getAsDouble();

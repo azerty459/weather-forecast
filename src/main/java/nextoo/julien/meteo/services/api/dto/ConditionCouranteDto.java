@@ -8,7 +8,7 @@ public class ConditionCouranteDto {
 	private double humidity;
 	
 	@JsonProperty("tmp")
-	private double TemperatureActuelle;
+	private double temperatureActuelle;
 
 	public ConditionCouranteDto() {
 		super();
@@ -23,12 +23,14 @@ public class ConditionCouranteDto {
 	}
 
 	public double getTemperatureActuelle() {
-		return TemperatureActuelle;
+		return temperatureActuelle;
 	}
 
 	public void setTemperatureActuelle(double temperatureActuelle) {
-		TemperatureActuelle = temperatureActuelle;
+		this.temperatureActuelle = temperatureActuelle;
 	}
+
+	
 	
 	
 	
