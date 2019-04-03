@@ -3,6 +3,8 @@ package nextoo.julien.meteo.services.api.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import nextoo.julien.meteo.controller.dto.JourReponseDto;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PrevisionDto {
 	
@@ -20,6 +22,9 @@ public class PrevisionDto {
 	
 	@JsonProperty("condition")
 	private String condition;
+	
+	@JsonProperty("icon")
+	private String icone;
 	
 	@JsonProperty("hourly_data")
 	private PrevisionsParHeureDto previsionsParHeure;
@@ -76,6 +81,17 @@ public class PrevisionDto {
 		this.previsionsParHeure = previsionsParHeure;
 	}
 	
-	
+	public JourReponseDto convertToJourReponseDto() {
+		
+		JourReponseDto jourReponse = new JourReponseDto();
+		jourReponse.setCondition(this.condition);
+		jourReponse.setDate(this.date);
+		jourReponse.setJour(this.jour);
+		jourReponse.setTmpMin(this.tmpMin);
+		jourReponse.setTmpMax(this.tmpMax);
+		
+		return jourReponse;
+		
+	}
 	
 }

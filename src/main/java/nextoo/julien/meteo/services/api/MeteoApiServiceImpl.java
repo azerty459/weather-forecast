@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import nextoo.julien.meteo.services.api.dto.MeteoResponseDto;
+import nextoo.julien.meteo.services.api.dto.MeteoDto;
 
 @Service
 public class MeteoApiServiceImpl implements MeteoApiService {
@@ -15,11 +15,11 @@ public class MeteoApiServiceImpl implements MeteoApiService {
 	
 	private static final String resourceUrl = "https://www.prevision-meteo.ch/services/json/";
 
-	public MeteoResponseDto getMeteo(String ville) throws IOException {
+	public MeteoDto getMeteo(String ville) throws IOException {
 		
 		RestTemplate restTemplate = new RestTemplate();
 
-		MeteoResponseDto meteo = restTemplate.getForObject(resourceUrl + ville, MeteoResponseDto.class);
+		MeteoDto meteo = restTemplate.getForObject(resourceUrl + ville, MeteoDto.class);
 
 		return meteo;
 	}

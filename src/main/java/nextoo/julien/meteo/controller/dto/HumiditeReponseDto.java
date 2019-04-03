@@ -1,4 +1,4 @@
-package nextoo.julien.meteo.services.api.dto;
+package nextoo.julien.meteo.controller.dto;
 
 public class HumiditeReponseDto {
 	

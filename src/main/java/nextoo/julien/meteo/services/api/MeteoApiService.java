@@ -2,8 +2,8 @@ package nextoo.julien.meteo.services.api;
 
 import java.io.IOException;
 
-import nextoo.julien.meteo.services.api.dto.MeteoResponseDto;
+import nextoo.julien.meteo.services.api.dto.MeteoDto;
 
 public interface MeteoApiService {
-	public MeteoResponseDto getMeteo(String ville) throws IOException;
+	public MeteoDto getMeteo(String ville) throws IOException;
 }

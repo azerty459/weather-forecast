@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import nextoo.julien.meteo.controller.dto.HumiditeReponseDto;
+import nextoo.julien.meteo.controller.dto.JourReponseDto;
 import nextoo.julien.meteo.services.MeteoServiceImpl;
-import nextoo.julien.meteo.services.api.dto.HumiditeReponseDto;
-import nextoo.julien.meteo.services.api.dto.JourReponseDto;
-import nextoo.julien.meteo.services.api.dto.MeteoResponseDto;
+import nextoo.julien.meteo.services.api.dto.MeteoDto;
 
 @RestController
 @RequestMapping("/meteo")
@@ -24,7 +24,7 @@ public class MeteoController {
 	MeteoServiceImpl meteoService;
 	
 	@GetMapping("/ville/{ville}")
-	public MeteoResponseDto getVilleMeteo(@PathVariable("ville") @NotNull String ville) throws IOException{
+	public MeteoDto getVilleMeteo(@PathVariable("ville") @NotNull String ville) throws IOException{
 		
 		return meteoService.getMeteo(ville);
 	}
