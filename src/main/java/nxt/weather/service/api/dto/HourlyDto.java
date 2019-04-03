@@ -14,7 +14,9 @@ public class HourlyDto {
     */
     @JsonAnySetter
     public void setHourlyData(String name, HourlyDataDto value) {
-        this.data.add(value);
+        //Recup l'heure pour l'utiliser comme index
+        int index = Integer.parseInt(name.split("H")[0]);
+        this.data.add(index, value);
     }
     
     public HourlyDataDto get(int hour) {
