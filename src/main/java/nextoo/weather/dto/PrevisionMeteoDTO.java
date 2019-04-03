@@ -1,4 +1,4 @@
-package nextoo.weather.entities;
+package nextoo.weather.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,68 +7,68 @@ import java.util.ArrayList;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class PrevisionMeteoEntity {
+public class PrevisionMeteoDTO {
 
     @JsonProperty("city_info")
-    private CityEntity city;
+    private CityDTO city;
 
     @JsonProperty("current_condition")
-    private CurrentMeteoEntity currentMeteo;
+    private CurrentMeteoDTO currentMeteo;
 
     @JsonProperty("fcst_day_0")
-    private PrevisionEntity currentDayPrevision;
+    private PrevisionDTO currentDayPrevision;
 
     @JsonProperty("fcst_day_1")
-    private PrevisionEntity oneDayPrevision;
+    private PrevisionDTO oneDayPrevision;
 
     @JsonProperty("fcst_day_2")
-    private PrevisionEntity twoDayPrevision;
+    private PrevisionDTO twoDayPrevision;
 
     @JsonProperty("fcst_day_3")
-    private PrevisionEntity threeDayPrevision;
+    private PrevisionDTO threeDayPrevision;
 
     @JsonProperty("fcst_day_4")
-    private PrevisionEntity fourDayPrevision;
+    private PrevisionDTO fourDayPrevision;
 
-    private List<PrevisionEntity> previsionList;
+    private List<PrevisionDTO> previsionList;
 
-    public PrevisionMeteoEntity() {
+    public PrevisionMeteoDTO() {
     }
 
-    public PrevisionEntity getOneDayPrevision() {
+    public PrevisionDTO getOneDayPrevision() {
         return oneDayPrevision;
     }
 
-    public void setOneDayPrevision(PrevisionEntity oneDayPrevision) {
+    public void setOneDayPrevision(PrevisionDTO oneDayPrevision) {
         this.oneDayPrevision = oneDayPrevision;
     }
 
-    public PrevisionEntity getTwoDayPrevision() {
+    public PrevisionDTO getTwoDayPrevision() {
         return twoDayPrevision;
     }
 
-    public void setTwoDayPrevision(PrevisionEntity twoDayPrevision) {
+    public void setTwoDayPrevision(PrevisionDTO twoDayPrevision) {
         this.twoDayPrevision = twoDayPrevision;
     }
 
-    public PrevisionEntity getThreeDayPrevision() {
+    public PrevisionDTO getThreeDayPrevision() {
         return threeDayPrevision;
     }
 
-    public void setThreeDayPrevision(PrevisionEntity threeDayPrevision) {
+    public void setThreeDayPrevision(PrevisionDTO threeDayPrevision) {
         this.threeDayPrevision = threeDayPrevision;
     }
 
-    public PrevisionEntity getFourDayPrevision() {
+    public PrevisionDTO getFourDayPrevision() {
         return fourDayPrevision;
     }
 
-    public void setFourDayPrevision(PrevisionEntity fourDayPrevision) {
+    public void setFourDayPrevision(PrevisionDTO fourDayPrevision) {
         this.fourDayPrevision = fourDayPrevision;
     }
 
-    public List<PrevisionEntity> getPrevisionList() {
-        List previsionsList = new ArrayList<PrevisionEntity>();
+    public List<PrevisionDTO> getPrevisionList() {
+        List previsionsList = new ArrayList<PrevisionDTO>();
         previsionsList.add(currentDayPrevision);
         previsionsList.add(oneDayPrevision);
         previsionsList.add(twoDayPrevision);
@@ -78,31 +78,31 @@ public class PrevisionMeteoEntity {
         return this.previsionList;
     }
 
-    public void setPrevisionList(List<PrevisionEntity> previsionList) {
+    public void setPrevisionList(List<PrevisionDTO> previsionList) {
         this.previsionList = previsionList;
     }
 
-    public CityEntity getCity() {
+    public CityDTO getCity() {
         return city;
     }
 
-    public void setCity(CityEntity city) {
+    public void setCity(CityDTO city) {
         this.city = city;
     }
 
-    public CurrentMeteoEntity getCurrentMeteo() {
+    public CurrentMeteoDTO getCurrentMeteo() {
         return currentMeteo;
     }
 
-    public void setCurrentMeteo(CurrentMeteoEntity currentMeteo) {
+    public void setCurrentMeteo(CurrentMeteoDTO currentMeteo) {
         this.currentMeteo = currentMeteo;
     }
 
-    public PrevisionEntity getCurrentDayPrevision() {
+    public PrevisionDTO getCurrentDayPrevision() {
         return currentDayPrevision;
     }
 
-    public void setCurrentDayPrevision(PrevisionEntity currentDayPrevision) {
+    public void setCurrentDayPrevision(PrevisionDTO currentDayPrevision) {
         this.currentDayPrevision = currentDayPrevision;
     }
 

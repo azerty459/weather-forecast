@@ -1,8 +1,8 @@
-package nextoo.weather.entities;
+package nextoo.weather.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class CityEntity {
+public class CityDTO {
 
     @JsonProperty("name")
     private String nom;
@@ -16,7 +16,7 @@ public class CityEntity {
     @JsonProperty("country")
     private String pays;
 
-    public CityEntity() {
+    public CityDTO() {
     }
 
     public String getPays() {

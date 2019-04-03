@@ -1,10 +1,10 @@
-package nextoo.weather.entities;
+package nextoo.weather.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.HashMap;
 
-public class PrevisionEntity {
+public class PrevisionDTO {
 
     @JsonProperty("date")
     private String date;
@@ -19,16 +19,16 @@ public class PrevisionEntity {
     private String condition;
 
     @JsonProperty("hourly_data")
-    private HashMap<String, HourlyDataEntity> hourlyData;
+    private HashMap<String, HourlyDataDTO> hourlyData;
 
-    public PrevisionEntity() {
+    public PrevisionDTO() {
     }
 
-    public HashMap<String, HourlyDataEntity> getHourlyData() {
+    public HashMap<String, HourlyDataDTO> getHourlyData() {
         return hourlyData;
     }
 
-    public void setHourlyData(HashMap<String, HourlyDataEntity> hourlyData) {
+    public void setHourlyData(HashMap<String, HourlyDataDTO> hourlyData) {
         this.hourlyData = hourlyData;
     }
 

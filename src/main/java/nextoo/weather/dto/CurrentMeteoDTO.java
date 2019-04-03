@@ -1,10 +1,10 @@
-package nextoo.weather.entities;
+package nextoo.weather.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class CurrentMeteoEntity {
+public class CurrentMeteoDTO {
 
     @JsonProperty("date")
     private String date;
@@ -16,9 +16,9 @@ public class CurrentMeteoEntity {
     private double temperature;
 
     @JsonProperty("humidity")
-    private double humidite;
+    private double humidity;
 
-    public CurrentMeteoEntity() {
+    public CurrentMeteoDTO() {
     }
 
     public String getHeure() {
@@ -29,12 +29,12 @@ public class CurrentMeteoEntity {
         this.heure = heure;
     }
 
-    public double getHumidite() {
-        return humidite;
+    public double getHumidity() {
+        return humidity;
     }
 
-    public void setHumidite(double humidite) {
-        this.humidite = humidite;
+    public void setHumidity(double humidity) {
+        this.humidity = humidity;
     }
 
     public String getDate() {

@@ -1,8 +1,8 @@
-package nextoo.weather.entities;
+package nextoo.weather.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class HourlyDataEntity {
+public class HourlyDataDTO {
 
     @JsonProperty("CONDITION")
     private String condition;
@@ -12,6 +12,20 @@ public class HourlyDataEntity {
 
     @JsonProperty("APCPsfc")
     private Double precipitation;
+
+    @JsonProperty("RH2m")
+    private Double humidity;
+
+    public HourlyDataDTO() {
+    }
+
+    public Double getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(Double humidity) {
+        this.humidity = humidity;
+    }
 
     public String getCondition() {
         return condition;

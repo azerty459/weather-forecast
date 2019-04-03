@@ -1,14 +1,13 @@
 package nextoo.weather.services;
 
-import nextoo.weather.entities.PrevisionEntity;
+import nextoo.weather.dto.HumidityDTO;
+import nextoo.weather.dto.PrevisionDTO;
 import nextoo.weather.services.api.PrevisionMeteoApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.*;
+import java.util.stream.Stream;
 
 @Service
 public class PrevisionMeteoService {
@@ -16,16 +15,27 @@ public class PrevisionMeteoService {
     @Autowired
     PrevisionMeteoApiService previsionMeteoApiService;
 
-    public PrevisionEntity getHottestDay(String name){
-        List<PrevisionEntity> previsions = previsionMeteoApiService.findCityPrevision(name).getPrevisionList();
+    public PrevisionDTO getHottestDay(String name){
+        List<PrevisionDTO> previsions = previsionMeteoApiService.findCityPrevision(name).getPrevisionList();
         return previsions.stream()
-                .max(Comparator.comparingDouble(PrevisionEntity::getTemperatureMax))
+                .max(Comparator.comparingDouble(PrevisionDTO::getTemperatureMax))
                 .get();
     }
 
-    /*public PrevisionEntity getRainyDays(String name) {
-        List<PrevisionEntity> previsions = previsionMeteoApiService.findCityPrevision(name).getPrevisionList();
-        return previsions.stream().filter(p -> p.getCondition().toLowerCase().contains("pluie")).map(p -> p.getCondition());
-    }*/
+    public Stream<PrevisionDTO> getRainyDays(String name) {
+        List<PrevisionDTO> previsions = previsionMeteoApiService.findCityPrevision(name).getPrevisionList();
+        return previsions.stream().filter(p -> p.getCondition().toLowerCase().contains("pluie"));
+    }
+
+    public HumidityDTO getCurrentHumidity(String name){
+        List<PrevisionDTO> previsions = previsionMeteoApiService.findCityPrevision(name).getPrevisionList();
+        HumidityDTO humidityDTO = new HumidityDTO();
+        Double weekAverage = previsions.stream().mapToDouble(p -> p.getHourlyData().entrySet().stream().mapToDouble(pr -> pr.getValue().getHumidity()).average().getAsDouble()).average().getAsDouble();
+
+        humidityDTO.setCurrentHumidity(previsionMeteoApiService.findCityPrevision(name).getCurrentMeteo().getHumidity());
+        humidityDTO.setWeekAverageHumdity(weekAverage);
+
+        return humidityDTO;
+    }
 
 }
