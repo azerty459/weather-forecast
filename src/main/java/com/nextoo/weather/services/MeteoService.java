@@ -2,12 +2,15 @@ package com.nextoo.weather.services;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.nextoo.weather.entities.DonneesParHeure;
+import com.nextoo.weather.entities.DonneesParHeureListe;
 import com.nextoo.weather.entities.Meteo;
 import com.nextoo.weather.entities.Prevision;
 import com.nextoo.weather.entities.PrevisionResponseDTO;
@@ -47,45 +50,23 @@ public class MeteoService {
 		PrevisionResponseDTO previsionDTO = getPrevisionResponseDTOByVille(ville);
 		Meteo meteo = new Meteo(previsionDTO);
 		Collection<Prevision> previsionSemaine = meteo.getPrevisionSemaine();
-		Collection<Prevision> joursPluvieux =  previsionSemaine.stream().filter(Prevision::estPluvieux)
+		Collection<Prevision> joursPluvieux =  previsionSemaine.stream().filter(prev -> 
+				(prev.getCondition().toLowerCase().contains("pluie")))				
 				.collect(Collectors.toList());
 		return joursPluvieux;
 	}
 	
-//	public Meteo getMeteoByVille(String ville) {		
-//		PrevisionResponseDTO villeInfosDTO  = restTemplate.getForObject(uri+ville, PrevisionResponseDTO.class);
-//		PrevisionResponseDTO conditionActuelDTO = restTemplate.getForObject(uri+ville, PrevisionResponseDTO.class);
-//		PrevisionResponseDTO previsionJour0DTO = restTemplate.getForObject(uri+ville, PrevisionResponseDTO.class);		
-//		PrevisionResponseDTO previsionJour1DTO = restTemplate.getForObject(uri+ville, PrevisionResponseDTO.class);		
-//		PrevisionResponseDTO previsionJour2DTO = restTemplate.getForObject(uri+ville, PrevisionResponseDTO.class);		
-//		PrevisionResponseDTO previsionJour3DTO = restTemplate.getForObject(uri+ville, PrevisionResponseDTO.class);	
-//		PrevisionResponseDTO previsionJour4DTO = restTemplate.getForObject(uri+ville, PrevisionResponseDTO.class);
-//		
-//
-//		VilleInfos villeInfos = villeInfosDTO.getVilleInfos();		
-//		ConditionActuel conditionActuel = conditionActuelDTO.getConditionActuel();		
-//		Prevision previsionJour0 = previsionJour0DTO.getPrevisionJour0();		
-//		Prevision previsionJour1 = previsionJour1DTO.getPrevisionJour1();		
-//		Prevision previsionJour2 = previsionJour2DTO.getPrevisionJour2();		
-//		Prevision previsionJour3 = previsionJour3DTO.getPrevisionJour3();		
-//		Prevision previsionJour4 = previsionJour4DTO.getPrevisionJour4();
-//		
-//		
-//		
-//		Meteo meteo = new Meteo();
-//		meteo.setVilleInfos(villeInfos);
-//		meteo.setConditionActuel(conditionActuel);
-//		meteo.setPrevisionJour0(previsionJour0);
-//		meteo.setPrevisionJour1(previsionJour1);
-//		meteo.setPrevisionJour2(previsionJour2);
-//		meteo.setPrevisionJour3(previsionJour3);
-//		meteo.setPrevisionJour4(previsionJour4);
-//		
-//		return meteo;
-//	}
-	
-
+	public Collection<Prevision> getJoursPluvieux2(String ville){
+		PrevisionResponseDTO previsionDTO = getPrevisionResponseDTOByVille(ville);
+		Meteo meteo = new Meteo(previsionDTO);
+		Collection<Prevision> previsionSemaine = meteo.getPrevisionSemaine();
+	}
 	
 	
 }
-
+//Collection<Prevision> previsionSemaine = meteo.getPrevisionSemaine();
+//DonneesParHeureListe donneesJour0 =  ((List<Prevision>) previsionSemaine).get(0).getDonneesParHeure();
+//DonneesParHeureListe donneesJour1 =  ((List<Prevision>) previsionSemaine).get(1).getDonneesParHeure();
+//DonneesParHeureListe donneesJour2 =  ((List<Prevision>) previsionSemaine).get(2).getDonneesParHeure();
+//DonneesParHeureListe donneesJour3 =  ((List<Prevision>) previsionSemaine).get(3).getDonneesParHeure();
+//DonneesParHeureListe donneesJour4 =  ((List<Prevision>) previsionSemaine).get(4).getDonneesParHeure();

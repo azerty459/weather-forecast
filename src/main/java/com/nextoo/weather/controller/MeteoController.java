@@ -40,4 +40,10 @@ public class MeteoController {
 		return joursPluvieux;
 	}
 	
+	@RequestMapping(value = "/meteo/{ville}/joursPluvieux2", produces = MediaType.APPLICATION_JSON_VALUE,  method = RequestMethod.GET)
+	public Collection<Prevision> findByJoursPluvieux2(@PathVariable("ville") String ville) {
+		Collection<Prevision> joursPluvieux = meteoService.getJoursPluvieux2(ville);
+		return joursPluvieux;
+	}
+	
 }

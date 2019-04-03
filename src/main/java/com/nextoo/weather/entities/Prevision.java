@@ -25,14 +25,6 @@ public class Prevision {
 	//HashMap<String, DonneesParHeure> donneesParHeure;
 	private DonneesParHeureListe donneesParHeure;
 	
-	
-	private static final String[] PLUVIEUX = {"averse", "pluie"};
-	
-	public static boolean estPluvieux(Prevision prevision) {
-        return Stream.of(PLUVIEUX)
-                .anyMatch(rs -> prevision.getCondition().toLowerCase().contains(rs.toLowerCase()));
-    }
-	
 	public Prevision() {
 		super();
 	}
@@ -83,7 +75,7 @@ public class Prevision {
 
 	public void setDonneesParHeure(DonneesParHeureListe donneesParHeure) {
 		this.donneesParHeure = donneesParHeure;
-	}
+	}	
 	
 	
 }
