@@ -11,21 +11,12 @@ public class JourReponseDto {
 	private double tmpMax;
 	
 	private String condition;
+	
+	private String icone;
 
 	public JourReponseDto() {
 		super();
 	}
-
-	public JourReponseDto(String jour, String date, double tmpMin, double tmpMax, String condition) {
-		super();
-		this.jour = jour;
-		this.date = date;
-		this.tmpMin = tmpMin;
-		this.tmpMax = tmpMax;
-		this.condition = condition;
-	}
-
-
 
 	public String getJour() {
 		return jour;
@@ -66,6 +57,13 @@ public class JourReponseDto {
 	public void setCondition(String condition) {
 		this.condition = condition;
 	}
-	
+
+	public String getIcone() {
+		return icone;
+	}
+
+	public void setIcone(String icone) {
+		this.icone = icone;
+	}
 	
 }

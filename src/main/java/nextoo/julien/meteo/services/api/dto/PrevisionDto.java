@@ -89,6 +89,7 @@ public class PrevisionDto {
 		jourReponse.setJour(this.jour);
 		jourReponse.setTmpMin(this.tmpMin);
 		jourReponse.setTmpMax(this.tmpMax);
+		jourReponse.setIcone(this.icone);
 		
 		return jourReponse;
 		

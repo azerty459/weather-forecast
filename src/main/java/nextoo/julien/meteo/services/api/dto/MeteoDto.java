@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import nextoo.julien.meteo.controller.dto.MeteoReponseDto;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MeteoDto {
 
@@ -103,6 +105,22 @@ public class MeteoDto {
 
 		return previsions;
 
+	}
+	
+	public MeteoReponseDto convertToMeteoReponseDto() {
+		
+		MeteoReponseDto meteoReponse = new MeteoReponseDto();
+		
+		meteoReponse.setVilleInfo(this.villeInfo.convertToVilleInfoReponseDto());
+		meteoReponse.setConditionCourante(this.conditionCourante.convertToCondiCouranteReponseDto());
+		meteoReponse.setPrevision_j0(this.prevision_j0.convertToJourReponseDto());
+		meteoReponse.setPrevision_j1(this.prevision_j1.convertToJourReponseDto());
+		meteoReponse.setPrevision_j2(this.prevision_j2.convertToJourReponseDto());
+		meteoReponse.setPrevision_j3(this.prevision_j3.convertToJourReponseDto());
+		meteoReponse.setPrevision_j4(this.prevision_j4.convertToJourReponseDto());
+		
+		return meteoReponse;
+		
 	}
 
 }

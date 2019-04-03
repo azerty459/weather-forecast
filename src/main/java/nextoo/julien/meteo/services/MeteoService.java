@@ -5,11 +5,11 @@ import java.util.Collection;
 
 import nextoo.julien.meteo.controller.dto.HumiditeReponseDto;
 import nextoo.julien.meteo.controller.dto.JourReponseDto;
-import nextoo.julien.meteo.services.api.dto.MeteoDto;
+import nextoo.julien.meteo.controller.dto.MeteoReponseDto;
 
 public interface MeteoService {
 	
-	public MeteoDto getMeteo(String ville) throws IOException;
+	public MeteoReponseDto getMeteo(String ville) throws IOException;
 		
 	public JourReponseDto getJourLePlusChaud(String ville) throws IOException;
 	

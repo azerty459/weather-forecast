@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import nextoo.julien.meteo.controller.dto.HumiditeReponseDto;
 import nextoo.julien.meteo.controller.dto.JourReponseDto;
+import nextoo.julien.meteo.controller.dto.MeteoReponseDto;
 import nextoo.julien.meteo.services.api.MeteoApiService;
 import nextoo.julien.meteo.services.api.dto.MeteoDto;
 import nextoo.julien.meteo.services.api.dto.PrevisionHeureDto;
@@ -21,8 +22,8 @@ public class MeteoServiceImpl implements MeteoService {
 	private MeteoApiService meteoApiService;
 
 	@Override
-	public MeteoDto getMeteo(String ville) throws IOException {
-		return meteoApiService.getMeteo(ville);
+	public MeteoReponseDto getMeteo(String ville) throws IOException {
+		return meteoApiService.getMeteo(ville).convertToMeteoReponseDto();
 	}
 
 	@Override
@@ -62,13 +63,6 @@ public class MeteoServiceImpl implements MeteoService {
 				.previsionsHeureToListe();
 
 		double moyenneJ0 = previsionsJ0.stream().mapToDouble(p -> p.getHumidite()).average().getAsDouble();
-		
-//		double moyenneJ = previsionsJ0.stream()
-//				.mapToDouble(p -> p.getHumidite())
-//				.average()
-//				.map(h -> h.)
-//				.average()
-//				.getAsDouble();
 
 		Collection<PrevisionHeureDto> previsionsJ1 = meteo.getPrevision_j1().getPrevisionsParHeure()
 				.previsionsHeureToListe();
