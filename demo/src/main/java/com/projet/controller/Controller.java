@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.projet.dto.FcstDayDto;
+import com.projet.dto.HotestDay;
+import com.projet.dto.InfoHumidity;
 import com.projet.dto.MeteoCityDto;
 import servicesMeteo.ServiceMeteo;
 
@@ -22,7 +24,7 @@ public class Controller {
 	}
 	
 	@RequestMapping("/meteo/{city}/hotest")
-	public FcstDayDto getHotestDay(@PathVariable @NotNull String city) {
+	public HotestDay getHotestDay(@PathVariable @NotNull String city) {
 		
 		return monService.getHotestDayOfWeek(city);
 	}
@@ -31,6 +33,12 @@ public class Controller {
 	public List<FcstDayDto> getRainDay(@PathVariable @NotNull String city) {
 		
 		return monService.getDaysOfRain(city);
+	}
+	
+	@RequestMapping("/meteo/{city}/humidity")
+	public InfoHumidity getHumidity(@PathVariable @NotNull String city) {
+		
+		return monService.getHumidityOfDayAndWeek(city);
 	}
 }
  

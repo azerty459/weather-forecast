@@ -10,8 +10,16 @@ public class CurrentConditionDto {
 	private String date;
 	@JsonProperty("hour")
 	private String hour;
+	@JsonProperty("humidity")
+	private int humidity;
 	
 	
+	public int getHumidity() {
+		return humidity;
+	}
+	public void setHumidity(int humidit) {
+		this.humidity = humidit;
+	}
 	public String getDate() {
 		return date;
 	}
