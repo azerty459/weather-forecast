@@ -1,6 +1,7 @@
 package servicesMeteo;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -24,12 +25,12 @@ public class ServiceMeteo {
 	private final static String URL = "http://www.prevision-meteo.ch/services/json/";
 	private RestTemplate restTemplate;
 	private ResponseEntity<MeteoCityDto> response;
-	
+
 	public ServiceMeteo() {
 		this.restTemplate = new RestTemplate();	
 	}
-	
-	
+
+
 	/*
 	 * Obtenir les infos du jour et de la semaine via une ville donnée
 	 * @param une ville donnée
@@ -93,11 +94,11 @@ public class ServiceMeteo {
 		return list;
 	}
 
-	
+
 	public InfoHumidity getHumidityOfDayAndWeek(String city) {
 		response = restTemplate.getForEntity((URL+city), MeteoCityDto.class);
-		
-		//toDo forEach suivi de stream
+
+
 		List<FcstDayDto> list = Arrays.asList(
 				response.getBody().getFcstDay0(),
 				response.getBody().getFcstDay1(), 
@@ -105,18 +106,25 @@ public class ServiceMeteo {
 				response.getBody().getFcstDay3(),
 				response.getBody().getFcstDay4()
 				);
-		
-		OptionalDouble moyenne = null;
-		
-		for(FcstDayDto fcstDayDto: list){
-			
-			Stream<Entry<String, HourlyDataDto>> sp = fcstDayDto.getHourlyData().entrySet().stream();	
-			moyenne = sp.mapToDouble(x -> x.getValue().getHumidity()).average();
-		}
-		
-		
-		
 
-		return new InfoHumidity(response.getBody().getCurrentCondition().getHumidity(), moyenne.getAsDouble());
+		
+		Double moyenne = 0.0;
+
+		//boucle sur chaque jour de la semaine contenu dans liste
+		for(FcstDayDto fcstDayDto: list){
+
+			//on additionne la moyenne de chaque jour de la semaine
+			moyenne += fcstDayDto.getHourlyData().entrySet().stream()
+                    .mapToDouble(x -> x.getValue().getHumidity())
+                    .average()
+                    .getAsDouble();
+		}		
+		
+		//on divise le resultat par le nombre de jour dans la liste
+		moyenne /= list.size();
+		//on arrondi au centième
+		moyenne = (double)Math.round(moyenne * 100) / 100;
+		
+		return new InfoHumidity(response.getBody().getCurrentCondition().getHumidity(), moyenne);
 	}
 }
