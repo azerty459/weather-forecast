@@ -60,12 +60,17 @@ public class MeteoService {
 		PrevisionResponseDTO previsionDTO = getPrevisionResponseDTOByVille(ville);
 		Meteo meteo = new Meteo(previsionDTO);
 		Collection<Prevision> previsionSemaine = meteo.getPrevisionSemaine();
+		
+		DonneesParHeureListe donneesJour0 =  ((List<Prevision>) previsionSemaine).get(0).getDonneesParHeure();
+		
+		return null;
+		
 	}
 	
 	
 }
-//Collection<Prevision> previsionSemaine = meteo.getPrevisionSemaine();
-//DonneesParHeureListe donneesJour0 =  ((List<Prevision>) previsionSemaine).get(0).getDonneesParHeure();
+
+//
 //DonneesParHeureListe donneesJour1 =  ((List<Prevision>) previsionSemaine).get(1).getDonneesParHeure();
 //DonneesParHeureListe donneesJour2 =  ((List<Prevision>) previsionSemaine).get(2).getDonneesParHeure();
 //DonneesParHeureListe donneesJour3 =  ((List<Prevision>) previsionSemaine).get(3).getDonneesParHeure();
