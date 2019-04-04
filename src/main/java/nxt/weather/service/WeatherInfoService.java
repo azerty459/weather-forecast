@@ -85,17 +85,21 @@ public class WeatherInfoService {
         
         int actual = weather.getCurrentCondition().getHumidity();
         double avg = getStreamMapToAverageHumidity(weather).average().getAsDouble();
-        boolean dry = weather.getForecastDays(0).getHourly().entrySet().stream().mapToDouble(h -> h.getValue().getHumidity()).average().getAsDouble() <= getStreamMapToAverageHumidity(weather).min().getAsDouble();
+        boolean dry = weather.getForecastDays(0).getHourly().entrySet().stream().mapToDouble(this::getHumidityFromMap).average().getAsDouble() <= getStreamMapToAverageHumidity(weather).min().getAsDouble();
 
         return new HumidityDto(actual, avg, dry);
     }
 
     private DoubleStream getStreamMapToAverageHumidity(WeatherDto weather) {
-        return weather.getForecastDays().stream().mapToDouble(getDailyAverageHumidity());
+        return weather.getForecastDays().stream().mapToDouble(this::getDailyAverageHumidity);
     }
 
-    private ToDoubleFunction<ForecastDayDto> getDailyAverageHumidity() {
-        return fd -> fd.getHourly().entrySet().stream().mapToDouble(h -> h.getValue().getHumidity()).average().getAsDouble();
+    private double getDailyAverageHumidity(ForecastDayDto fd) {
+        return fd.getHourly().entrySet().stream().mapToDouble(this::getHumidityFromMap).average().getAsDouble();
+    }
+
+    private int getHumidityFromMap(Entry<String, HourlyDataDto> mapHourly) {
+        return mapHourly.getValue().getHumidity();
     }
 
 }
