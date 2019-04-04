@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import nextoo.exo1.meteorest.objects.Meteo;
+import nextoo.exo1.meteorest.objects.MeteoParHeure;
 import nextoo.exo1.meteorest.objects.TraitementJson;
 
 /**
@@ -19,12 +20,12 @@ import nextoo.exo1.meteorest.objects.TraitementJson;
 @Service
 public class PrevisionServiceImpl implements PrevisionService {
 	
-	static String fooResourceUrl = "https://www.prevision-meteo.ch/services/json/";
+	private static final String URL_SERVICE_METEO = "https://www.prevision-meteo.ch/services/json/";
 	
 	@Override
 	public TraitementJson recuperationJson(String ville) {
 		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<TraitementJson> response = restTemplate.getForEntity(fooResourceUrl + ville, TraitementJson.class);
+		ResponseEntity<TraitementJson> response = restTemplate.getForEntity(URL_SERVICE_METEO + ville, TraitementJson.class);
 		return response.getBody();
 	}
 
@@ -54,12 +55,16 @@ public class PrevisionServiceImpl implements PrevisionService {
 		map.put("Current", String.valueOf(e.getCurrent().getHumidite()));
 		map.put("Semaine", String.valueOf(
 				previsions.stream().mapToDouble(
-						p -> p.getParHeure().values().stream().mapToDouble(
-								x -> x.getHumidity()
-								).average().getAsDouble()
+						p -> getHumiditeMoyenne(p)
 						).average().getAsDouble()
 				));
 		return map;
+	}
+
+	private double getHumiditeMoyenne(Meteo p) {
+		return p.getParHeure().values().stream().mapToDouble(
+				MeteoParHeure::getHumidity
+				).average().getAsDouble();
 	}
 
 }

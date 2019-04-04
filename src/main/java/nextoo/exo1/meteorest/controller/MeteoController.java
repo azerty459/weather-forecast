@@ -15,30 +15,30 @@ import nextoo.exo1.meteorest.service.PrevisionService;
  * @version java 1.8
  */
 @RestController
-@RequestMapping("/meteo")
+@RequestMapping("/meteo/{ville}")
 public class MeteoController {
 	
 	@Autowired
 	PrevisionService ps;
 
-	@RequestMapping("/{city}")
-	public TraitementJson findByCity(@PathVariable String city) {
-		TraitementJson previ = ps.recuperationJson(city);
+	@RequestMapping("/")
+	public TraitementJson meteoParVille(@PathVariable String ville) {
+		TraitementJson previ = ps.recuperationJson(ville);
 		return previ;
 	}
 	
-	@RequestMapping("/{city}/hot")
-	public Meteo jourChaud(@PathVariable String city) {
-		return ps.jourLePlusChaud(city);
+	@RequestMapping("/hot")
+	public Meteo jourChaud(@PathVariable String ville) {
+		return ps.jourLePlusChaud(ville);
 	}
 	
-	@RequestMapping("{city}/pluie")
-	public Stream<Meteo> pluie(@PathVariable String city) {
-		return ps.jourDePluie(city);
+	@RequestMapping("/pluie")
+	public Stream<Meteo> joursDePluie(@PathVariable String ville) {
+		return ps.jourDePluie(ville);
 	}
 	
-	@RequestMapping("{city}/humidite")
-	public Map<String, String> humidite(@PathVariable String city) {
-		return ps.humiditeSemaine(city);
+	@RequestMapping("/humidite")
+	public Map<String, String> semaineHumiditeMoyenne(@PathVariable String ville) {
+		return ps.humiditeSemaine(ville);
 	}
 }
