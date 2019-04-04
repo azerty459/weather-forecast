@@ -34,8 +34,8 @@ public class MeteoServiceImpl implements MeteoService {
  
 		return meteo.getPrevisionsList().stream()
 					.map(jourChaud -> jourChaud.convertToJourReponseDto())
-					.max(comp)	
-					.get();
+					.max(comp)	//Comparator.comparing(...)
+					.get(); //orElse(new Exception("Pas de données"))
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class MeteoServiceImpl implements MeteoService {
 		MeteoDto meteo = meteoApiService.getMeteo(ville);
 
 		return meteo.getPrevisionsList().stream()
-					.filter(p -> p.getCondition().toLowerCase().contains("pluie"))
+					.filter(p -> p.getCondition().toLowerCase().contains("pluie")) //niveau de precipitation
 					.map(jourPluie -> jourPluie.convertToJourReponseDto())
 					.collect(Collectors.toList());
 		
@@ -63,8 +63,8 @@ public class MeteoServiceImpl implements MeteoService {
 				.stream()
 				.mapToDouble(p -> p.getPrevisionsParHeure().values()
 						.stream()
-						.mapToDouble(h -> h.getHumidite())
-						.average()
+						.mapToDouble(h -> h.getHumidite()) // (PrevisionHeureDto::getHumidity)
+						.average() //orElse(...)
 						.getAsDouble())
 				.average()
 				.getAsDouble();
