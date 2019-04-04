@@ -4,9 +4,11 @@ import nxt.weather.service.api.WeatherApiService;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map.Entry;
 import nxt.weather.controller.dto.ForecastDto;
 import nxt.weather.service.api.dto.ForecastDayDto;
 import nxt.weather.controller.dto.HumidityDto;
+import nxt.weather.service.api.dto.HourlyDataDto;
 import nxt.weather.service.api.dto.WeatherDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,21 +76,10 @@ public class WeatherInfoService {
 
     public HumidityDto humidity(String city) {
         WeatherDto weather = api.getInformations(city);
-
-        //double avg = weather.getForecastDays().stream().mapToDouble(fd -> fd.getHourly().entrySet().stream().mapToDouble(h -> h.getValue().getHumidity()).average().getAsDouble()).average().getAsDouble();
         
         int actual = weather.getCurrentCondition().getHumidity();
-        boolean dry = true;
-        double avg = 0;
-        int nb = 0;
-        for (ForecastDayDto fd : weather.getForecastDays()) {
-            double avgDay = fd.getHourly().entrySet().stream().mapToInt(h -> h.getValue().getHumidity()).sum();
-            nb += fd.getHourly().size();
-            avg = avg + (1 / (nb + 1.0)) * (avgDay - avg);
-            if(dry && actual > avgDay) {
-                dry = false;
-            }
-        }
+        double avg = weather.getForecastDays().stream().mapToDouble(fd -> fd.getHourly().entrySet().stream().mapToDouble(h -> h.getValue().getHumidity()).average().getAsDouble()).average().getAsDouble();
+        boolean dry = weather.getForecastDays(0).getHourly().entrySet().stream().mapToDouble(h -> h.getValue().getHumidity()).average().getAsDouble() <= weather.getForecastDays().stream().mapToDouble(fd -> fd.getHourly().entrySet().stream().mapToDouble(h -> h.getValue().getHumidity()).average().getAsDouble()).min().getAsDouble();
 
         return new HumidityDto(actual, avg, dry);
     }
