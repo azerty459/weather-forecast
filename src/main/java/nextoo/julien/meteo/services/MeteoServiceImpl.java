@@ -13,6 +13,9 @@ import nextoo.julien.meteo.controller.dto.JourReponseDto;
 import nextoo.julien.meteo.controller.dto.MeteoReponseDto;
 import nextoo.julien.meteo.services.api.MeteoApiService;
 import nextoo.julien.meteo.services.api.dto.MeteoDto;
+import nextoo.julien.meteo.services.api.dto.PrevisionHeureDto;
+import nextoo.julien.meteo.services.api.exception.HumiditeNonTrouveApiException;
+import nextoo.julien.meteo.services.api.exception.JourNonTrouveApiException;
 
 @Service
 public class MeteoServiceImpl implements MeteoService {
@@ -26,16 +29,14 @@ public class MeteoServiceImpl implements MeteoService {
 	}
 
 	@Override
-	public JourReponseDto getJourLePlusChaud(String ville) throws IOException {
+	public JourReponseDto getJourLePlusChaud(String ville) throws JourNonTrouveApiException, IOException{
 
 		MeteoDto meteo = meteoApiService.getMeteo(ville);
-
-		final Comparator<JourReponseDto> comp = (p1, p2) -> Double.compare(p1.getTmpMax(), p2.getTmpMax());
  
 		return meteo.getPrevisionsList().stream()
 					.map(jourChaud -> jourChaud.convertToJourReponseDto())
-					.max(comp)	//Comparator.comparing(...)
-					.get(); //orElse(new Exception("Pas de données"))
+					.max(Comparator.comparing(JourReponseDto::getTmpMax))
+					.orElseThrow(() -> new JourNonTrouveApiException());
 	}
 
 	@Override
@@ -51,7 +52,7 @@ public class MeteoServiceImpl implements MeteoService {
 	}
 
 	@Override
-	public HumiditeReponseDto getHumidite(String ville) throws IOException {
+	public HumiditeReponseDto getHumidite(String ville) throws IOException, HumiditeNonTrouveApiException {
 		MeteoDto meteo = meteoApiService.getMeteo(ville);
 		
 		HumiditeReponseDto humiditeReponse = new HumiditeReponseDto();
@@ -63,11 +64,11 @@ public class MeteoServiceImpl implements MeteoService {
 				.stream()
 				.mapToDouble(p -> p.getPrevisionsParHeure().values()
 						.stream()
-						.mapToDouble(h -> h.getHumidite()) // (PrevisionHeureDto::getHumidity)
-						.average() //orElse(...)
+						.mapToDouble(PrevisionHeureDto::getHumidite)
+						.average()
 						.getAsDouble())
 				.average()
-				.getAsDouble();
+				.orElseThrow(() -> new HumiditeNonTrouveApiException("Humidité moyenne de la semaine non trouvée dans l'API"));
 		
 		humiditeReponse.setHumiditeMoyenneSemaine(humiditeMoyenne);
 		humiditeReponse.setIndicateurHumidite();

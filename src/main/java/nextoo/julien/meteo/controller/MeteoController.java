@@ -15,6 +15,8 @@ import nextoo.julien.meteo.controller.dto.HumiditeReponseDto;
 import nextoo.julien.meteo.controller.dto.JourReponseDto;
 import nextoo.julien.meteo.controller.dto.MeteoReponseDto;
 import nextoo.julien.meteo.services.MeteoServiceImpl;
+import nextoo.julien.meteo.services.api.exception.HumiditeNonTrouveApiException;
+import nextoo.julien.meteo.services.api.exception.JourNonTrouveApiException;
 
 @RestController
 @RequestMapping("/meteo")
@@ -30,7 +32,7 @@ public class MeteoController {
 	}
 	
 	@GetMapping("/ville/{ville}/jour-plus-chaud")
-	public JourReponseDto getJourLePlusChaud(@PathVariable("ville") @NotNull String ville) throws IOException{
+	public JourReponseDto getJourLePlusChaud(@PathVariable("ville") @NotNull String ville) throws IOException, JourNonTrouveApiException{
 		
 		return meteoService.getJourLePlusChaud(ville);
 	}
@@ -42,7 +44,7 @@ public class MeteoController {
 	}
 	
 	@GetMapping("/ville/{ville}/humidite")
-	public HumiditeReponseDto getHumidite(@PathVariable("ville") @NotNull String ville) throws IOException{
+	public HumiditeReponseDto getHumidite(@PathVariable("ville") @NotNull String ville) throws IOException, HumiditeNonTrouveApiException{
 		
 		return meteoService.getHumidite(ville);
 	}
