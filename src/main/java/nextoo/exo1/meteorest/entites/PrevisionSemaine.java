@@ -1,4 +1,4 @@
-package nextoo.exo1.meteorest.objects;
+package nextoo.exo1.meteorest.entites;
 
 import java.util.ArrayList;
 
@@ -9,24 +9,24 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author liam
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TraitementJson {
+public class PrevisionSemaine {
 	@JsonProperty("city_info")
 	Ville ville;
 	
 	@JsonProperty("current_condition")
-	Meteo current;
+	PrevisionJour current;
 	
 	@JsonProperty("fcst_day_0")
-	Meteo j0;
+	PrevisionJour j0;
 	
 	@JsonProperty("fcst_day_1")
-	Meteo j1;
+	PrevisionJour j1;
 	
 	@JsonProperty("fcst_day_2")
-	Meteo j2;
+	PrevisionJour j2;
 	
 	@JsonProperty("fcst_day_3")
-	Meteo j3;
+	PrevisionJour j3;
 
 	/**
 	 * @return the ville
@@ -45,22 +45,22 @@ public class TraitementJson {
 	/**
 	 * @return the current
 	 */
-	public Meteo getCurrent() {
+	public PrevisionJour getCurrent() {
 		return current;
 	}
 
 	/**
 	 * @param current the current to set
 	 */
-	public void setCurrent(Meteo current) {
+	public void setCurrent(PrevisionJour current) {
 		this.current = current;
 	}
 
 	/**
 	 * @return the j0
 	 */
-	public ArrayList<Meteo> getPrevisions() {
-		ArrayList<Meteo> previsions = new ArrayList<Meteo>();
+	public ArrayList<PrevisionJour> getPrevisions() {
+		ArrayList<PrevisionJour> previsions = new ArrayList<PrevisionJour>();
 		previsions.add(j0);
 		previsions.add(j1);
 		previsions.add(j2);

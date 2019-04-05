@@ -6,43 +6,42 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import nextoo.exo1.meteorest.entites.PrevisionSemaine;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import nextoo.exo1.meteorest.objects.Meteo;
-import nextoo.exo1.meteorest.objects.MeteoParHeure;
-import nextoo.exo1.meteorest.objects.TraitementJson;
+import nextoo.exo1.meteorest.entites.PrevisionJour;
+import nextoo.exo1.meteorest.entites.PrevisionHeure;
 
 /**
  * @author liam
  */
 @Service
-public class PrevisionServiceImpl implements PrevisionService {
+public class MeteoServiceImpl implements IMeteoService {
 	
 	private static final String URL_SERVICE_METEO = "https://www.prevision-meteo.ch/services/json/";
-	
+
 	@Override
-	public TraitementJson recuperationJson(String ville) {
+	public PrevisionSemaine recuperationJson(String ville) {
 		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<TraitementJson> response = restTemplate.getForEntity(URL_SERVICE_METEO + ville, TraitementJson.class);
+		ResponseEntity<PrevisionSemaine> response = restTemplate.getForEntity(URL_SERVICE_METEO + ville, PrevisionSemaine.class);
 		return response.getBody();
 	}
 
 	@Override
-	public Meteo jourLePlusChaud(String ville) {
-		TraitementJson e = recuperationJson(ville);
-		ArrayList<Meteo> previsions = e.getPrevisions();
+	public PrevisionJour jourLePlusChaud(String ville) {
+		PrevisionSemaine e = recuperationJson(ville);
+		ArrayList<PrevisionJour> previsions = e.getPrevisions();
 		return previsions.stream().max(
 				Comparator.comparing(
-						Meteo::getTemperatureMax)
+						PrevisionJour::getTemperatureMax)
 				).get();
 	}
 
 	@Override
-	public Stream<Meteo> jourDePluie(String ville) {
-		TraitementJson e = recuperationJson(ville);
-		ArrayList<Meteo> previsions = e.getPrevisions();
+	public Stream<PrevisionJour> jourDePluie(String ville) {
+		PrevisionSemaine e = recuperationJson(ville);
+		ArrayList<PrevisionJour> previsions = e.getPrevisions();
 		return previsions.stream().filter(
 				p -> p.getCondition().contains("pluie"));
 	}
@@ -50,21 +49,21 @@ public class PrevisionServiceImpl implements PrevisionService {
 	@Override
 	public Map<String, String> humiditeSemaine(String ville) {
 		Map<String, String> map = new HashMap<String, String>();
-		TraitementJson e = recuperationJson(ville);
-		ArrayList<Meteo> previsions = e.getPrevisions();
+		PrevisionSemaine e = recuperationJson(ville);
+		ArrayList<PrevisionJour> previsions = e.getPrevisions();
 		map.put("Current", String.valueOf(e.getCurrent().getHumidite()));
 		map.put("Semaine", String.valueOf(
 				previsions.stream().mapToDouble(
-						p -> getHumiditeMoyenne(p)
-						).average().getAsDouble()
+						p -> getHumiditeMoyenne(p))
+						.average().orElse(0)
 				));
 		return map;
 	}
 
-	private double getHumiditeMoyenne(Meteo p) {
+	private double getHumiditeMoyenne(PrevisionJour p) {
 		return p.getParHeure().values().stream().mapToDouble(
-				MeteoParHeure::getHumidity
-				).average().getAsDouble();
+				PrevisionHeure::getHumidity
+				).average().orElse(0);
 	}
 
 }

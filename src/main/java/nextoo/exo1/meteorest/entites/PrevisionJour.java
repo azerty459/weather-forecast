@@ -1,4 +1,4 @@
-package nextoo.exo1.meteorest.objects;
+package nextoo.exo1.meteorest.entites;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,13 +9,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author liam
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Meteo {
+public class PrevisionJour {
 	
 	/**
 	 * Represente l'evolution de l'humidite par heure
 	 */
 	@JsonProperty("hourly_data")
-	Map<String, MeteoParHeure> parHeure = new HashMap<String, MeteoParHeure>();
+	Map<String, PrevisionHeure> parHeure = new HashMap<String, PrevisionHeure>();
 	
 	/**
 	 * Represente la date du bulletin meteo.
@@ -53,7 +53,7 @@ public class Meteo {
 	@JsonProperty("tmax")
 	private double temperatureMax;
 	
-	public Meteo() {
+	public PrevisionJour() {
 		
 	}
 
@@ -79,7 +79,7 @@ public class Meteo {
 	}
 
 	/**
-	 * @param temperatureActuelle the temperatureActuelle to set
+	 * @param temperature the temperature Actuelle to set
 	 */
 	public void setTemperature(double temperature) {
 		this.temperature = temperature;
@@ -144,14 +144,14 @@ public class Meteo {
 	/**
 	 * @return the parHeure
 	 */
-	public Map<String, MeteoParHeure> getParHeure() {
+	public Map<String, PrevisionHeure> getParHeure() {
 		return parHeure;
 	}
 
 	/**
 	 * @param parHeure the parHeure to set
 	 */
-	public void setParHeure(Map<String, MeteoParHeure> parHeure) {
+	public void setParHeure(Map<String, PrevisionHeure> parHeure) {
 		this.parHeure = parHeure;
 	}
 	

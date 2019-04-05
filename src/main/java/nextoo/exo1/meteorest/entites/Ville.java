@@ -1,4 +1,4 @@
-package nextoo.exo1.meteorest.objects;
+package nextoo.exo1.meteorest.entites;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

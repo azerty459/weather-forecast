@@ -2,38 +2,37 @@ package nextoo.exo1.meteorest.controller;
 
 import java.util.Map;
 import java.util.stream.Stream;
+
+import nextoo.exo1.meteorest.entites.PrevisionSemaine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import nextoo.exo1.meteorest.objects.Meteo;
-import nextoo.exo1.meteorest.objects.TraitementJson;
-import nextoo.exo1.meteorest.service.PrevisionService;
+import nextoo.exo1.meteorest.entites.PrevisionJour;
+import nextoo.exo1.meteorest.service.IMeteoService;
 
 /**
  * @author liam
- * @version java 1.8
  */
 @RestController
 @RequestMapping("/meteo/{ville}")
 public class MeteoController {
 	
 	@Autowired
-	PrevisionService ps;
+    IMeteoService ps;
 
 	@RequestMapping("/")
-	public TraitementJson meteoParVille(@PathVariable String ville) {
-		TraitementJson previ = ps.recuperationJson(ville);
-		return previ;
+	public PrevisionSemaine meteoParVille(@PathVariable String ville) {
+		return ps.recuperationJson(ville);
 	}
 	
 	@RequestMapping("/hot")
-	public Meteo jourChaud(@PathVariable String ville) {
+	public PrevisionJour jourChaud(@PathVariable String ville) {
 		return ps.jourLePlusChaud(ville);
 	}
 	
 	@RequestMapping("/pluie")
-	public Stream<Meteo> joursDePluie(@PathVariable String ville) {
+	public Stream<PrevisionJour> joursDePluie(@PathVariable String ville) {
 		return ps.jourDePluie(ville);
 	}
 	
