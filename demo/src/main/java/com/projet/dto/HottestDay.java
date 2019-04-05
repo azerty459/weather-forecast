@@ -1,6 +1,6 @@
 package com.projet.dto;
 
-public class HotestDay {
+public class HottestDay {
 
 	private String date;
 	
@@ -10,7 +10,7 @@ public class HotestDay {
 	
 	private int temperatureMax;
 	
-	public HotestDay(String date, String name, String condition, int tempMax) {
+	public HottestDay(String date, String name, String condition, int tempMax) {
 		
 		this.date = date;
 		this.day = name;

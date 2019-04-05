@@ -1,16 +1,15 @@
 package com.projet.dto;
 
-import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class InfoHumidity {
+public class Humidity {
 
 	private int currentHumidity;
 
 	private double averageHumidity;
 
 
-	public InfoHumidity(int currentHumidity, double averageHumidity) {
+	public Humidity(int currentHumidity, double averageHumidity) {
 		this.currentHumidity = currentHumidity;
 		this.averageHumidity = averageHumidity;
 	}

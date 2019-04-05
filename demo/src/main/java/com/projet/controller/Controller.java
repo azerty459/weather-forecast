@@ -3,42 +3,42 @@ package com.projet.controller;
 import java.io.IOException;
 import java.util.List;
 import javax.validation.constraints.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.projet.dto.FcstDayDto;
-import com.projet.dto.HotestDay;
-import com.projet.dto.InfoHumidity;
-import com.projet.dto.MeteoCityDto;
-import servicesMeteo.ServiceMeteo;
+import com.projet.business.ServiceMeteo;
+import com.projet.dto.*;
 
 @RestController
+@RequestMapping("/meteo/{city}")
 public class Controller {
 		
-	private ServiceMeteo monService = new ServiceMeteo();
-
-	@RequestMapping("/meteo/{city}")
-	public MeteoCityDto getMeteoDay(@PathVariable @NotNull String city) throws IOException{
+	@Autowired
+	private ServiceMeteo serviceMeteo;
+	
+	@GetMapping("")
+	public PrevisionCityDto getPrevisionCityDay(@PathVariable @NotNull String city) throws IOException{
 		
-		return monService.getMeteoCity(city);	
+		return serviceMeteo.getPrevisionCity(city);	
 	}
 	
-	@RequestMapping("/meteo/{city}/hotest")
-	public HotestDay getHotestDay(@PathVariable @NotNull String city) {
+	@GetMapping("/hottest")
+	public HottestDay getHottestDay(@PathVariable @NotNull String city) {
 		
-		return monService.getHotestDayOfWeek(city);
+		return serviceMeteo.getHottestDay(city);
 	}
 	
-	@RequestMapping("/meteo/{city}/rain")
-	public List<FcstDayDto> getRainDay(@PathVariable @NotNull String city) {
+	@GetMapping("/rain")
+	public List<DayDto> getRainyDays(@PathVariable @NotNull String city) {
 		
-		return monService.getDaysOfRain(city);
+		return serviceMeteo.getRainyDays(city);
 	}
 	
-	@RequestMapping("/meteo/{city}/humidity")
-	public InfoHumidity getHumidity(@PathVariable @NotNull String city) {
+	@GetMapping("/humidity")
+	public Humidity getHumidity(@PathVariable @NotNull String city) {
 		
-		return monService.getHumidityOfDayAndWeek(city);
+		return serviceMeteo.getHumidity(city);
 	}
 }
- 

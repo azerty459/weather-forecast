@@ -12,6 +12,10 @@ public class CurrentConditionDto {
 	private String hour;
 	@JsonProperty("humidity")
 	private int humidity;
+	@JsonProperty("tmp")
+	private int temp;
+	@JsonProperty("condition")
+	private String condition;
 	
 	
 	public int getHumidity() {
@@ -32,4 +36,17 @@ public class CurrentConditionDto {
 	public void setHour(String hour) {
 		this.hour = hour;
 	}
+	public int getTemp() {
+		return temp;
+	}
+	public void setTemp(int temp) {
+		this.temp = temp;
+	}
+	public String getCondition() {
+		return condition;
+	}
+	public void setCondition(String condition) {
+		this.condition = condition;
+	}
+	
 }
