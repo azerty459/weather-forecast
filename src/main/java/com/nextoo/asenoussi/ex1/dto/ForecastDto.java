@@ -15,6 +15,8 @@ public class ForecastDto {
 	Map<String, HourlyDataDto> hourlyData;
 	
 	String jourSemaine;
+	
+	double avgTemp;
 
 	public String getDate() {
 		return date;
@@ -48,10 +50,6 @@ public class ForecastDto {
 		this.condition = condition;
 	}
 
-	public double getAverageTemperature() {
-		return (tempMax + tempMin) / 2; 
-	}
-
 	public Map<String, HourlyDataDto> getHourlyData() {
 		return hourlyData;
 	}
@@ -66,6 +64,14 @@ public class ForecastDto {
 
 	public void setJourSemaine(String jourSemaine) {
 		this.jourSemaine = jourSemaine;
+	}
+
+	public double getAvgTemp() {
+		return avgTemp;
+	}
+
+	public void setAvgTemp(double avgTemp) {
+		this.avgTemp = avgTemp;
 	}
 	
 	

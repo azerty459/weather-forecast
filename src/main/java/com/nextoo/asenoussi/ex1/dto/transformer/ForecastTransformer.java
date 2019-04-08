@@ -26,13 +26,13 @@ public class ForecastTransformer {
 			forecastDto.setTempMax(forecast.getTempMax());
 			forecastDto.setTempMin(forecast.getTempMin());
 			forecastDto.setJourSemaine(forecast.getJourSemaine());
-			
+			forecastDto.setAvgTemp((forecast.getTempMax() + forecast.getTempMin())/2);
 			return forecastDto;
 		}
 		return null;
 	}
 
-	public static Forecast dtoToentity(ForecastDto forecastDto) {
+	public static Forecast dtoToEntity(ForecastDto forecastDto) {
 		if(forecastDto != null) {
 			Forecast forecast = new Forecast();
 			

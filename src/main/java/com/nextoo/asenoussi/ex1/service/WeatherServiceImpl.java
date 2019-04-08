@@ -22,7 +22,7 @@ public class WeatherServiceImpl implements WeatherService{
 		ResponseApiDto response = getAllDataFromCityName(cityName);
 		if(response != null) {
 			return response.getForecasts().stream().max(
-					Comparator.comparingDouble(ForecastDto::getAverageTemperature)
+					Comparator.comparingDouble(ForecastDto::getAvgTemp)
 			).get();
 		}
 		return null;

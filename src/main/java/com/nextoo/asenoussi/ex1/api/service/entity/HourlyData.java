@@ -12,20 +12,12 @@ public class HourlyData {
 	@JsonProperty("APCPsfc")
 	private double precipitation;
 	
-	public int getHumidity() {
-		return humidity;
-	}
+	public int getHumidity() {return humidity;}
 
-	public void setHumidity(int humidity) {
-		this.humidity = humidity;
-	}
+	public void setHumidity(int humidity) {this.humidity = humidity;}
 
-	public double getPrecipitation() {
-		return precipitation;
-	}
+	public double getPrecipitation() {return precipitation;}
 
-	public void setPrecipitation(double precipitation) {
-		this.precipitation = precipitation;
-	}
+	public void setPrecipitation(double precipitation) {this.precipitation = precipitation;}
 }
 

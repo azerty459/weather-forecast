@@ -7,59 +7,39 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CityInfo {
 	
 	@JsonProperty("name")
-	String nomLocale;
+	private String nomLocale;
 	
 	@JsonProperty("latitude")
-	String latitude;
+	private String latitude;
 	
 	@JsonProperty("longitude")
-	String longitude;
+	private String longitude;
 	
 	@JsonProperty("sunrise")
-	String leveSoleil;
+	private String leveSoleil;
 	
 	@JsonProperty("sunset")
-	String coucheSoleil;
+	private String coucheSoleil;
 	
-	public String getNomLocalite() {
-		return nomLocale;
-	}
+	public String getNomLocalite() {return nomLocale;}
 
-	public void setNomLocalite(String nomLocalite) {
-		this.nomLocale = nomLocalite;
-	}
+	public void setNomLocalite(String nomLocalite) {this.nomLocale = nomLocalite;}
 
-	public String getLatitude() {
-		return latitude;
-	}
+	public String getLatitude() {return latitude;}
 
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
+	public void setLatitude(String latitude) {this.latitude = latitude;}
 
-	public String getLongitude() {
-		return longitude;
-	}
+	public String getLongitude() {return longitude;}
 
-	public void setLongitude(String longitude) {
-		this.longitude = longitude;
-	}
+	public void setLongitude(String longitude) {this.longitude = longitude;}
 
-	public String getLeveSoleil() {
-		return leveSoleil;
-	}
+	public String getLeveSoleil() {return leveSoleil;}
 
-	public void setLeveSoleil(String leveSoleil) {
-		this.leveSoleil = leveSoleil;
-	}
+	public void setLeveSoleil(String leveSoleil) {this.leveSoleil = leveSoleil;}
 
-	public String getCoucheSoleil() {
-		return coucheSoleil;
-	}
+	public String getCoucheSoleil() {return coucheSoleil;}
 
-	public void setCoucheSoleil(String coucheSoleil) {
-		this.coucheSoleil = coucheSoleil;
-	}
+	public void setCoucheSoleil(String coucheSoleil) {this.coucheSoleil = coucheSoleil;}
 	
 	
 }

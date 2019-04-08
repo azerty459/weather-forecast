@@ -8,74 +8,46 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Forecast{
 	@JsonProperty("date")
-	String date;
+	private String date;
 	
 	@JsonProperty("tmin")
-	double tempMin;
+	private double tempMin;
 	
 	@JsonProperty("tmax")
-	double tempMax;
+	private double tempMax;
 	
 	@JsonProperty("condition")
-	String condition;
+	private String condition;
 	
 	@JsonProperty("day_long")
-	String jourSemaine;
+	private String jourSemaine;
 	
 	@JsonProperty("hourly_data")
-	Map<String, HourlyData> hourlyData;
+	private Map<String, HourlyData> hourlyData;
 
-	public String getDate() {
-		return date;
-	}
+	public String getDate() {return date;}
 
-	public void setDate(String date) {
-		this.date = date;
-	}
+	public void setDate(String date) {this.date = date;}
 
-	public double getTempMin() {
-		return tempMin;
-	}
+	public double getTempMin() {return tempMin;}
 
-	public void setTempMin(double tempMin) {
-		this.tempMin = tempMin;
-	}
+	public void setTempMin(double tempMin) {this.tempMin = tempMin;}
 
-	public double getTempMax() {
-		return tempMax;
-	}
+	public double getTempMax() {return tempMax;}
 
-	public void setTempMax(double tempMax) {
-		this.tempMax = tempMax;
-	}
+	public void setTempMax(double tempMax) {this.tempMax = tempMax;}
 	
-	public String getCondition() {
-		return condition;
-	}
+	public String getCondition() {return condition;}
 
-	public void setCondition(String condition) {
-		this.condition = condition;
-	}
+	public void setCondition(String condition) {this.condition = condition;}
 
-	public double getAverageTemperature() {
-		return (tempMax + tempMin) / 2; 
-	}
+	public Map<String, HourlyData> getHourlyData() {return hourlyData;}
 
-	public Map<String, HourlyData> getHourlyData() {
-		return hourlyData;
-	}
+	public void setHourlyData(Map<String, HourlyData> hourlyData) {this.hourlyData = hourlyData;}
 
-	public void setHourlyData(Map<String, HourlyData> hourlyData) {
-		this.hourlyData = hourlyData;
-	}
+	public String getJourSemaine() {return jourSemaine;}
 
-	public String getJourSemaine() {
-		return jourSemaine;
-	}
-
-	public void setJourSemaine(String jourSemaine) {
-		this.jourSemaine = jourSemaine;
-	}
+	public void setJourSemaine(String jourSemaine) {this.jourSemaine = jourSemaine;}
 	
 	
 	

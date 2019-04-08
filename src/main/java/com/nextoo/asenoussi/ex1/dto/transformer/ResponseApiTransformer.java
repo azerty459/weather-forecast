@@ -18,10 +18,11 @@ public class ResponseApiTransformer {
 			response.setCurrentCondition(CurrentConditionTransformer.dtoToEntity(responseDto.getCurrentCondition()));
 			
 			List<ForecastDto> forecastsDto = new ArrayList<>(responseDto.getForecasts());
-			response.setForecastJ0(ForecastTransformer.dtoToentity(forecastsDto.get(0)));
-			response.setForecastJ1(ForecastTransformer.dtoToentity(forecastsDto.get(1)));
-			response.setForecastJ2(ForecastTransformer.dtoToentity(forecastsDto.get(2)));
-			response.setForecastJ3(ForecastTransformer.dtoToentity(forecastsDto.get(3)));
+			response.setForecastJ0(ForecastTransformer.dtoToEntity(forecastsDto.get(0)));
+			response.setForecastJ1(ForecastTransformer.dtoToEntity(forecastsDto.get(1)));
+			response.setForecastJ2(ForecastTransformer.dtoToEntity(forecastsDto.get(2)));
+			response.setForecastJ3(ForecastTransformer.dtoToEntity(forecastsDto.get(3)));
+			response.setForecastJ4(ForecastTransformer.dtoToEntity(forecastsDto.get(4)));
 			
 			return response;
 		}
@@ -39,6 +40,7 @@ public class ResponseApiTransformer {
 			forecasts.add(ForecastTransformer.entityToDto(response.getForecastJ1()));
 			forecasts.add(ForecastTransformer.entityToDto(response.getForecastJ2()));
 			forecasts.add(ForecastTransformer.entityToDto(response.getForecastJ3()));
+			forecasts.add(ForecastTransformer.entityToDto(response.getForecastJ4()));
 			responseDto.setForecast(forecasts);
 			
 			return responseDto;
