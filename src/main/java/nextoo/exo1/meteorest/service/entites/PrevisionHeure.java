@@ -1,18 +1,13 @@
-package nextoo.exo1.meteorest.entites;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+package nextoo.exo1.meteorest.service.entites;
 
 /**
  * @author liam
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class PrevisionHeure {
 	
 	/**
 	 * Represente le niveau d'humidite
 	 */
-	@JsonProperty("RH2m")
 	private int humidity;
 
 	/**

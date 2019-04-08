@@ -1,32 +1,23 @@
-package nextoo.exo1.meteorest.entites;
+package nextoo.exo1.meteorest.service.entites;
 
 import java.util.ArrayList;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author liam
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class PrevisionSemaine {
-	@JsonProperty("city_info")
-	Ville ville;
+
+	private Ville ville;
+
+	private PrevisionJour current;
+
+	private PrevisionJour j0;
 	
-	@JsonProperty("current_condition")
-	PrevisionJour current;
+	private PrevisionJour j1;
 	
-	@JsonProperty("fcst_day_0")
-	PrevisionJour j0;
+	private PrevisionJour j2;
 	
-	@JsonProperty("fcst_day_1")
-	PrevisionJour j1;
-	
-	@JsonProperty("fcst_day_2")
-	PrevisionJour j2;
-	
-	@JsonProperty("fcst_day_3")
-	PrevisionJour j3;
+	private PrevisionJour j3;
 
 	/**
 	 * @return the ville
@@ -67,7 +58,36 @@ public class PrevisionSemaine {
 		previsions.add(j3);
 		return previsions;
 	}
-	
-	
-	
+
+	public PrevisionJour getJ0() {
+		return j0;
+	}
+
+	public void setJ0(PrevisionJour j0) {
+		this.j0 = j0;
+	}
+
+	public PrevisionJour getJ1() {
+		return j1;
+	}
+
+	public void setJ1(PrevisionJour j1) {
+		this.j1 = j1;
+	}
+
+	public PrevisionJour getJ2() {
+		return j2;
+	}
+
+	public void setJ2(PrevisionJour j2) {
+		this.j2 = j2;
+	}
+
+	public PrevisionJour getJ3() {
+		return j3;
+	}
+
+	public void setJ3(PrevisionJour j3) {
+		this.j3 = j3;
+	}
 }

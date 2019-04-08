@@ -1,9 +1,11 @@
-package nextoo.exo1.meteorest.service.dto;
+package nextoo.exo1.meteorest.controller.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.HashMap;
 import java.util.Map;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PrevisionJourDTO {
 
     /**

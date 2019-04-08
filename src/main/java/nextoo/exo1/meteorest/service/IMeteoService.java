@@ -3,8 +3,8 @@ package nextoo.exo1.meteorest.service;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import nextoo.exo1.meteorest.entites.PrevisionJour;
-import nextoo.exo1.meteorest.entites.PrevisionSemaine;
+import nextoo.exo1.meteorest.controller.dto.PrevisionJourDTO;
+import nextoo.exo1.meteorest.controller.dto.PrevisionSemaineDTO;
 
 /**
  * @author liam
@@ -15,21 +15,21 @@ public interface IMeteoService {
 	 * @param ville type String, represente le nom de la ville
 	 * @return un objet PrevisionSemaine qui contient la meteo
 	 */
-	PrevisionSemaine recuperationJson(String ville);
+	PrevisionSemaineDTO appelApiMeteo(String ville);
 	
 	/**
 	 * Va donner le jour le plus chaud de la semaine
 	 * @param ville type String, represente le nom de la ville
 	 * @return un objet meteo qui contient le jour le plus chaud
 	 */
-	PrevisionJour jourLePlusChaud(String ville);
+	PrevisionJourDTO jourLePlusChaud(String ville);
 	
 	/**
 	 * Va donner les jours de pluie pour une ville donnee
 	 * @param ville type String, represente le nom de la ville
 	 * @return La liste des jours de pluie
 	 */
-	Stream<PrevisionJour> jourDePluie(String ville);
+	Stream<PrevisionJourDTO> jourDePluie(String ville);
 	
 	/**
 	 * Donne l'humidite moyenne de la semaine pour une ville donnee

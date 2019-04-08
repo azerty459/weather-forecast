@@ -1,56 +1,46 @@
-package nextoo.exo1.meteorest.entites;
+package nextoo.exo1.meteorest.service.entites;
 
 import java.util.HashMap;
 import java.util.Map;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author liam
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class PrevisionJour {
 	
 	/**
 	 * Represente l'evolution de l'humidite par heure
 	 */
-	@JsonProperty("hourly_data")
 	Map<String, PrevisionHeure> parHeure = new HashMap<String, PrevisionHeure>();
 	
 	/**
 	 * Represente la date du bulletin meteo.
 	 */
-	@JsonProperty("date")
 	private String dateDuBulletin;
 	
 	/**
 	 * Exprime les conditions, si il pleut, si il y a du soleil...
 	 */
-	@JsonProperty("condition_key")
 	private String condition;
 	
 	/**
 	 * Represente soit la temperature actuelle pour la meteo du jour, soit la meteo prevue pour une prevision.
 	 */
-	@JsonProperty("tmp")
 	private double temperature;
 	
 	/**
 	 * Represente le niveau d'humidite
 	 */
-	@JsonProperty("humidity")
 	private int humidite;
 	
 	/**
 	 * Represente la temperature minimale pour la date renseignee.
 	 */
-	@JsonProperty("tmin")
 	private double temperatureMin;
 	
 	/**
 	 * Represente la temperature maximale pour la date renseingnee.
 	 */
-	@JsonProperty("tmax")
 	private double temperatureMax;
 	
 	public PrevisionJour() {
