@@ -1,15 +1,24 @@
-package com.nextoo.asenoussi.ex1.dto;
+package com.nextoo.asenoussi.ex1.api.service.entity;
 
-public class CityInfoDto {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
+public class CityInfo {
 	
+	@JsonProperty("name")
 	String nomLocale;
 	
+	@JsonProperty("latitude")
 	String latitude;
 	
+	@JsonProperty("longitude")
 	String longitude;
-
+	
+	@JsonProperty("sunrise")
 	String leveSoleil;
 	
+	@JsonProperty("sunset")
 	String coucheSoleil;
 	
 	public String getNomLocalite() {
@@ -54,3 +63,4 @@ public class CityInfoDto {
 	
 	
 }
+

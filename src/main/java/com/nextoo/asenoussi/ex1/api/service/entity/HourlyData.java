@@ -1,9 +1,15 @@
-package com.nextoo.asenoussi.ex1.dto;
+package com.nextoo.asenoussi.ex1.api.service.entity;
 
-public class HourlyDataDto {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonIgnoreProperties(ignoreUnknown=true)
+public class HourlyData {
+
+	@JsonProperty("RH2m")
 	private int humidity;
 
+	@JsonProperty("APCPsfc")
 	private double precipitation;
 	
 	public int getHumidity() {
@@ -21,6 +27,5 @@ public class HourlyDataDto {
 	public void setPrecipitation(double precipitation) {
 		this.precipitation = precipitation;
 	}
-	
-	
 }
+

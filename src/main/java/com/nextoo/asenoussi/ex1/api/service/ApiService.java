@@ -1,7 +1,7 @@
 package com.nextoo.asenoussi.ex1.api.service;
 
-import com.nextoo.asenoussi.ex1.dto.ResponseApiDto;
+import com.nextoo.asenoussi.ex1.api.service.entity.ResponseApi;
 
 public interface ApiService {
-	public ResponseApiDto getDataFromCityName(String cityName);
+	public ResponseApi getDataFromCityName(String cityName);
 }

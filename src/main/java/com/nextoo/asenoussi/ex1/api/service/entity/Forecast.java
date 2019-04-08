@@ -1,20 +1,29 @@
-package com.nextoo.asenoussi.ex1.dto;
+package com.nextoo.asenoussi.ex1.api.service.entity;
 
 import java.util.Map;
 
-public class ForecastDto {
-	
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
+public class Forecast{
+	@JsonProperty("date")
 	String date;
 	
+	@JsonProperty("tmin")
 	double tempMin;
 	
+	@JsonProperty("tmax")
 	double tempMax;
 	
+	@JsonProperty("condition")
 	String condition;
-
-	Map<String, HourlyDataDto> hourlyData;
 	
+	@JsonProperty("day_long")
 	String jourSemaine;
+	
+	@JsonProperty("hourly_data")
+	Map<String, HourlyData> hourlyData;
 
 	public String getDate() {
 		return date;
@@ -52,14 +61,14 @@ public class ForecastDto {
 		return (tempMax + tempMin) / 2; 
 	}
 
-	public Map<String, HourlyDataDto> getHourlyData() {
+	public Map<String, HourlyData> getHourlyData() {
 		return hourlyData;
 	}
 
-	public void setHourlyData(Map<String, HourlyDataDto> hourlyData) {
+	public void setHourlyData(Map<String, HourlyData> hourlyData) {
 		this.hourlyData = hourlyData;
 	}
-	
+
 	public String getJourSemaine() {
 		return jourSemaine;
 	}
@@ -67,6 +76,8 @@ public class ForecastDto {
 	public void setJourSemaine(String jourSemaine) {
 		this.jourSemaine = jourSemaine;
 	}
+	
+	
 	
 	
 	
