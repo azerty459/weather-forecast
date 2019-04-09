@@ -53,6 +53,9 @@ public class PrevisionJourDTO {
     @JsonProperty("icon")
     private String icon;
 
+    @JsonProperty("icon_big")
+    private String icon_big;
+
     public PrevisionJourDTO() {
 
     }
@@ -161,5 +164,13 @@ public class PrevisionJourDTO {
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    public void setIcon_big(String icon_big) {
+        this.icon_big = icon_big;
+    }
+
+    public String getIcon_big() {
+        return icon_big;
     }
 }

@@ -44,6 +44,8 @@ public class PrevisionJour {
 	private double temperatureMax;
 
 	private String icon;
+
+	private String icon_big;
 	
 	public PrevisionJour() {
 		
@@ -155,5 +157,13 @@ public class PrevisionJour {
 
 	public void setIcon(String icon) {
 		this.icon = icon;
+	}
+
+	public String getIcon_big() {
+		return icon_big;
+	}
+
+	public void setIcon_big(String icon_big) {
+		this.icon_big = icon_big;
 	}
 }

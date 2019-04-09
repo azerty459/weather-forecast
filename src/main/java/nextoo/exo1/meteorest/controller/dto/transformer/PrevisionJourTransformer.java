@@ -20,6 +20,7 @@ public class PrevisionJourTransformer {
         }
         pjdto.setParHeure(previsions_par_heure);
         pjdto.setIcon(pj.getIcon());
+        pjdto.setIcon_big(pj.getIcon_big());
         pjdto.setTemperature(pj.getTemperature());
         pjdto.setTemperatureMax(pj.getTemperatureMax());
         pjdto.setTemperatureMin(pj.getTemperatureMin());
@@ -37,6 +38,7 @@ public class PrevisionJourTransformer {
         }
         pj.setParHeure(previsions_par_heure);
         pj.setIcon(pjdto.getIcon());
+        pj.setIcon(pjdto.getIcon_big());
         pj.setTemperature(pjdto.getTemperature());
         pj.setTemperatureMax(pjdto.getTemperatureMax());
         pj.setTemperatureMin(pjdto.getTemperatureMin());
