@@ -2,9 +2,9 @@ package com.nextoo.asenoussi.ex1.dto;
 
 public class HumidityResponseDto {
 	
-	int currentHumidity;
+	private int currentHumidity;
 
-	double weekAvgHumidity;
+	private double weekAvgHumidity;
 
 	public int getCurrentHumidity() {
 		return currentHumidity;

@@ -4,19 +4,21 @@ import java.util.Map;
 
 public class ForecastDto {
 	
-	String date;
+	private String date;
 	
-	double tempMin;
+	private double tempMin;
 	
-	double tempMax;
+	private double tempMax;
 	
-	String condition;
+	private String condition;
 
-	Map<String, HourlyDataDto> hourlyData;
+	private Map<String, HourlyDataDto> hourlyData;
 	
-	String jourSemaine;
+	private String jourSemaine;
 	
-	double avgTemp;
+	private double avgTemp;
+	
+	private String imageUrl;
 
 	public String getDate() {
 		return date;
@@ -74,6 +76,12 @@ public class ForecastDto {
 		this.avgTemp = avgTemp;
 	}
 	
-	
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
 	
 }

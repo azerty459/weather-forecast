@@ -1,9 +1,9 @@
 package com.nextoo.asenoussi.ex1.api.service.entity;
 
-import java.util.Collection;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.Collection;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class ResponseApi {

@@ -6,11 +6,11 @@ import java.util.Collection;
 
 public class ResponseApiDto {
 
-	CityInfoDto cityInfo;
+	private CityInfoDto cityInfo;
 	
-	Collection<ForecastDto> forecasts = new ArrayList<>();
+	private Collection<ForecastDto> forecasts = new ArrayList<>();
 	
-	CurrentConditionDto currentCondition;
+	private CurrentConditionDto currentCondition;
 
 	public CityInfoDto getCityInfo() {
 		return cityInfo;
@@ -24,10 +24,7 @@ public class ResponseApiDto {
 		this.forecasts = forecasts;
 	}
 	
-	public Collection<ForecastDto> getForecasts(){
-		
-		return forecasts;
-	}
+	public Collection<ForecastDto> getForecasts(){return forecasts;}
 
 	public CurrentConditionDto getCurrentCondition() {
 		return currentCondition;
@@ -36,8 +33,6 @@ public class ResponseApiDto {
 	public void setCurrentCondition(CurrentConditionDto currentCondition) {
 		this.currentCondition = currentCondition;
 	}
-	
-	
-	
-	
+
 }
+

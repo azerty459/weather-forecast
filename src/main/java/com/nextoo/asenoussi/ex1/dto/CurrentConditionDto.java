@@ -1,14 +1,17 @@
+
 package com.nextoo.asenoussi.ex1.dto;
 
 public class CurrentConditionDto {
 	
-	int humidity;
+	private int humidity;
 	
-	String hour;
+	private String hour;
 	
-	String condition;
+	private String condition;
 	
-	int temperature;
+	private int temperature;
+	
+	private String imageUrl;
 
 	public int getHumidity() {
 		return humidity;
@@ -42,5 +45,12 @@ public class CurrentConditionDto {
 		this.temperature = temperature;
 	}
 	
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
 	
 }

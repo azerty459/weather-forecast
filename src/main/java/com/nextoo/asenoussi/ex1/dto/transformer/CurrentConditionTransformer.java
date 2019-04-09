@@ -14,6 +14,7 @@ public class CurrentConditionTransformer {
 			current.setCondition(currentDto.getCondition());
 			current.setHour(currentDto.getHour());
 			current.setTemperature(currentDto.getTemperature());
+			current.setImageUrl(currentDto.getImageUrl());
 			
 			return current;
 		}
@@ -28,6 +29,7 @@ public class CurrentConditionTransformer {
 			currentDto.setCondition(current.getCondition());
 			currentDto.setHour(current.getHour());
 			currentDto.setTemperature(current.getTemperature());
+			currentDto.setImageUrl(current.getImageUrl());
 			
 			return currentDto;
 		}

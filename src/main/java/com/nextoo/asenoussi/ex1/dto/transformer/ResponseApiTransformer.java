@@ -1,11 +1,11 @@
 package com.nextoo.asenoussi.ex1.dto.transformer;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.nextoo.asenoussi.ex1.api.service.entity.ResponseApi;
 import com.nextoo.asenoussi.ex1.dto.ForecastDto;
 import com.nextoo.asenoussi.ex1.dto.ResponseApiDto;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ResponseApiTransformer {
 	private ResponseApiTransformer() {}

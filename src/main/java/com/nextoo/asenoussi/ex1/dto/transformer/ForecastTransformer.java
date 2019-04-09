@@ -1,13 +1,13 @@
 package com.nextoo.asenoussi.ex1.dto.transformer;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import com.nextoo.asenoussi.ex1.api.service.entity.Forecast;
 import com.nextoo.asenoussi.ex1.api.service.entity.HourlyData;
 import com.nextoo.asenoussi.ex1.dto.ForecastDto;
 import com.nextoo.asenoussi.ex1.dto.HourlyDataDto;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class ForecastTransformer {
 	private ForecastTransformer() {}
@@ -27,6 +27,8 @@ public class ForecastTransformer {
 			forecastDto.setTempMin(forecast.getTempMin());
 			forecastDto.setJourSemaine(forecast.getJourSemaine());
 			forecastDto.setAvgTemp((forecast.getTempMax() + forecast.getTempMin())/2);
+			forecastDto.setImageUrl(forecast.getImageUrl());
+			
 			return forecastDto;
 		}
 		return null;
@@ -46,6 +48,7 @@ public class ForecastTransformer {
 			forecast.setTempMax(forecastDto.getTempMax());
 			forecast.setTempMin(forecastDto.getTempMin());
 			forecast.setJourSemaine(forecastDto.getJourSemaine());
+			forecast.setImageUrl(forecastDto.getImageUrl());
 			
 			return forecast;
 		}

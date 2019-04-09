@@ -15,6 +15,10 @@ public class CurrentCondition {
 	
 	@JsonProperty("tmp")
 	private int temperature;
+	
+
+	@JsonProperty("icon")
+	private String imageUrl;
 
 	public int getHumidity() {return humidity;}
 
@@ -31,6 +35,14 @@ public class CurrentCondition {
 	public int getTemperature() {return temperature;}
 
 	public void setTemperature(int temperature) {this.temperature = temperature;}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
 	
 	
 	

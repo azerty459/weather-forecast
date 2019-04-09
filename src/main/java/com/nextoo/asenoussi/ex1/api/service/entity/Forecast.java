@@ -1,9 +1,9 @@
 package com.nextoo.asenoussi.ex1.api.service.entity;
 
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Forecast{
@@ -24,6 +24,9 @@ public class Forecast{
 	
 	@JsonProperty("hourly_data")
 	private Map<String, HourlyData> hourlyData;
+	
+	@JsonProperty("icon")
+	private String imageUrl;
 
 	public String getDate() {return date;}
 
@@ -48,6 +51,14 @@ public class Forecast{
 	public String getJourSemaine() {return jourSemaine;}
 
 	public void setJourSemaine(String jourSemaine) {this.jourSemaine = jourSemaine;}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
 	
 	
 	
