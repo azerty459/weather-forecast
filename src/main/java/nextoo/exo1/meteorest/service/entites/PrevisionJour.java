@@ -42,6 +42,8 @@ public class PrevisionJour {
 	 * Represente la temperature maximale pour la date renseingnee.
 	 */
 	private double temperatureMax;
+
+	private String icon;
 	
 	public PrevisionJour() {
 		
@@ -65,6 +67,8 @@ public class PrevisionJour {
 	 * @return the temperatureActuelle
 	 */
 	public double getTemperature() {
+		if(this.temperature == 0)
+			this.temperature = (this.temperatureMin+this.temperatureMax)/2;
 		return temperature;
 	}
 
@@ -144,5 +148,12 @@ public class PrevisionJour {
 	public void setParHeure(Map<String, PrevisionHeure> parHeure) {
 		this.parHeure = parHeure;
 	}
-	
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
 }

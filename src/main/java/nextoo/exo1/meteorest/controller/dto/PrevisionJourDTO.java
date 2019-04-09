@@ -50,6 +50,9 @@ public class PrevisionJourDTO {
     @JsonProperty("tmax")
     private double temperatureMax;
 
+    @JsonProperty("icon")
+    private String icon;
+
     public PrevisionJourDTO() {
 
     }
@@ -152,4 +155,11 @@ public class PrevisionJourDTO {
         this.parHeure = parHeure;
     }
 
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
 }

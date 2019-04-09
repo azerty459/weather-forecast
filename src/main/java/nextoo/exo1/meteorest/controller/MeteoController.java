@@ -1,5 +1,7 @@
 package nextoo.exo1.meteorest.controller;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 import nextoo.exo1.meteorest.controller.dto.PrevisionJourDTO;
@@ -33,7 +35,7 @@ public class MeteoController {
 	}
 
 	@RequestMapping("/jourPluie")
-	public Stream<PrevisionJourDTO> joursDePluie(@PathVariable String ville) {
+	public List<PrevisionJourDTO> joursDePluie(@PathVariable String ville) {
 		return ps.jourDePluie(ville);
 	}
 

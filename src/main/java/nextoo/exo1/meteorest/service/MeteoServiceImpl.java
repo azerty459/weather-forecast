@@ -1,10 +1,8 @@
 package nextoo.exo1.meteorest.service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Stream;
+import java.lang.reflect.Array;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import nextoo.exo1.meteorest.controller.dto.PrevisionHeureDTO;
 import nextoo.exo1.meteorest.controller.dto.PrevisionJourDTO;
@@ -39,11 +37,11 @@ public class MeteoServiceImpl implements IMeteoService {
 	}
 
 	@Override
-	public Stream<PrevisionJourDTO> jourDePluie(String ville) {
+	public List<PrevisionJourDTO> jourDePluie(String ville) {
 		PrevisionSemaineDTO e = appelApiMeteo(ville);
 		ArrayList<PrevisionJourDTO> previsions = e.getPrevisions();
 		return previsions.stream().filter(
-				p -> p.getCondition().contains("pluie"));
+				p -> p.getCondition().contains("pluie")).collect(Collectors.toList());
 	}
 
 	@Override

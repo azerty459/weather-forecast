@@ -1,7 +1,7 @@
 package nextoo.exo1.meteorest.service;
 
+import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import nextoo.exo1.meteorest.controller.dto.PrevisionJourDTO;
 import nextoo.exo1.meteorest.controller.dto.PrevisionSemaineDTO;
@@ -29,7 +29,7 @@ public interface IMeteoService {
 	 * @param ville type String, represente le nom de la ville
 	 * @return La liste des jours de pluie
 	 */
-	Stream<PrevisionJourDTO> jourDePluie(String ville);
+	List<PrevisionJourDTO> jourDePluie(String ville);
 	
 	/**
 	 * Donne l'humidite moyenne de la semaine pour une ville donnee
