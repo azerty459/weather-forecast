@@ -12,7 +12,11 @@ public class WeatherApiService {
     private final RestTemplate rest = new RestTemplate();
     
     public WeatherDto getInformations(String city) {
-        return (WeatherDto) this.rest.getForObject(API_URL + city, WeatherDto.class);
+        WeatherDto weather = (WeatherDto) this.rest.getForObject(API_URL + city, WeatherDto.class);
+        if(weather.getCity() == null) {
+            throw new IllegalArgumentException("Ville introuvable");
+        }
+        return weather;
     }
     
 }
