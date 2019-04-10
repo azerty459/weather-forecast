@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>nxt.weather</groupId>
-	<artifactId>exo1</artifactId>
+	<artifactId>weather</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>exo1</name>
+	<name>Weather</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
