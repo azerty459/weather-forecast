@@ -6,10 +6,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class HourlyDataDto {
     
+    @JsonProperty("RH2m")
     private int humidity;
+    
+    @JsonProperty("CONDITION_KEY")
     private String condition;
     
-    @JsonProperty("RH2m")
+    @JsonProperty("APCPsfc")
+    private double precipitation;
+    
+    
     public void setHumidity(int humidity) {
         this.humidity = humidity;
     }
@@ -18,13 +24,20 @@ public class HourlyDataDto {
         return humidity;
     }
     
-    @JsonProperty("CONDITION_KEY")
     public void setCondition(String condition) {
         this.condition = condition;
     }
     
     public String getCondition() {
         return condition;
+    }
+
+    public double getPrecipitation() {
+        return precipitation;
+    }
+
+    public void setPrecipitation(int precipitation) {
+        this.precipitation = precipitation;
     }
     
 }

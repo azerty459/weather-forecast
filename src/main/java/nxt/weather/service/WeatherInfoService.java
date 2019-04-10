@@ -67,7 +67,7 @@ public class WeatherInfoService {
         List<ForecastDto> days = new ArrayList<>();
         
         for (ForecastDayDto fd : weather.getForecastDays()) {
-            if (fd.getHourly().entrySet().stream().anyMatch(h -> h.getValue().getCondition().contains("pluie"))) {
+            if (fd.getHourly().entrySet().stream().anyMatch(h -> h.getValue().getPrecipitation() > 0)) {
                 days.add(new ForecastDto(
                         fd.getDate(),
                         fd.getDay(),
