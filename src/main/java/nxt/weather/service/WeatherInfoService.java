@@ -10,6 +10,7 @@ import java.util.stream.DoubleStream;
 import nxt.weather.controller.dto.ForecastDto;
 import nxt.weather.service.api.dto.ForecastDayDto;
 import nxt.weather.controller.dto.HumidityDto;
+import nxt.weather.exception.WeatherCityNotFoundException;
 import nxt.weather.service.api.dto.HourlyDataDto;
 import nxt.weather.service.api.dto.WeatherDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,12 @@ public class WeatherInfoService {
     private WeatherApiService api;
 
     public List<ForecastDto> weather(String city) {
-        WeatherDto weather = api.getInformations(city);
+        WeatherDto weather;
+        try {
+            weather = api.getInformations(city);
+        } catch(WeatherCityNotFoundException ex) {
+            return null;
+        }
         List<ForecastDto> days = new ArrayList<>();
 
         weather.getForecastDays().forEach(fd -> {
@@ -43,7 +49,12 @@ public class WeatherInfoService {
     }
 
     public ForecastDto heat(String city) {
-        WeatherDto weather = api.getInformations(city); 
+        WeatherDto weather;
+        try {
+            weather = api.getInformations(city);
+        } catch(WeatherCityNotFoundException ex) {
+            return null;
+        }
         
         ForecastDayDto fd = weather.getForecastDays().stream().max(getComparatorTempMax()).get();
         
@@ -63,7 +74,12 @@ public class WeatherInfoService {
     }
 
     public List<ForecastDto> rain(String city) {
-        WeatherDto weather = api.getInformations(city);
+        WeatherDto weather;
+        try {
+            weather = api.getInformations(city);
+        } catch(WeatherCityNotFoundException ex) {
+            return null;
+        }
         List<ForecastDto> days = new ArrayList<>();
         
         for (ForecastDayDto fd : weather.getForecastDays()) {
@@ -81,7 +97,12 @@ public class WeatherInfoService {
     }
 
     public HumidityDto humidity(String city) {
-        WeatherDto weather = api.getInformations(city);
+        WeatherDto weather;
+        try {
+            weather = api.getInformations(city);
+        } catch(WeatherCityNotFoundException ex) {
+            return null;
+        }
         
         int actual = weather.getCurrentCondition().getHumidity();
         double avg = getStreamMapToAverageHumidity(weather).average().getAsDouble();

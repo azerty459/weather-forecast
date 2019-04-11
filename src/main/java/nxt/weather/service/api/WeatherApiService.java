@@ -1,5 +1,6 @@
 package nxt.weather.service.api;
 
+import nxt.weather.exception.WeatherCityNotFoundException;
 import nxt.weather.service.api.dto.WeatherDto;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -11,10 +12,10 @@ public class WeatherApiService {
     
     private final RestTemplate rest = new RestTemplate();
     
-    public WeatherDto getInformations(String city) {
+    public WeatherDto getInformations(String city) throws WeatherCityNotFoundException {
         WeatherDto weather = (WeatherDto) this.rest.getForObject(API_URL + city, WeatherDto.class);
         if(weather.getCity() == null) {
-            throw new IllegalArgumentException("Ville introuvable");
+            throw new WeatherCityNotFoundException("Ville introuvable");
         }
         return weather;
     }
