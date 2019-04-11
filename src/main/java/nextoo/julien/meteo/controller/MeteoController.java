@@ -16,6 +16,7 @@ import nextoo.julien.meteo.controller.dto.HumiditeReponseDto;
 import nextoo.julien.meteo.controller.dto.JourReponseDto;
 import nextoo.julien.meteo.controller.dto.MeteoReponseDto;
 import nextoo.julien.meteo.services.MeteoServiceImpl;
+import nextoo.julien.meteo.services.api.dto.MeteoDto;
 import nextoo.julien.meteo.services.api.exception.HumiditeNonTrouveApiException;
 import nextoo.julien.meteo.services.api.exception.JourNonTrouveApiException;
 

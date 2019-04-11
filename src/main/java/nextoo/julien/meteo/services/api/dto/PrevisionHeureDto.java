@@ -7,6 +7,9 @@ public class PrevisionHeureDto {
 	@JsonProperty("RH2m")
 	private double humidite;
 
+	@JsonProperty("APCPsfc")
+	private double precipitation;
+
 	public PrevisionHeureDto() {
 		super();
 	}
@@ -18,6 +21,13 @@ public class PrevisionHeureDto {
 	public void setHumidite(double humidite) {
 		this.humidite = humidite;
 	}
-	
-	
+
+	public double getPrecipitation() {
+		return precipitation;
+	}
+
+	public void setPrecipitation(double precipitation) {
+		this.precipitation = precipitation;
+	}
+
 }
