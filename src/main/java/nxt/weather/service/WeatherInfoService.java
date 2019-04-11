@@ -82,16 +82,14 @@ public class WeatherInfoService {
         }
         List<ForecastDto> days = new ArrayList<>();
         
-        for (ForecastDayDto fd : weather.getForecastDays()) {
-            if (fd.getHourly().entrySet().stream().anyMatch(h -> h.getValue().getPrecipitation() > 0)) {
-                days.add(new ForecastDto(
-                        fd.getDate(),
-                        fd.getDay(),
-                        fd.getCondition(),
-                        fd.getTempMin(),
-                        fd.getTempMax()));
-            }
-        }
+        weather.getForecastDays().stream().filter((fd) -> (fd.getHourly().entrySet().stream().anyMatch(h -> h.getValue().getPrecipitation() > 0))).forEachOrdered((fd) -> {
+            days.add(new ForecastDto(
+                    fd.getDate(),
+                    fd.getDay(),
+                    fd.getCondition(),
+                    fd.getTempMin(),
+                    fd.getTempMax()));
+        });
 
         return days;
     }
