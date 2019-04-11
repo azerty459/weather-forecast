@@ -3,7 +3,6 @@ package nextoo.julien.meteo.services;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import nextoo.julien.meteo.controller.dto.JourReponseDto;
 import nextoo.julien.meteo.controller.dto.MeteoReponseDto;
 import nextoo.julien.meteo.services.api.MeteoApiService;
 import nextoo.julien.meteo.services.api.dto.MeteoDto;
-import nextoo.julien.meteo.services.api.dto.PrevisionDto;
 import nextoo.julien.meteo.services.api.dto.PrevisionHeureDto;
 import nextoo.julien.meteo.services.api.exception.HumiditeNonTrouveApiException;
 import nextoo.julien.meteo.services.api.exception.JourNonTrouveApiException;
@@ -51,7 +49,7 @@ public class MeteoServiceImpl implements MeteoService {
 					.stream().filter(p -> p.getPrevisionsParHeure().values()
 							.stream()
 							.mapToDouble(PrevisionHeureDto::getPrecipitation)
-							.sum() > 0
+							.sum() > 0.1
 							).map(jourPluie -> jourPluie.convertToJourReponseDto())
 					.collect(Collectors.toList());
 		
