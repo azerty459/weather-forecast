@@ -7,6 +7,7 @@ import com.nextoo.asenoussi.ex1.dto.HumidityResponseDto;
 import com.nextoo.asenoussi.ex1.dto.ResponseApiDto;
 import com.nextoo.asenoussi.ex1.dto.transformer.ResponseApiTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
@@ -16,6 +17,14 @@ import java.util.Comparator;
 public class WeatherServiceImpl implements WeatherService{
 	@Autowired
 	ApiService apiService;
+
+	@Autowired
+	private DecimalFormat df;
+
+	@Bean
+	public DecimalFormat createDecimalFormat(){
+		return new DecimalFormat(".##");
+	}
 	
 	@Override
 	public ForecastDto getMostHotDayOfWeek(String cityName) {
@@ -36,7 +45,6 @@ public class WeatherServiceImpl implements WeatherService{
 							forecast -> forecast.getHourlyData().values().stream().anyMatch(hourly -> (hourly.getPrecipitation() > 0))
 							).toArray(ForecastDto[]::new);
 		}
-		
 		return null;
 	}
 	
@@ -53,7 +61,6 @@ public class WeatherServiceImpl implements WeatherService{
 					).average().orElse(0d) // avg humididty for all forecast(day of week)
 					
 			).average().getAsDouble(); // avg humidity for all day in week
-			DecimalFormat df = new DecimalFormat(".##");
 			humidityAvg = Double.parseDouble(df.format(humidityAvg).replaceAll(",", "."));
 			humidityResponse.setWeekAvgHumidity(humidityAvg);
 			return humidityResponse;

@@ -15,26 +15,26 @@ import javax.validation.constraints.NotNull;
 @CrossOrigin("*")
 public class WeatherController {
 
-	@Autowired
-	private WeatherService weatherService;
-	
-	@GetMapping("/city/{cityName}")
-	public ResponseApiDto getAll(@PathVariable("cityName") @NotNull @NotEmpty String cityName) {
-		return weatherService.getAllDataFromCityName(cityName);
-	}
-	
-	@GetMapping("city/{cityName}/forecasts/mosthot")
-	public ForecastDto mostHotDayOfWeek(@PathVariable("cityName") @NotNull @NotEmpty String cityName) {
-		return weatherService.getMostHotDayOfWeek(cityName);
-	}
-	
-	@GetMapping("city/{cityName}/forecasts/rain")
-	public ForecastDto[] rainDays(@PathVariable("cityName") @NotNull @NotEmpty String cityName) {
-		return weatherService.getDayWithRain(cityName);
-	}
-	
-	@GetMapping("city/{cityName}/humidity")
-	public HumidityResponseDto humidity(@PathVariable("cityName") @NotNull @NotEmpty String cityName) {
-		return weatherService.getHumidityData(cityName);
-	}
+    @Autowired
+    private WeatherService weatherService;
+
+    @GetMapping("/city/{cityName}")
+    public ResponseApiDto getAll(@PathVariable("cityName") @NotNull @NotEmpty String cityName) {
+        return weatherService.getAllDataFromCityName(cityName);
+    }
+
+    @GetMapping("city/{cityName}/forecasts/mosthot")
+    public ForecastDto mostHotDayOfWeek(@PathVariable("cityName") @NotNull @NotEmpty String cityName) {
+        return weatherService.getMostHotDayOfWeek(cityName);
+    }
+
+    @GetMapping("city/{cityName}/forecasts/rain")
+    public ForecastDto[] rainDays(@PathVariable("cityName") @NotNull @NotEmpty String cityName) {
+        return weatherService.getDayWithRain(cityName);
+    }
+
+    @GetMapping("city/{cityName}/humidity")
+    public HumidityResponseDto humidity(@PathVariable("cityName") @NotNull @NotEmpty String cityName) {
+        return weatherService.getHumidityData(cityName);
+    }
 }

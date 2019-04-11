@@ -3,22 +3,24 @@ package com.nextoo.asenoussi.ex1.api.service.entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CurrentCondition {
-	
+
 	@JsonProperty("humidity")
 	private int humidity;
-	
+
 	@JsonProperty("hour")
 	private String hour;
-	
+
 	@JsonProperty("condition")
 	private String condition;
-	
+
 	@JsonProperty("tmp")
 	private int temperature;
-	
 
-	@JsonProperty("icon")
+	@JsonProperty("icon_big")
 	private String imageUrl;
+
+	@JsonProperty("date")
+	private String date;
 
 	public int getHumidity() {return humidity;}
 
@@ -43,8 +45,14 @@ public class CurrentCondition {
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
-	
-	
-	
+
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
 }
 

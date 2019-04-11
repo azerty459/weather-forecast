@@ -1,6 +1,8 @@
 
 package com.nextoo.asenoussi.ex1.dto;
 
+import java.util.Date;
+
 public class CurrentConditionDto {
 	
 	private int humidity;
@@ -12,6 +14,8 @@ public class CurrentConditionDto {
 	private int temperature;
 	
 	private String imageUrl;
+
+	private Date date;
 
 	public int getHumidity() {
 		return humidity;
@@ -52,5 +56,12 @@ public class CurrentConditionDto {
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
-	
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
 }
