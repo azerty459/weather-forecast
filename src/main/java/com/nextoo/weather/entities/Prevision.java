@@ -1,7 +1,6 @@
 package com.nextoo.weather.entities;
 
 import java.util.HashMap;
-import java.util.stream.Stream;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -20,6 +19,9 @@ public class Prevision {
 	
 	@JsonProperty("condition")
 	private String condition;
+	
+	@JsonProperty("icon_big")
+	private String icon;
 	
 	@JsonProperty("hourly_data")
 	HashMap<String, DonneesParHeure> donneesParHeure;

@@ -1,7 +1,5 @@
 package com.nextoo.weather.entities;
 
-import java.util.stream.Stream;
-
 import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class DonneesParHeure {

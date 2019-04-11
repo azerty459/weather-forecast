@@ -1,15 +1,15 @@
 package com.nextoo.weather.services;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.nextoo.weather.entities.HumiditeSemaine;
 import com.nextoo.weather.entities.Meteo;
 import com.nextoo.weather.entities.Prevision;
 import com.nextoo.weather.entities.PrevisionResponseDTO;
@@ -50,22 +50,34 @@ public class MeteoService {
 		List<Prevision> previsionSemaine = previsionDTO.getPrevisionSemaine();
 		
 		List<Prevision> joursPluvieux =  previsionSemaine.stream().filter(prev -> 
-				(prev.getCondition().toLowerCase().contains("pluie")))				
+				getJourAvecConditionPluie(prev))				
 				.collect(Collectors.toList());
 		return joursPluvieux;
 	}
+
+	private boolean getJourAvecConditionPluie(Prevision prev) {
+		return prev.getCondition().toLowerCase().contains("pluie");
+	}
 	
-	public Stream<Prevision> getJoursPluvieuxPrecipitation(String ville){
+	public List<Prevision> getJoursPluvieuxPrecipitation(String ville){
 		PrevisionResponseDTO previsionDTO = getPrevisionResponseDTOByVille(ville);
 		List<Prevision> previsionSemaine = previsionDTO.getPrevisionSemaine();
 		
-		Stream<Prevision> joursPluvieux = previsionSemaine.stream().filter(
-					prev -> (prev.getDonneesParHeure().values().stream()
-							.mapToDouble
-							(heure -> heure.getPrecipitation()).average().getAsDouble())
+		List<Prevision> joursPluvieux = previsionSemaine.stream()
+				.filter(
+					prev -> getMoyennePrecipitationParJour(prev)
 						>=0.05
-				);		
+				)
+				.collect(Collectors.toList());		
 		return joursPluvieux;
+	}
+
+	private double getMoyennePrecipitationParJour(Prevision prev) {
+		return prev.getDonneesParHeure().values().stream()
+				.mapToDouble
+				(heure -> heure.getPrecipitation())
+				.average()
+				.getAsDouble();
 	}
 
 	
@@ -75,12 +87,42 @@ public class MeteoService {
 		TauxHumidite tauxHumidite = new TauxHumidite();
 		tauxHumidite.setHumiditeActuelle(previsionDTO.getConditionActuel().getHumidite());
 		
-		double moyenneHumiditeSemaine = previsionSemaine.stream().mapToDouble(
-				prev -> prev.getDonneesParHeure().values().stream().mapToDouble(
-						heure -> heure.getHumidite()).average().getAsDouble()				
-				).average().getAsDouble();
+		double moyenneHumiditeSemaine = previsionSemaine.stream()
+				.mapToDouble(
+						this::getHumiditeMoyenneParJour				
+				)
+				.average()
+				.getAsDouble();
 		tauxHumidite.setHumiditeSemaine(moyenneHumiditeSemaine);
 		return tauxHumidite;
 		
+	}
+	
+	public HumiditeSemaine getHumiditeMoyenneJour(String ville) {
+		PrevisionResponseDTO previsionDTO = getPrevisionResponseDTOByVille(ville);
+		List<Prevision> previsionSemaine = previsionDTO.getPrevisionSemaine();
+		HumiditeSemaine humiditeSemaine = new HumiditeSemaine();
+		
+		humiditeSemaine.setHumiditeActuelle(previsionDTO.getConditionActuel().getHumidite());
+		
+		List<Double> moyenneHumiditeSemaine = previsionSemaine.stream()
+				.mapToDouble(
+				this::getHumiditeMoyenneParJour				
+				).collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+//				).boxed()
+//				.collect(Collectors.toList());
+		humiditeSemaine.setHumiditeMoyenneJourSemaine(moyenneHumiditeSemaine);
+		return humiditeSemaine;
+		
+	}
+
+	private double getHumiditeMoyenneParJour(Prevision prev) {
+		return prev.getDonneesParHeure()
+		.values()
+		.stream()
+		.mapToDouble(
+				heure -> heure.getHumidite())
+								.average()
+								.getAsDouble();
 	}
 }

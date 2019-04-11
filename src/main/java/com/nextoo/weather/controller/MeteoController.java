@@ -5,17 +5,20 @@ import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nextoo.weather.entities.HumiditeSemaine;
 import com.nextoo.weather.entities.Meteo;
 import com.nextoo.weather.entities.Prevision;
 import com.nextoo.weather.entities.TauxHumidite;
 import com.nextoo.weather.services.MeteoService;
 
 @RestController
+@CrossOrigin
 public class MeteoController {
 	@Autowired
 	private MeteoService meteoService;
@@ -41,8 +44,8 @@ public class MeteoController {
 	}
 	
 	@RequestMapping(value = "/meteo/{ville}/joursPluvieuxBis", produces = MediaType.APPLICATION_JSON_VALUE,  method = RequestMethod.GET)
-	public Stream<Prevision> findByJoursPluvieuxPrecipitation(@PathVariable("ville") String ville) {
-		Stream<Prevision> joursPluvieux = meteoService.getJoursPluvieuxPrecipitation(ville);
+	public Collection<Prevision> findByJoursPluvieuxPrecipitation(@PathVariable("ville") String ville) {
+		Collection<Prevision> joursPluvieux = meteoService.getJoursPluvieuxPrecipitation(ville);
 		return joursPluvieux;
 	}
 	
@@ -50,6 +53,12 @@ public class MeteoController {
 	public TauxHumidite findByJourTauxHumidite(@PathVariable("ville") String ville) {
 		TauxHumidite tauxHumidite = meteoService.getHumidite(ville);
 		return tauxHumidite;
+	}
+	
+	@RequestMapping(value = "/meteo/{ville}/humiditeBis", produces = MediaType.APPLICATION_JSON_VALUE,  method = RequestMethod.GET)
+	public HumiditeSemaine findByJourTauxHumiditeJourSemaine(@PathVariable("ville") String ville) {
+		HumiditeSemaine humiditeSemaine = meteoService.getHumiditeMoyenneJour(ville);
+		return humiditeSemaine;
 	}
 	
 }
