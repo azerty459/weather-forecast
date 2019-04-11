@@ -25,7 +25,7 @@ public class PrevisionDto {
 	@JsonProperty("condition")
 	private String condition;
 	
-	@JsonProperty("icon")
+	@JsonProperty("icon_big")
 	private String icone;
 	
 //	@JsonProperty("hourly_data")
