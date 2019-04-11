@@ -3,6 +3,7 @@ package nxt.weather.controller;
 import java.util.List;
 import nxt.weather.controller.dto.ForecastDto;
 import nxt.weather.controller.dto.HumidityDto;
+import nxt.weather.controller.dto.ReturnDto;
 import nxt.weather.service.WeatherInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +37,7 @@ public class WeatherController {
      * @return Liste de prévision
      */
     @GetMapping("/ville/{city}")
-    public List<ForecastDto> weather(@PathVariable String city) {
+    public ReturnDto<List<ForecastDto>> weather(@PathVariable String city) {
         return weatherInfoService.weather(city);
     }
 
@@ -46,7 +47,7 @@ public class WeatherController {
      * @return Prévision du jour
      */
     @GetMapping("/ville/{city}/chaleur")
-    public ForecastDto heat(@PathVariable String city) {
+    public ReturnDto<ForecastDto> heat(@PathVariable String city) {
         return weatherInfoService.heat(city);
     }
 
@@ -56,7 +57,7 @@ public class WeatherController {
      * @return Liste de prévision
      */
     @GetMapping("/ville/{city}/pluie")
-    public List<ForecastDto> rain(@PathVariable String city) {
+    public ReturnDto<List<ForecastDto>> rain(@PathVariable String city) {
         return weatherInfoService.rain(city);
     }
 
@@ -66,7 +67,7 @@ public class WeatherController {
      * @return 
      */
     @GetMapping("/ville/{city}/humidite")
-    public HumidityDto humidity(@PathVariable String city) {
+    public ReturnDto<HumidityDto> humidity(@PathVariable String city) {
         return weatherInfoService.humidity(city);
     }
 

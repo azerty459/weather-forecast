@@ -10,6 +10,7 @@ import java.util.stream.DoubleStream;
 import nxt.weather.controller.dto.ForecastDto;
 import nxt.weather.service.api.dto.ForecastDayDto;
 import nxt.weather.controller.dto.HumidityDto;
+import nxt.weather.controller.dto.ReturnDto;
 import nxt.weather.exception.WeatherCityNotFoundException;
 import nxt.weather.service.api.dto.HourlyDataDto;
 import nxt.weather.service.api.dto.WeatherDto;
@@ -27,12 +28,12 @@ public class WeatherInfoService {
     @Autowired
     private WeatherApiService api;
 
-    public List<ForecastDto> weather(String city) {
+    public ReturnDto<List<ForecastDto>> weather(String city) {
         WeatherDto weather;
         try {
             weather = api.getInformations(city);
         } catch(WeatherCityNotFoundException ex) {
-            return null;
+            return new ReturnDto<>(404, ex.getMessage());
         }
         List<ForecastDto> days = new ArrayList<>();
 
@@ -45,27 +46,27 @@ public class WeatherInfoService {
                     fd.getTempMax()));
         });
 
-        return days;
+        return new ReturnDto<>(days);
     }
 
-    public ForecastDto heat(String city) {
+    public ReturnDto<ForecastDto> heat(String city) {
         WeatherDto weather;
         try {
             weather = api.getInformations(city);
         } catch(WeatherCityNotFoundException ex) {
-            return null;
+            return new ReturnDto<>(404, ex.getMessage());
         }
         
         ForecastDayDto fd = weather.getForecastDays().stream().max(getComparatorTempMax()).get();
         
-        ForecastDto d = new ForecastDto(
+        ForecastDto forecast = new ForecastDto(
                 fd.getDate(),
                 fd.getDay(),
                 fd.getCondition(),
                 fd.getTempMin(),
                 fd.getTempMax());
 
-        return d;
+        return new ReturnDto<>(forecast);
     }
 
     private Comparator<ForecastDayDto> getComparatorTempMax() {
@@ -73,12 +74,12 @@ public class WeatherInfoService {
         return comp;
     }
 
-    public List<ForecastDto> rain(String city) {
+    public ReturnDto<List<ForecastDto>> rain(String city) {
         WeatherDto weather;
         try {
             weather = api.getInformations(city);
         } catch(WeatherCityNotFoundException ex) {
-            return null;
+            return new ReturnDto<>(404, ex.getMessage());
         }
         List<ForecastDto> days = new ArrayList<>();
         
@@ -91,22 +92,22 @@ public class WeatherInfoService {
                     fd.getTempMax()));
         });
 
-        return days;
+        return new ReturnDto<>(days);
     }
 
-    public HumidityDto humidity(String city) {
+    public ReturnDto<HumidityDto> humidity(String city) {
         WeatherDto weather;
         try {
             weather = api.getInformations(city);
         } catch(WeatherCityNotFoundException ex) {
-            return null;
+            return new ReturnDto<>(404, ex.getMessage());
         }
         
         int actual = weather.getCurrentCondition().getHumidity();
         double avg = getStreamMapToAverageHumidity(weather).average().getAsDouble();
         boolean dry = weather.getForecastDays(0).getHourly().entrySet().stream().mapToDouble(this::getHumidityFromMap).average().getAsDouble() <= getStreamMapToAverageHumidity(weather).min().getAsDouble();
 
-        return new HumidityDto(actual, avg, dry);
+        return new ReturnDto<>(new HumidityDto(actual, avg, dry));
     }
 
     private DoubleStream getStreamMapToAverageHumidity(WeatherDto weather) {

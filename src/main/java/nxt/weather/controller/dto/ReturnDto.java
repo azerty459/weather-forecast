@@ -4,16 +4,20 @@ public class ReturnDto<E> {
     
     private int code;
     private String message;
-    private E result;
+    private E resultat;
     
     public ReturnDto(E result) {
         this(200, "Success", result);
     }
     
+    public ReturnDto(int code, String message) {
+        this(code, message, null);
+    }
+    
     public ReturnDto(int code, String message, E result) {
         this.code = code;
         this.message = message;
-        this.result = result;
+        this.resultat = result;
     }
 
     public int getCode() {
@@ -32,12 +36,12 @@ public class ReturnDto<E> {
         this.message = message;
     }
 
-    public E getResult() {
-        return result;
+    public E getResultat() {
+        return resultat;
     }
 
-    public void setResult(E result) {
-        this.result = result;
+    public void setResultat(E result) {
+        this.resultat = result;
     }
     
 }
