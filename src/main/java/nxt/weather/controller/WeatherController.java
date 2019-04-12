@@ -40,6 +40,7 @@ public class WeatherController {
      */
     @GetMapping("/ville/{city}")
     public ReturnDto<List<ForecastDto>> weather(@PathVariable String city) {
+        city = city.replaceAll("[ |']", "-");
         return weatherInfoService.weather(city);
     }
 
@@ -50,6 +51,7 @@ public class WeatherController {
      */
     @GetMapping("/ville/{city}/chaleur")
     public ReturnDto<ForecastDto> heat(@PathVariable String city) {
+        city = city.replaceAll("[ |']", "-");
         return weatherInfoService.heat(city);
     }
 
@@ -60,6 +62,7 @@ public class WeatherController {
      */
     @GetMapping("/ville/{city}/pluie")
     public ReturnDto<List<ForecastDto>> rain(@PathVariable String city) {
+        city = city.replaceAll("[ |']", "-");
         return weatherInfoService.rain(city);
     }
 
@@ -70,6 +73,7 @@ public class WeatherController {
      */
     @GetMapping("/ville/{city}/humidite")
     public ReturnDto<HumidityDto> humidity(@PathVariable String city) {
+        city = city.replaceAll("[ |']", "-");
         return weatherInfoService.humidity(city);
     }
 
