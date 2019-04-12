@@ -1,5 +1,7 @@
 package nextoo.exo1.meteorest.service.entites;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,37 +9,37 @@ import java.util.Map;
  * @author liam
  */
 public class PrevisionJour {
-	
+
 	/**
 	 * Represente l'evolution de l'humidite par heure
 	 */
 	Map<String, PrevisionHeure> parHeure = new HashMap<String, PrevisionHeure>();
-	
+
 	/**
 	 * Represente la date du bulletin meteo.
 	 */
 	private String dateDuBulletin;
-	
+
 	/**
 	 * Exprime les conditions, si il pleut, si il y a du soleil...
 	 */
 	private String condition;
-	
+
 	/**
 	 * Represente soit la temperature actuelle pour la meteo du jour, soit la meteo prevue pour une prevision.
 	 */
 	private double temperature;
-	
+
 	/**
 	 * Represente le niveau d'humidite
 	 */
 	private int humidite;
-	
+
 	/**
 	 * Represente la temperature minimale pour la date renseignee.
 	 */
 	private double temperatureMin;
-	
+
 	/**
 	 * Represente la temperature maximale pour la date renseingnee.
 	 */
@@ -46,9 +48,9 @@ public class PrevisionJour {
 	private String icon;
 
 	private String icon_big;
-	
+
 	public PrevisionJour() {
-		
+
 	}
 
 	/**
@@ -69,6 +71,7 @@ public class PrevisionJour {
 	 * @return the temperatureActuelle
 	 */
 	public double getTemperature() {
+        System.out.println(temperature);
 		if(this.temperature == 0)
 			this.temperature = (this.temperatureMin+this.temperatureMax)/2;
 		return temperature;

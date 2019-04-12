@@ -78,6 +78,9 @@ public class PrevisionJourDTO {
      * @return the temperatureActuelle
      */
     public double getTemperature() {
+        System.out.println(temperature);
+        if(this.temperature == 0)
+            this.temperature = (this.temperatureMin+this.temperatureMax)/2;
         return temperature;
     }
 
