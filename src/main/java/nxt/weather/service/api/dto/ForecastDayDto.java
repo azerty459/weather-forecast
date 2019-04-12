@@ -14,6 +14,7 @@ public class ForecastDayDto {
     private int tempMax;
     private String condition;
     private String conditionKey;
+    private String icon;
     private Map<String, HourlyDataDto> hourly = new HashMap<>();
 
     public String getDate() {
@@ -66,6 +67,15 @@ public class ForecastDayDto {
     @JsonProperty("condition_key")
     public void setConditionKey(String condition_key) {
         this.conditionKey = condition_key;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    @JsonProperty("icon_big")
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public Map<String, HourlyDataDto> getHourly() {

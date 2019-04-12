@@ -9,13 +9,15 @@ public class ForecastDto {
     private final String condition;
     private final int temperatureMin;
     private final int temperatureMax;
+    private final String icon;
 
-    public ForecastDto(String date, String nom, String condition, int temperature_min, int temperature_max) {
+    public ForecastDto(String date, String nom, String condition, int temperature_min, int temperature_max, String icon) {
         this.date = date;
         this.nom = nom;
         this.condition = condition;
         this.temperatureMin = temperature_min;
         this.temperatureMax = temperature_max;
+        this.icon = icon;
     }
 
     public String getDate() {
@@ -43,6 +45,10 @@ public class ForecastDto {
     @JsonProperty("temparature_max")
     public int getTemperatureMax() {
         return temperatureMax;
+    }
+
+    public String getIcon() {
+        return icon;
     }
     
 }

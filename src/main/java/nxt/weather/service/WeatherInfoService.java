@@ -43,7 +43,8 @@ public class WeatherInfoService {
                     fd.getDay(),
                     fd.getCondition(),
                     fd.getTempMin(),
-                    fd.getTempMax()));
+                    fd.getTempMax(),
+                    fd.getIcon()));
         });
 
         return new ReturnDto<>(days);
@@ -64,7 +65,8 @@ public class WeatherInfoService {
                 fd.getDay(),
                 fd.getCondition(),
                 fd.getTempMin(),
-                fd.getTempMax());
+                fd.getTempMax(),
+                fd.getIcon());
 
         return new ReturnDto<>(forecast);
     }
@@ -89,7 +91,8 @@ public class WeatherInfoService {
                     fd.getDay(),
                     fd.getCondition(),
                     fd.getTempMin(),
-                    fd.getTempMax()));
+                    fd.getTempMax(),
+                    fd.getIcon()));
         });
 
         return new ReturnDto<>(days);
