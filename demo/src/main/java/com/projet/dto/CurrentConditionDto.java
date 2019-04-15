@@ -16,8 +16,16 @@ public class CurrentConditionDto {
 	private int temp;
 	@JsonProperty("condition")
 	private String condition;
+	@JsonProperty("icon_big")
+	private String icon;
 	
 	
+	public String getIcon() {
+		return icon;
+	}
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
 	public int getHumidity() {
 		return humidity;
 	}

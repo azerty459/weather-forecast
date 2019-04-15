@@ -17,9 +17,23 @@ public class DayDto {
 
 	@JsonProperty("condition")
 	private String condition;
-
+	
+	@JsonProperty("tmin")
+	private int tempMin;
+	
 	@JsonProperty("tmax")
 	private int tempMax;
+	
+	@JsonProperty("icon_big")
+	private String icon;
+
+	public int getTempMin() {
+		return tempMin;
+	}
+
+	public void setTempMin(int tempMin) {
+		this.tempMin = tempMin;
+	}
 
 	@JsonProperty("hourly_data")
 	private Map<String, HourlyDataDto> hourlyData = new HashMap<>();
@@ -63,6 +77,14 @@ public class DayDto {
 
 	public void setTempMax(int tempMax) {
 		this.tempMax = tempMax;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 
 
