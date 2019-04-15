@@ -18,10 +18,11 @@ public class TodayDto {
     private double pressure;
     private int humidity;
     private String condition;
+    private String icon;
     @JsonProperty("days")
     private List<ForecastDto> forecast;
 
-    public TodayDto(String name, String country, String sunrise, String sunset, int temperature, int windSpeed, String windDir, double pressure, int humidity, String condition, List<ForecastDto> forecast) {
+    public TodayDto(String name, String country, String sunrise, String sunset, int temperature, int windSpeed, String windDir, double pressure, int humidity, String condition, String icon, List<ForecastDto> forecast) {
         this.name = name;
         this.country = country;
         this.sunrise = sunrise;
@@ -32,6 +33,7 @@ public class TodayDto {
         this.pressure = pressure;
         this.humidity = humidity;
         this.condition = condition;
+        this.icon = icon;
         this.forecast = forecast;
     }
 
@@ -73,6 +75,10 @@ public class TodayDto {
 
     public String getCondition() {
         return condition;
+    }
+
+    public String getIcon() {
+        return icon;
     }
 
     public List<ForecastDto> getForecast() {

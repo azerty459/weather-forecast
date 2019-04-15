@@ -21,6 +21,7 @@ public class ConditionDto {
     private int humidity;
     private String condition;
     private String conditionKey;
+    private String icon;
 
     public String getDate() {
         return date;
@@ -101,5 +102,13 @@ public class ConditionDto {
     public void setConditionLey(String condition_key) {
         this.conditionKey = condition_key;
     }
-    
+
+    public String getIcon() {
+        return icon;
+    }
+
+    @JsonProperty("icon_big")
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
 }

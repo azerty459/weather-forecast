@@ -65,6 +65,7 @@ public class WeatherInfoService {
                 weather.getCurrentCondition().getPressure(),
                 weather.getCurrentCondition().getHumidity(),
                 weather.getCurrentCondition().getCondition(),
+                weather.getCurrentCondition().getIcon(),
                 days
         );
 
