@@ -4,6 +4,7 @@ import java.util.List;
 import nxt.weather.controller.dto.ForecastDto;
 import nxt.weather.controller.dto.HumidityDto;
 import nxt.weather.controller.dto.ReturnDto;
+import nxt.weather.controller.dto.TodayDto;
 import nxt.weather.service.WeatherInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -39,7 +40,7 @@ public class WeatherController {
      * @return Liste de prévision
      */
     @GetMapping("/ville/{city}")
-    public ReturnDto<List<ForecastDto>> weather(@PathVariable String city) {
+    public ReturnDto<TodayDto> weather(@PathVariable String city) {
         city = city.replaceAll("[ |']", "-");
         return weatherInfoService.weather(city);
     }

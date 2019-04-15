@@ -1,16 +1,14 @@
 package nxt.weather.service;
 
-import nxt.weather.controller.dto.HourlyDto;
+import nxt.weather.controller.dto.*;
 import nxt.weather.service.api.WeatherApiService;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.stream.DoubleStream;
-import nxt.weather.controller.dto.ForecastDto;
+
 import nxt.weather.service.api.dto.ForecastDayDto;
-import nxt.weather.controller.dto.HumidityDto;
-import nxt.weather.controller.dto.ReturnDto;
 import nxt.weather.exception.WeatherCityNotFoundException;
 import nxt.weather.service.api.dto.HourlyDataDto;
 import nxt.weather.service.api.dto.WeatherDto;
@@ -28,7 +26,7 @@ public class WeatherInfoService {
     @Autowired
     private WeatherApiService api;
 
-    public ReturnDto<List<ForecastDto>> weather(String city) {
+    public ReturnDto<TodayDto> weather(String city) {
         WeatherDto weather;
         try {
             weather = api.getInformations(city);
@@ -56,8 +54,21 @@ public class WeatherInfoService {
                     hourly));
         });
 
+        TodayDto today = new TodayDto(
+                weather.getCity().getName(),
+                weather.getCity().getCountry(),
+                weather.getCity().getSunrise(),
+                weather.getCity().getSunset(),
+                weather.getCurrentCondition().getTemp(),
+                weather.getCurrentCondition().getWindSpeed(),
+                weather.getCurrentCondition().getWindDir(),
+                weather.getCurrentCondition().getPressure(),
+                weather.getCurrentCondition().getHumidity(),
+                weather.getCurrentCondition().getCondition(),
+                days
+        );
 
-        return new ReturnDto<>(days);
+        return new ReturnDto<>(today);
     }
 
     public ReturnDto<ForecastDto> heat(String city) {
