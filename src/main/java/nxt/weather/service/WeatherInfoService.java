@@ -1,11 +1,11 @@
 package nxt.weather.service;
 
+import nxt.weather.controller.dto.HourlyDto;
 import nxt.weather.service.api.WeatherApiService;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.function.ToDoubleFunction;
 import java.util.stream.DoubleStream;
 import nxt.weather.controller.dto.ForecastDto;
 import nxt.weather.service.api.dto.ForecastDayDto;
@@ -38,14 +38,24 @@ public class WeatherInfoService {
         List<ForecastDto> days = new ArrayList<>();
 
         weather.getForecastDays().forEach(fd -> {
+            //Création liste données horaire
+            HourlyDto[] hourly = new HourlyDto[fd.getHourly().size()];
+            fd.getHourly().forEach((key, value) -> {
+                hourly[Integer.parseInt(key.split("H")[0])] = new HourlyDto(
+                        value.getHumidity(),
+                        value.getPrecipitation(),
+                        value.getTemperature());
+            });
             days.add(new ForecastDto(
                     fd.getDate(),
                     fd.getDay(),
                     fd.getCondition(),
                     fd.getTempMin(),
                     fd.getTempMax(),
-                    fd.getIcon()));
+                    fd.getIcon(),
+                    hourly));
         });
+
 
         return new ReturnDto<>(days);
     }
@@ -72,8 +82,7 @@ public class WeatherInfoService {
     }
 
     private Comparator<ForecastDayDto> getComparatorTempMax() {
-        Comparator<ForecastDayDto> comp = Comparator.comparing(ForecastDayDto::getTempMax);
-        return comp;
+        return Comparator.comparing(ForecastDayDto::getTempMax);
     }
 
     public ReturnDto<List<ForecastDto>> rain(String city) {
