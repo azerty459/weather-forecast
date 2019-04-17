@@ -30,6 +30,9 @@ public class ServiceMeteo {
 	public PrevisionCityDto getPrevisionCity(String city) throws IOException  {
 
 		PrevisionCityDto p = getResponsePrevisionCity(city);
+		if(p.getCurrentCondition() == null)
+			return null;
+		
 		return p;
 	}
 
@@ -41,6 +44,9 @@ public class ServiceMeteo {
 	public HottestDay getHottestDay(String city) {
 
 		PrevisionCityDto p = getResponsePrevisionCity(city);
+		
+		if(p.getCurrentCondition() == null)
+			return null;
 
 		//liste contenant les cinq jours de la semaine
 		List<DayDto> list = p.getListOfDays();
@@ -50,7 +56,8 @@ public class ServiceMeteo {
 
 		//récupération du jour le plus chaud de la semaine avec pour critére de comparaison "comparator"
 		DayDto day = list.stream().max(comparator).get();
-		return new HottestDay(day.getDate(),day.getNameOfDay(),day.getCondition(),day.getTempMax());
+		
+		return new HottestDay(day.getDate(),day.getNameOfDay(),day.getCondition(),day.getTempMax(),day.getTempMin(),day.getIcon());
 
 	}
 
@@ -60,6 +67,9 @@ public class ServiceMeteo {
 	 */
 	public List<DayDto> getRainyDays(String city) {
 		PrevisionCityDto p = getResponsePrevisionCity(city);
+		
+		if(p.getCurrentCondition() == null)
+			return null;
 
 		//liste contenant les cinq jours de la semaine
 		List<DayDto> list = p.getListOfDays();
@@ -76,6 +86,9 @@ public class ServiceMeteo {
 
 	public Humidity getHumidity(String city) {
 		PrevisionCityDto p = getResponsePrevisionCity(city);
+		
+		if(p.getCurrentCondition() == null)
+			return null;
 
 		List<DayDto> listOfDays= p.getListOfDays();
 

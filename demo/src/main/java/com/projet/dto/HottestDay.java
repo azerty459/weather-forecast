@@ -10,12 +10,58 @@ public class HottestDay {
 	
 	private int temperatureMax;
 	
-	public HottestDay(String date, String name, String condition, int tempMax) {
+	private int temperatureMin;
+	
+	private String icon;
+	
+	public HottestDay(String date, String name, String condition, int tempMax, int tempMin, String icon) {
 		
 		this.date = date;
 		this.day = name;
 		this.condition = condition;
 		this.temperatureMax = tempMax;
+		this.temperatureMin = tempMin;
+		this.icon = icon;
+	}
+
+
+	public String getDay() {
+		return day;
+	}
+
+
+	public void setDay(String day) {
+		this.day = day;
+	}
+
+
+	public int getTemperatureMax() {
+		return temperatureMax;
+	}
+
+
+	public void setTemperatureMax(int temperatureMax) {
+		this.temperatureMax = temperatureMax;
+	}
+
+
+	public int getTemperatureMin() {
+		return temperatureMin;
+	}
+
+
+	public void setTemperatureMin(int temperatureMin) {
+		this.temperatureMin = temperatureMin;
+	}
+
+
+	public String getIcon() {
+		return icon;
+	}
+
+
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 
 
