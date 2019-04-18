@@ -46,9 +46,6 @@ public class ServiceMeteo {
 
 		PrevisionCityDto p = getResponsePrevisionCity(city);
 		
-		if(p.getCurrentCondition() == null)
-			return null;
-
 		//liste contenant les cinq jours de la semaine
 		List<DayDto> list = p.getListOfDays();
 
@@ -57,8 +54,10 @@ public class ServiceMeteo {
 
 		//récupération du jour le plus chaud de la semaine avec pour critére de comparaison "comparator"
 		DayDto day = list.stream().max(comparator).get();
+		
 		if(day.getCondition() == null)
 			return null;
+		
 		return new HottestDay(day.getDate(),day.getNameOfDay(),day.getCondition(),day.getTempMax(),day.getTempMin(),day.getIcon());
 
 	}

@@ -10,7 +10,7 @@ public class HottestDay {
 	
 	private int temperatureMax;
 	
-	private int  temperatureMin;
+	private int temperatureMin;
 	
 	private String icon;
 	
@@ -22,8 +22,8 @@ public class HottestDay {
 		this.temperatureMax = tempMax;
 		this.temperatureMin = tempMin;
 		this.icon =icon;
+		this.icon = icon;
 	}
-
 
 	public String getDay() {
 		return day;
