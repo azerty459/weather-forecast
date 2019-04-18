@@ -27,14 +27,6 @@ public class DayDto {
 	@JsonProperty("icon_big")
 	private String icon;
 
-	public int getTempMin() {
-		return tempMin;
-	}
-
-	public void setTempMin(int tempMin) {
-		this.tempMin = tempMin;
-	}
-
 	@JsonProperty("hourly_data")
 	private Map<String, HourlyDataDto> hourlyData = new HashMap<>();
 
@@ -87,6 +79,13 @@ public class DayDto {
 		this.icon = icon;
 	}
 
+	public int getTempMin() {
+		return tempMin;
+	}
+
+	public void setTempMin(int tempMin) {
+		this.tempMin = tempMin;
+	}
 
 
 }

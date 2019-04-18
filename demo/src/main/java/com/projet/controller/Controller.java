@@ -1,6 +1,5 @@
 package com.projet.controller;
 
-import java.io.IOException;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ public class Controller {
 	private ServiceMeteo serviceMeteo;
 	
 	@GetMapping("")
-	public PrevisionCityDto getPrevisionCityDay(@PathVariable @NotNull String city) throws IOException{
+	public PrevisionCityDto getPrevisionCityDay(@PathVariable @NotNull String city){
 		
 		return serviceMeteo.getPrevisionCity(city);	
 	}

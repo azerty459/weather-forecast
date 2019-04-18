@@ -1,6 +1,5 @@
 package com.projet.business;
 
-import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,7 +26,7 @@ public class ServiceMeteo {
 	 * Obtenir les infos du jour et de la semaine via une ville donnée
 	 * @param une ville donnée
 	 */
-	public PrevisionCityDto getPrevisionCity(String city) throws IOException  {
+	public PrevisionCityDto getPrevisionCity(String city){
 
 		PrevisionCityDto p = getResponsePrevisionCity(city);
 		
