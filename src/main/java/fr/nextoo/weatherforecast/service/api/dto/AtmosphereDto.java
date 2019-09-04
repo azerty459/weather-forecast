@@ -1,4 +1,4 @@
-package fr.nextoo.weatherforecast.dto;
+package fr.nextoo.weatherforecast.service.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

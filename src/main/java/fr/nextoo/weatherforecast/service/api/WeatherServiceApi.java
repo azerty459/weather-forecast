@@ -13,8 +13,8 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import fr.nextoo.weatherforecast.dto.ForecastDto;
-import fr.nextoo.weatherforecast.dto.WeatherDto;
+import fr.nextoo.weatherforecast.service.api.dto.ForecastDto;
+import fr.nextoo.weatherforecast.service.api.dto.WeatherDto;
 
 @Service
 public class WeatherServiceApi {

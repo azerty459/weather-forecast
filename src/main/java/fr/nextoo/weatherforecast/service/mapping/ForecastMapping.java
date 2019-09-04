@@ -8,10 +8,10 @@ import fr.nextoo.weatherforecast.bean.CityBean;
 import fr.nextoo.weatherforecast.bean.ForecastBean;
 import fr.nextoo.weatherforecast.bean.SkyBean;
 import fr.nextoo.weatherforecast.bean.WeatherBean;
-import fr.nextoo.weatherforecast.dto.CityDto;
-import fr.nextoo.weatherforecast.dto.ForecastDto;
-import fr.nextoo.weatherforecast.dto.SkyDto;
-import fr.nextoo.weatherforecast.dto.WeatherDto;
+import fr.nextoo.weatherforecast.service.api.dto.CityDto;
+import fr.nextoo.weatherforecast.service.api.dto.ForecastDto;
+import fr.nextoo.weatherforecast.service.api.dto.SkyDto;
+import fr.nextoo.weatherforecast.service.api.dto.WeatherDto;
 
 public class ForecastMapping {
 
