@@ -1,10 +1,12 @@
 package fr.nextoo.weatherforecast.service.business;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import fr.nextoo.weatherforecast.bean.ForecastBean;
-import fr.nextoo.weatherforecast.dto.ForecastDto;
+import fr.nextoo.weatherforecast.bean.WeatherBean;
+import fr.nextoo.weatherforecast.dto.WeatherDto;
 import fr.nextoo.weatherforecast.service.api.WeatherServiceApi;
 import fr.nextoo.weatherforecast.service.mapping.ForecastMapping;
 
@@ -14,9 +16,9 @@ public class WeatherService {
 	@Autowired
 	private WeatherServiceApi weatherServiceApi;
 
-	public ForecastBean getDaysWeatherByCity(String city) {
-		ForecastDto forecastDto = weatherServiceApi.getForecastByCity(city);
-		return ForecastMapping.mappingForecastDtoToForecastBean(forecastDto);
+	public List<WeatherBean> getDaysWeatherByCity(String city) {
+		List<WeatherDto> weatherDtoList = weatherServiceApi.getWeatherDaysByCity(city);
+		return ForecastMapping.mappingWeatherDtoListToWeatherBeanList(weatherDtoList);
 	}
 	
 }

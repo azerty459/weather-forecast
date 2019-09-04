@@ -25,42 +25,65 @@ public class ForecastMapping {
 		ForecastBean forecastBean = new ForecastBean();
 
 		if (forecastDto != null) {
-
 			CityDto cityDto = forecastDto.getCity();
-			if (cityDto != null) {
-				CityBean cityBean = new CityBean();
-				cityBean.setId(cityDto.getId());
-				cityBean.setName(cityDto.getName());
-				forecastBean.setCity(cityBean);
-			}
+			forecastBean.setCity(mappingCityDtoToCityBean(cityDto));
 
-			WeatherDto[] weatherDaysDto = forecastDto.getWeatherDays();
-			if (weatherDaysDto != null && weatherDaysDto.length > 0) {
+			List<WeatherDto> weatherDtoList = (LinkedList<WeatherDto>)forecastDto.getWeatherDays();
+			forecastBean.setWeatherDays(mappingWeatherDtoListToWeatherBeanList(weatherDtoList));
+		}
+		return forecastBean;
+	}
 
-				List<WeatherBean> weatherDaysBean = new LinkedList<>();
+	public static List<WeatherBean> mappingWeatherDtoListToWeatherBeanList(List<WeatherDto> weatherDtoList) {
+		List<WeatherBean> weatherBeanList = new LinkedList<>();
 
-				for (WeatherDto weatherDto : weatherDaysDto) {
-					WeatherBean weatherBean = new WeatherBean();
-
-					List<SkyDto> skyDtoList = weatherDto.getSky();
-					if (skyDtoList != null) {
-						List<SkyBean> skyBeanList = new ArrayList<>();
-
-						for (SkyDto skyDto : skyDtoList) {
-							SkyBean skyBean = new SkyBean();
-							skyBean.setMain(skyDto.getMain());
-							skyBean.setDescription(skyDto.getDescription());
-							skyBeanList.add(skyBean);
-						}
-						weatherBean.setSky(skyBeanList);
-					}
-
-					weatherDaysBean.add(weatherBean);
-				}
-				forecastBean.setWeatherDays(weatherDaysBean);
+		if (weatherDtoList != null && weatherDtoList.size() > 0) {
+			for (WeatherDto weatherDto : weatherDtoList) {
+				WeatherBean weatherBean = mappingWeatherDtoToWeatherBean(weatherDto);
+				weatherBeanList.add(weatherBean);
 			}
 		}
+		return weatherBeanList;
+	}
 
-		return forecastBean;
+	public static WeatherBean mappingWeatherDtoToWeatherBean(WeatherDto weatherDto) {
+		WeatherBean weatherBean = new WeatherBean();
+
+		List<SkyDto> skyDtoList = weatherDto.getSky();
+		if (skyDtoList != null) {
+			List<SkyBean> skyBeanList = mappingSkyDtoListToSkyBeanList(skyDtoList);
+			weatherBean.setSky(skyBeanList);
+		}
+		return weatherBean;
+	}
+
+	public static List<SkyBean> mappingSkyDtoListToSkyBeanList(List<SkyDto> skyDtoList) {
+		List<SkyBean> skyBeanList = new ArrayList<>();
+		
+		for (SkyDto skyDto : skyDtoList) {
+			SkyBean skyBean = mappingSkyDtoToSkyBean(skyDto);
+			skyBeanList.add(skyBean);
+		}
+		return skyBeanList;
+	}
+
+	public static SkyBean mappingSkyDtoToSkyBean(SkyDto skyDto) {
+		SkyBean skyBean = new SkyBean();
+		
+		if(skyDto != null) {
+			skyBean.setMain(skyDto.getMain());
+			skyBean.setDescription(skyDto.getDescription());
+		}
+		return skyBean;
+	}
+
+	public static CityBean mappingCityDtoToCityBean(CityDto cityDto) {
+		CityBean cityBean = new CityBean();
+		
+		if (cityDto != null) {
+			cityBean.setId(cityDto.getId());
+			cityBean.setName(cityDto.getName());
+		}
+		return cityBean;
 	}
 }

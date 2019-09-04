@@ -1,6 +1,6 @@
 package fr.nextoo.weatherforecast.dto;
 
-import java.util.Arrays;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,7 +12,7 @@ public class ForecastDto {
 	private CityDto city;
 	
 	@JsonProperty("list")
-	private WeatherDto[] weatherDays;
+	private List<WeatherDto> weatherDays;
 	
 	public CityDto getCity() {
 		return city;
@@ -21,18 +21,18 @@ public class ForecastDto {
 	public void setCity(CityDto city) {
 		this.city = city;
 	}
-	
-	public WeatherDto[] getWeatherDays() {
+
+	public List<WeatherDto> getWeatherDays() {
 		return weatherDays;
 	}
-	
-	public void setWeatherDays(WeatherDto[] weatherDays) {
+
+	public void setWeatherDays(List<WeatherDto> weatherDays) {
 		this.weatherDays = weatherDays;
 	}
 
 	@Override
 	public String toString() {
-		return "ForecastDto [city=" + city + ", weatherDays=" + Arrays.toString(weatherDays) + "]";
+		return "ForecastDto [city=" + city + ", weatherDays=" + weatherDays + "]";
 	}
 	
 }
