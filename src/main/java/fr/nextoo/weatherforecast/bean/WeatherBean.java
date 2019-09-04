@@ -1,81 +1,42 @@
 package fr.nextoo.weatherforecast.bean;
 
+import java.util.List;
+
 public class WeatherBean {
-	private int id;
-	private String city;
-	private double temperature;
-	private int pressure;
-	private int humidity;
-	private double temperatureMin;
-	private double temperatureMax;
-	
-	public WeatherBean() {
-	}
-	
-	public WeatherBean(int id, String city) {
-		this.id = id;
-		this.city = city;
-	}
-	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getCity() {
-		return city;
-	}
-	public void setCity(String city) {
-		this.city = city;
+
+	private List<SkyBean> sky;
+
+	private AtmosphereBean atmosphere;
+
+	private WindBean wind;
+
+	public List<SkyBean> getSky() {
+		return sky;
 	}
 
-	public double getTemperature() {
-		return temperature;
+	public void setSky(List<SkyBean> sky) {
+		this.sky = sky;
 	}
 
-	public void setTemperature(double temperature) {
-		this.temperature = temperature;
+	public AtmosphereBean getAtmosphere() {
+		return atmosphere;
 	}
 
-	public int getPressure() {
-		return pressure;
+	public void setAtmosphere(AtmosphereBean atmosphere) {
+		this.atmosphere = atmosphere;
 	}
 
-	public void setPressure(int pressure) {
-		this.pressure = pressure;
+	public WindBean getWind() {
+		return wind;
 	}
 
-	public int getHumidity() {
-		return humidity;
-	}
-
-	public void setHumidity(int humidity) {
-		this.humidity = humidity;
-	}
-
-	public double getTemperatureMin() {
-		return temperatureMin;
-	}
-
-	public void setTemperatureMin(double temperatureMin) {
-		this.temperatureMin = temperatureMin;
-	}
-
-	public double getTemperatureMax() {
-		return temperatureMax;
-	}
-
-	public void setTemperatureMax(double temperatureMax) {
-		this.temperatureMax = temperatureMax;
+	public void setWind(WindBean wind) {
+		this.wind = wind;
 	}
 
 	@Override
 	public String toString() {
-		return "WeatherBean [id=" + id + ", city=" + city + ", temperature=" + temperature + ", pressure=" + pressure
-				+ ", humidity=" + humidity + ", temperatureMin=" + temperatureMin + ", temperatureMax=" + temperatureMax
-				+ "]";
+		return "WeatherBean [sky=" + sky + ", atmosphere=" + atmosphere + ", wind=" + wind + "]";
 	}
-
 
 }

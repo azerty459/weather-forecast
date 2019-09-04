@@ -4,95 +4,82 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import fr.nextoo.weatherforecast.dto.WeatherDto;
+import fr.nextoo.weatherforecast.dto.ForecastDto;
 
 @Service
 public class WeatherServiceApi {
 
-	final String CURRENT_URL = "http://api.openweathermap.org/data/2.5/weather";
-	
-	public WeatherDto getCurrentWeatherByCity(String city) {
-		WeatherDto weatherDto = null;
-		
+	private static final String APP_ID_NUMBER = "16fe170129730a58996ed579c78e01f2";
+	private static final String FORECAST_URL_PATH = "http://api.openweathermap.org/data/2.5/forecast";
+
+	public ForecastDto getForecastByCity(String city) {
+
 		Map<String, String> params = new HashMap<>();
 		params.put("q", city);
-		params.put("APPID", "16fe170129730a58996ed579c78e01f2");
+		params.put("APPID", APP_ID_NUMBER);
 
-		URL url;
-		try {
-			url = this.generateUrl(CURRENT_URL, params);
-			
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-			connection.setRequestMethod("GET");
-			connection.setRequestProperty("Content-Type", "application/json");
-			
-			BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-			String inputLine;
-			StringBuffer content = new StringBuffer();
-			
-			while((inputLine = reader.readLine()) != null) {
-				content.append(inputLine);
-			}
-			reader.close();
-			connection.disconnect();
-						
-			ObjectMapper mapper = new ObjectMapper();
-			weatherDto = mapper.readValue(content.toString(), WeatherDto.class);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-		}
-		
-			
-			
-			
-		
-		
-		return weatherDto;
+		String url = generateUrl(FORECAST_URL_PATH, params);
+		ForecastDto forecastDto = new RestTemplate().getForEntity(url, ForecastDto.class).getBody();
+
+		return forecastDto;
 	}
-	
+
+	private String sendHttpRequest(URL url, String method, String contentType) throws IOException {
+
+		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+		connection.setRequestMethod(method);
+		connection.setRequestProperty("Content-Type", contentType);
+
+		BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+		String inputLine;
+		StringBuffer content = new StringBuffer();
+
+		while ((inputLine = reader.readLine()) != null) {
+			content.append(inputLine);
+		}
+
+		reader.close();
+		connection.disconnect();
+
+		return content.toString();
+	}
+
 	/**
 	 * Generate an URL with HTTP params
+	 *
 	 * @param basePath
 	 * @param params
 	 * @return URL
-	 * @throws MalformedURLException
 	 */
-	private URL generateUrl(String basePath, Map<String, String> params) throws MalformedURLException {
+	private String generateUrl(final String basePath, final Map<String, String> params) {
 		String paramsFormatted = this.generateParams(params);
-		String pathFormatted = paramsFormatted.length() > 0 ? 
-				new StringBuilder(basePath).append("?").append(paramsFormatted).toString() : basePath;
-				
-		return new URL(pathFormatted);
+		String pathFormatted = paramsFormatted.length() > 0
+				? new StringBuilder(basePath).append("?").append(paramsFormatted).toString()
+				: basePath;
+		return pathFormatted;
 	}
-	
+
 	/**
-	 * generate params for HTTP request
-	 * format : "key=value&key2=value2"
+	 * generate params for HTTP request format : "key=value&key2=value2"
+	 *
 	 * @param params
 	 * @return params formatted
 	 */
-	private String generateParams(Map<String, String> params) {
+	private String generateParams(final Map<String, String> params) {
 		StringBuilder paramsBuilder = new StringBuilder();
 
-		params.forEach((key, value)-> {
-			paramsBuilder.append(key).append("=").append(value).append("&");
+		params.forEach((key, value) -> {
+			paramsBuilder.append(paramsBuilder.length() == 0 ? "" : "&");
+			paramsBuilder.append(key).append("=").append(value);
 		});
-		String paramsFormatted = paramsBuilder.toString();
-		
-		return paramsFormatted.length() > 0 ? 
-				paramsFormatted.substring(0, paramsFormatted.length() -1) : paramsFormatted;
+		return paramsBuilder.toString();
 	}
 
 }
