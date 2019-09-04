@@ -13,8 +13,10 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import fr.nextoo.weatherforecast.bean.WeatherBean;
 import fr.nextoo.weatherforecast.service.api.dto.ForecastDto;
 import fr.nextoo.weatherforecast.service.api.dto.WeatherDto;
+import fr.nextoo.weatherforecast.service.api.mapping.ForecastMapping;
 
 @Service
 public class WeatherServiceApi {
@@ -22,7 +24,7 @@ public class WeatherServiceApi {
 	private static final String APP_ID_NUMBER = "16fe170129730a58996ed579c78e01f2";
 	private static final String FORECAST_URL_PATH = "http://api.openweathermap.org/data/2.5/forecast";
 
-	public List<WeatherDto> getWeatherDaysByCity(String city) {
+	public List<WeatherBean> getWeatherDaysByCity(String city) {
 
 		Map<String, String> params = new HashMap<>();
 		params.put("q", city);
@@ -31,11 +33,11 @@ public class WeatherServiceApi {
 		String url = generateUrl(FORECAST_URL_PATH, params);
 		ForecastDto forecastDto = new RestTemplate().getForEntity(url, ForecastDto.class).getBody();
 
-		List<WeatherDto> weatherDays = new LinkedList<WeatherDto>();
+		List<WeatherDto> weatherDtoList = new LinkedList<WeatherDto>();
 		if (forecastDto != null) {
-			weatherDays = forecastDto.getWeatherDays();
+			weatherDtoList = forecastDto.getWeatherDays();
 		}
-		return weatherDays;
+		return ForecastMapping.mappingWeatherDtoListToWeatherBeanList(weatherDtoList);
 	}
 
 	private String sendHttpRequest(URL url, String method, String contentType) throws IOException {

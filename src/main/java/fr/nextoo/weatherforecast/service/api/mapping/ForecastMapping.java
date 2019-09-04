@@ -1,4 +1,4 @@
-package fr.nextoo.weatherforecast.service.mapping;
+package fr.nextoo.weatherforecast.service.api.mapping;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
