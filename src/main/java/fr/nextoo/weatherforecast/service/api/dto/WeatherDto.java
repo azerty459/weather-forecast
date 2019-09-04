@@ -1,5 +1,6 @@
 package fr.nextoo.weatherforecast.service.api.dto;
 
+import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -16,6 +17,9 @@ public class WeatherDto {
 
 	@JsonProperty("wind")
 	private WindDto wind;
+	
+	@JsonProperty("dt")
+	private Date dateTime;
 
 	public List<SkyDto> getSky() {
 		return sky;
@@ -41,9 +45,18 @@ public class WeatherDto {
 		this.wind = wind;
 	}
 
+	public Date getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTime(Date dateTime) {
+		this.dateTime = dateTime;
+	}
+
 	@Override
 	public String toString() {
-		return "WeatherDto [sky=" + sky + ", atmosphere=" + atmosphere + ", wind=" + wind + "]";
+		return "WeatherDto [sky=" + sky + ", atmosphere=" + atmosphere + ", wind=" + wind + ", dateTime=" + dateTime
+				+ "]";
 	}
 
 }

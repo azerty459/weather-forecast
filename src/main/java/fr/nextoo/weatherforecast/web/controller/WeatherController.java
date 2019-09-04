@@ -21,4 +21,9 @@ public class WeatherController {
 		return weatherService.getDaysWeatherByCity(city);
 	}
 
+	@GetMapping(value = "weather/forecast/hotest-day/{city}")
+	public List<WeatherBean> hotestDayByCity(@PathVariable String city) {
+		return weatherService.getDaysWeatherByCity(city);
+	}
+	
 }

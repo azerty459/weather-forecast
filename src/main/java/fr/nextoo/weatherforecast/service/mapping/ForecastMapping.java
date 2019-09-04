@@ -54,6 +54,7 @@ public class ForecastMapping {
 			List<SkyBean> skyBeanList = mappingSkyDtoListToSkyBeanList(skyDtoList);
 			weatherBean.setSky(skyBeanList);
 		}
+		weatherBean.setDateTime(weatherDto.getDateTime());
 		return weatherBean;
 	}
 

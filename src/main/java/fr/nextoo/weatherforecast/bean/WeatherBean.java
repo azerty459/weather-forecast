@@ -1,5 +1,6 @@
 package fr.nextoo.weatherforecast.bean;
 
+import java.util.Date;
 import java.util.List;
 
 public class WeatherBean {
@@ -9,6 +10,8 @@ public class WeatherBean {
 	private AtmosphereBean atmosphere;
 
 	private WindBean wind;
+	
+	private Date dateTime;
 
 	public List<SkyBean> getSky() {
 		return sky;
@@ -34,9 +37,18 @@ public class WeatherBean {
 		this.wind = wind;
 	}
 
+	public Date getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTime(Date dateTime) {
+		this.dateTime = dateTime;
+	}
+
 	@Override
 	public String toString() {
-		return "WeatherBean [sky=" + sky + ", atmosphere=" + atmosphere + ", wind=" + wind + "]";
+		return "WeatherBean [sky=" + sky + ", atmosphere=" + atmosphere + ", wind=" + wind + ", dateTime=" + dateTime
+				+ "]";
 	}
 
 }
