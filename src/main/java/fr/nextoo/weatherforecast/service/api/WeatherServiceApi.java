@@ -13,6 +13,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import fr.nextoo.weatherforecast.bean.DailyForecastBean;
 import fr.nextoo.weatherforecast.bean.WeatherBean;
 import fr.nextoo.weatherforecast.service.api.dto.ForecastDto;
 import fr.nextoo.weatherforecast.service.api.dto.WeatherDto;
@@ -24,7 +25,7 @@ public class WeatherServiceApi {
 	private static final String APP_ID_NUMBER = "16fe170129730a58996ed579c78e01f2";
 	private static final String FORECAST_URL_PATH = "http://api.openweathermap.org/data/2.5/forecast";
 
-	public List<WeatherBean> getWeatherDaysByCity(String city) {
+	public DailyForecastBean getWeatherDaysByCity(String city) {
 
 		Map<String, String> params = new HashMap<>();
 		params.put("q", city);
@@ -37,7 +38,7 @@ public class WeatherServiceApi {
 		if (forecastDto != null) {
 			weatherDtoList = forecastDto.getWeatherDays();
 		}
-		return ForecastMapping.mappingWeatherDtoListToWeatherBeanList(weatherDtoList);
+		return ForecastMapping.mappingForecastDtoToDailyForecastBean(forecastDto);
 	}
 
 	private String sendHttpRequest(URL url, String method, String contentType) throws IOException {

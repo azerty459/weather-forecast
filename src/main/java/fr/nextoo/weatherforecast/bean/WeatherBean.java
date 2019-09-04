@@ -6,11 +6,8 @@ import java.util.List;
 public class WeatherBean {
 
 	private List<SkyBean> sky;
-
 	private AtmosphereBean atmosphere;
-
 	private WindBean wind;
-	
 	private Date dateTime;
 
 	public List<SkyBean> getSky() {

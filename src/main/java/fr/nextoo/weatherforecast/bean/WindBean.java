@@ -3,7 +3,6 @@ package fr.nextoo.weatherforecast.bean;
 public class WindBean {
 
 	private double windSpeed;
-
 	private double windDegrees;
 
 	public double getWindSpeed() {

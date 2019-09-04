@@ -3,13 +3,11 @@ package fr.nextoo.weatherforecast.bean;
 public class SkyBean {
 
 	private String main;
-
 	private String description;
 
 	public String getMain() {
 		return main;
 	}
-
 	public void setMain(String main) {
 		this.main = main;
 	}
@@ -17,7 +15,6 @@ public class SkyBean {
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import fr.nextoo.weatherforecast.bean.DailyForecastBean;
 import fr.nextoo.weatherforecast.bean.WeatherBean;
 import fr.nextoo.weatherforecast.service.business.WeatherService;
 
@@ -17,12 +18,12 @@ public class WeatherController {
 	private WeatherService weatherService;
 
 	@GetMapping(value = "weather/forecast/{city}")
-	public List<WeatherBean> daysWeatherByCity(@PathVariable String city) {
+	public DailyForecastBean daysWeatherByCity(@PathVariable String city) {
 		return weatherService.getDaysWeatherByCity(city);
 	}
 
 	@GetMapping(value = "weather/forecast/hotest-day/{city}")
-	public List<WeatherBean> hotestDayByCity(@PathVariable String city) {
+	public DailyForecastBean hotestDayByCity(@PathVariable String city) {
 		return weatherService.getDaysWeatherByCity(city);
 	}
 	
