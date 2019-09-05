@@ -5,18 +5,17 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import fr.nextoo.weatherforecast.bean.DailyForecastBean;
-import fr.nextoo.weatherforecast.bean.WeatherBean;
+import fr.nextoo.weatherforecast.bean.ForecastBean;
+import fr.nextoo.weatherforecast.service.api.dto.City5DaysForecastDto;
 import fr.nextoo.weatherforecast.service.api.dto.ForecastDto;
-import fr.nextoo.weatherforecast.service.api.dto.WeatherDto;
 import fr.nextoo.weatherforecast.service.api.mapping.ForecastMapping;
 
 @Service
@@ -25,20 +24,27 @@ public class WeatherServiceApi {
 	private static final String APP_ID_NUMBER = "16fe170129730a58996ed579c78e01f2";
 	private static final String FORECAST_URL_PATH = "http://api.openweathermap.org/data/2.5/forecast";
 
-	public DailyForecastBean getWeatherDaysByCity(String city) {
+	public Map<String, List<ForecastBean>> getDailyForecastsByCity(String city) {
+		return ForecastMapping.mappingForecastDtoToDailyForecastBean(this.getForecastsByCityApi(city));
+	}
 
+	public List<ForecastBean> getForecastsByCity(String city) {
+		return ForecastMapping.mappingForecastDtoToForecastBean(this.getForecastsByCityApi(city));
+	}
+
+	private List<ForecastDto> getForecastsByCityApi(String city){
 		Map<String, String> params = new HashMap<>();
 		params.put("q", city);
 		params.put("APPID", APP_ID_NUMBER);
 
 		String url = generateUrl(FORECAST_URL_PATH, params);
-		ForecastDto forecastDto = new RestTemplate().getForEntity(url, ForecastDto.class).getBody();
+		City5DaysForecastDto city5DaysForecastDto = new RestTemplate().getForEntity(url, City5DaysForecastDto.class).getBody();
 
-		List<WeatherDto> weatherDtoList = new LinkedList<WeatherDto>();
-		if (forecastDto != null) {
-			weatherDtoList = forecastDto.getWeatherDays();
+		List<ForecastDto> forecastsDto = new ArrayList<>();
+		if(city5DaysForecastDto != null) {
+			forecastsDto = city5DaysForecastDto.getForecasts();
 		}
-		return ForecastMapping.mappingForecastDtoToDailyForecastBean(forecastDto);
+		return forecastsDto;
 	}
 
 	private String sendHttpRequest(URL url, String method, String contentType) throws IOException {
@@ -72,8 +78,8 @@ public class WeatherServiceApi {
 		String paramsFormatted = this.generateParams(params);
 		String pathFormatted = paramsFormatted.length() > 0
 				? new StringBuilder(basePath).append("?").append(paramsFormatted).toString()
-				: basePath;
-		return pathFormatted;
+						: basePath;
+				return pathFormatted;
 	}
 
 	/**

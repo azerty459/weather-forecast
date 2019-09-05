@@ -1,7 +1,10 @@
 package fr.nextoo.weatherforecast.bean;
 
+import java.time.Instant;
+
 public class ForecastBean {
 
+	private Instant date;
 	private double temperature;
 	private String weatherName;
 	private String weatherDescription;
@@ -11,6 +14,13 @@ public class ForecastBean {
 	private double windSpeed;
 	private double windDirection;
 	private double snow;
+	
+	public Instant getDate() {
+		return date;
+	}
+	public void setDate(Instant date) {
+		this.date = date;
+	}
 	
 	public double getTemperature() {
 		return temperature;
@@ -77,9 +87,10 @@ public class ForecastBean {
 	
 	@Override
 	public String toString() {
-		return "ForecastBean [temperature=" + temperature + ", weatherName=" + weatherName + ", weatherDescription="
-				+ weatherDescription + ", humidity=" + humidity + ", rain=" + rain + ", clouds=" + clouds
-				+ ", windSpeed=" + windSpeed + ", windDirection=" + windDirection + ", snow=" + snow + "]";
+		return "ForecastBean [date=" + date + ", temperature=" + temperature + ", weatherName=" + weatherName
+				+ ", weatherDescription=" + weatherDescription + ", humidity=" + humidity + ", rain=" + rain
+				+ ", clouds=" + clouds + ", windSpeed=" + windSpeed + ", windDirection=" + windDirection + ", snow="
+				+ snow + "]";
 	}
 	
 }

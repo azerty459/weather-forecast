@@ -1,38 +1,57 @@
 package fr.nextoo.weatherforecast.service.api.dto;
 
+import java.time.Instant;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@JsonIgnoreProperties(ignoreUnknown=true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ForecastDto {
 
-	@JsonProperty("city")
-	private CityDto city;
+	@JsonProperty("weather")
+	private List<SkyDto> sky;
+
+	@JsonProperty("main")
+	private AtmosphereDto atmosphere;
+
+	@JsonProperty("wind")
+	private WindDto wind;
 	
-	@JsonProperty("list")
-	private List<WeatherDto> weatherDays;
-	
-	public CityDto getCity() {
-		return city;
+	@JsonProperty("dt")
+	private Instant date;
+
+	public List<SkyDto> getSky() {
+		return sky;
 	}
-	
-	public void setCity(CityDto city) {
-		this.city = city;
+	public void setSky(List<SkyDto> sky) {
+		this.sky = sky;
 	}
 
-	public List<WeatherDto> getWeatherDays() {
-		return weatherDays;
+	public AtmosphereDto getAtmosphere() {
+		return atmosphere;
+	}
+	public void setAtmosphere(AtmosphereDto atmosphere) {
+		this.atmosphere = atmosphere;
 	}
 
-	public void setWeatherDays(List<WeatherDto> weatherDays) {
-		this.weatherDays = weatherDays;
+	public WindDto getWind() {
+		return wind;
 	}
-
+	public void setWind(WindDto wind) {
+		this.wind = wind;
+	}
+	
+	public Instant getDate() {
+		return date;
+	}
+	public void setDate(Instant date) {
+		this.date = date;
+	}
+	
 	@Override
 	public String toString() {
-		return "ForecastDto [city=" + city + ", weatherDays=" + weatherDays + "]";
+		return "ForecastDto [sky=" + sky + ", atmosphere=" + atmosphere + ", wind=" + wind + ", date=" + date + "]";
 	}
-	
+
 }

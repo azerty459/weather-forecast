@@ -13,7 +13,6 @@ public class WindDto {
 	public double getWindSpeed() {
 		return windSpeed;
 	}
-
 	public void setWindSpeed(double windSpeed) {
 		this.windSpeed = windSpeed;
 	}
@@ -21,7 +20,6 @@ public class WindDto {
 	public double getWindDegrees() {
 		return windDegrees;
 	}
-
 	public void setWindDegrees(double windDegrees) {
 		this.windDegrees = windDegrees;
 	}

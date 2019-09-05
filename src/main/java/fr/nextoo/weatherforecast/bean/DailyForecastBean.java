@@ -1,17 +1,17 @@
 package fr.nextoo.weatherforecast.bean;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.List;
 
 public class DailyForecastBean {
 	
-	private Date date;
+	private Instant date;
 	private List<ForecastBean> forecasts;
 	
-	public Date getDate() {
+	public Instant getDate() {
 		return date;
 	}
-	public void setDate(Date date) {
+	public void setDate(Instant date) {
 		this.date = date;
 	}
 	
