@@ -36,7 +36,7 @@ public class ForecastMapping {
 		Map<LocalDate, List<ForecastBean>> forecastsByDay = forecastsBean
 				.stream()
 				.collect(Collectors.groupingBy(
-						forecast -> DateUtils.formattingInstantToLocalDate(forecast.getDate()) ));
+						forecast -> DateUtils.formattingInstantToLocalDate(forecast.getInstant()) ));
 
 		// convert the Map forecastByDay into a DailyForecastBean list
 		return forecastsByDay
@@ -64,7 +64,7 @@ public class ForecastMapping {
 	 */
 	private static ForecastBean mappingForecastDtoToBean(ForecastDto forecastDto) {
 		ForecastBean forecast = new ForecastBean();
-		forecast.setDate(forecastDto.getDate());
+		forecast.setInstant(forecastDto.getInstant());
 		// TODO Optional
 		AtmosphereDto atmosphereDto = forecastDto.getAtmosphere();
 		if (atmosphereDto != null) {
@@ -77,6 +77,7 @@ public class ForecastMapping {
 			forecast.setWeatherName(skyDto.get(0).getMain());
 			forecast.setWeatherDescription(skyDto.get(0).getDescription());
 		}
+		forecast.setRain(forecastDto.getRain());
 
 		return forecast;
 	}

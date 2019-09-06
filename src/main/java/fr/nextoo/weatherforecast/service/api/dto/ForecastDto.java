@@ -2,6 +2,7 @@ package fr.nextoo.weatherforecast.service.api.dto;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -19,9 +20,16 @@ public class ForecastDto {
 	@JsonProperty("wind")
 	private WindDto wind;
 
-	private Instant date;
 	@JsonIgnore
-	private Instant localDate;
+	private double rain;
+
+	@JsonProperty("rain")
+	private void unpackNestedRain(Map<String, Object> rain) {
+		this.rain = (double)rain.get("3h");
+	}
+
+	@JsonProperty("dt")
+	private Instant instant;
 
 	public List<SkyDto> getSky() {
 		return sky;
@@ -44,18 +52,24 @@ public class ForecastDto {
 		this.wind = wind;
 	}
 
-	@JsonProperty("date")
-	public Instant getDate() {
-		return date;
+	public double getRain() {
+		return rain;
 	}
-	@JsonProperty("dt")
-	public void setDate(Instant date) {
-		this.date = date;
+	public void setRain(double rain) {
+		this.rain = rain;
+	}
+
+	public Instant getInstant() {
+		return instant;
+	}
+	public void setInstant(Instant instant) {
+		this.instant = instant;
 	}
 
 	@Override
 	public String toString() {
-		return "ForecastDto [sky=" + sky + ", atmosphere=" + atmosphere + ", wind=" + wind + ", date=" + date + "]";
+		return "ForecastDto [sky=" + sky + ", atmosphere=" + atmosphere + ", wind=" + wind + ", rain=" + rain
+				+ ", instant=" + instant + "]";
 	}
 
 }

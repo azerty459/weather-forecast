@@ -3,6 +3,7 @@ package fr.nextoo.weatherforecast.service.business;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,21 +29,21 @@ public class WeatherService {
 
 	/**
 	 * Get DailyForecast List of the next few days for a city
-	 * @param city
+	 * @param cityName
 	 * @return DailyForecastBean List
 	 */
-	public List<DailyForecastBean> getDaysWeatherByCity(String city) {
-		return weatherServiceApi.getDailyForecastsByCity(city);
+	public List<DailyForecastBean> getDaysWeatherByCity(String cityName) {
+		return weatherServiceApi.getDailyForecastsByCity(cityName);
 	}
 
 	/**
 	 * Get hottest DailyForecast of the next few days for a city
-	 * @param city
+	 * @param cityName
 	 * @return Hottest DailyForecastBean
 	 */
-	public  DailyForecastBean getHottestDayByCity(String city) {
+	public  DailyForecastBean getHottestDayByCity(String cityName) {
 		// get the dailyForecastList of Weather API
-		List<DailyForecastBean> dailyForecastList = weatherServiceApi.getDailyForecastsByCity(city);
+		List<DailyForecastBean> dailyForecastList = weatherServiceApi.getDailyForecastsByCity(cityName);
 
 		// find the date of the hottest day
 		// first map()  -> get the hottest forecast for each day
@@ -54,7 +55,7 @@ public class WeatherService {
 						.max(comparingHottestTemperature)
 						.get())
 				.max(comparingHottestTemperature)
-				.map(forecast -> DateUtils.formattingInstantToLocalDate(forecast.getDate()))
+				.map(forecast -> DateUtils.formattingInstantToLocalDate(forecast.getInstant()))
 				.get();
 
 		// return the DailyForecastBean with the day is equals of the hottestLocalDate
@@ -63,6 +64,26 @@ public class WeatherService {
 				.filter(daily -> daily.getDay().equals(hottestLocalDate))
 				.findFirst()
 				.orElse(new DailyForecastBean());
+	}
+
+	/**
+	 * Get rainy DailyForecast of the next few days for a city
+	 * @param cityName
+	 * @return rainy DailyForecastBean list
+	 */
+	public List<DailyForecastBean> getRainyDaysrByCity(String cityName) {
+		// get the dailyForecastList of Weather API
+		List<DailyForecastBean> dailyForecastList = weatherServiceApi.getDailyForecastsByCity(cityName);
+
+		// return rainy days
+		// when a forecast in a day has rain != 0
+		return dailyForecastList
+				.stream()
+				.filter(day -> day.getForecasts()
+						.stream()
+						.anyMatch(forecast -> forecast.getRain() != 0) )
+				.collect(Collectors.toList());
+
 	}
 
 }

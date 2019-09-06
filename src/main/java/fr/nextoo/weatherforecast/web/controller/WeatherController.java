@@ -21,22 +21,32 @@ public class WeatherController {
 
 	/**
 	 * Get the weather of the next few days for a city
-	 * @param city
+	 * @param cityName
 	 * @return List<DailyForecastBean>
 	 */
-	@GetMapping(value = "/weather/forecast/{city}")
-	public List<DailyForecastBean> daysWeatherByCity(@PathVariable String city) {
-		return weatherService.getDaysWeatherByCity(city);
+	@GetMapping(value = "/weather/forecast/{cityName}")
+	public List<DailyForecastBean> daysWeatherByCity(@PathVariable String cityName) {
+		return weatherService.getDaysWeatherByCity(cityName);
 	}
 
 	/**
 	 * Get the weather of the hottest day of the next few days for a city
-	 * @param city
+	 * @param cityName
 	 * @return DailyForecastBean
 	 */
-	@GetMapping(value = "weather/forecast/hottest-day/{city}")
-	public  DailyForecastBean hotestDayByCity(@PathVariable String city) {
-		return weatherService.getHottestDayByCity(city);
+	@GetMapping(value = "/weather/forecast/hottest-day/{cityName}")
+	public  DailyForecastBean hotestDayByCity(@PathVariable String cityName) {
+		return weatherService.getHottestDayByCity(cityName);
+	}
+
+	/**
+	 * Get the weather the next few rainy days for a city
+	 * @param cityName
+	 * @return List<DailyForecastBean>
+	 */
+	@GetMapping(value="/weather/forecast/rainy-day/{cityName}")
+	public List<DailyForecastBean> rainyDaysByCity(@PathVariable String cityName){
+		return weatherService.getRainyDaysrByCity(cityName);
 	}
 
 }

@@ -21,21 +21,21 @@ public class WeatherServiceApi {
 
 	/**
 	 * Get DailyForcasts List for the city converted (bean)
-	 * @param city
+	 * @param cityName
 	 * @return DailyForecasts list
 	 */
-	public List<DailyForecastBean> getDailyForecastsByCity(String city) {
-		return ForecastMapping.mappingForecastsDtoListToDailyForecastBeanList(this.getForecastsByCityApi(city));
+	public List<DailyForecastBean> getDailyForecastsByCity(String cityName) {
+		return ForecastMapping.mappingForecastsDtoListToDailyForecastBeanList(this.getForecastsByCityApi(cityName));
 	}
 
 	/**
 	 * API HTTP call : GET Forecasts for the city
-	 * @param city
+	 * @param cityName
 	 * @return Forecasts
 	 */
-	private List<ForecastDto> getForecastsByCityApi(String city){
+	private List<ForecastDto> getForecastsByCityApi(String cityName){
 		Map<String, String> params = new HashMap<>();
-		params.put("q", city);
+		params.put("q", cityName);
 		params.put("APPID", APP_ID_NUMBER);
 
 		String url = generateUrl(FORECAST_URL_PATH, params);

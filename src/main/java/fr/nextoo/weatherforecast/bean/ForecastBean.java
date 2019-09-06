@@ -4,22 +4,19 @@ import java.time.Instant;
 
 public class ForecastBean {
 
-	private Instant date;
+	private Instant instant;
 	private double temperature;
 	private String weatherName;
 	private String weatherDescription;
 	private int humidity;
-	//	private double rain;
-	//	private int clouds;
-	//	private double windSpeed;
-	//	private double windDirection;
-	//	private double snow;
+	private double rain;
 
-	public Instant getDate() {
-		return date;
+
+	public Instant getInstant() {
+		return instant;
 	}
-	public void setDate(Instant date) {
-		this.date = date;
+	public void setInstant(Instant instant) {
+		this.instant = instant;
 	}
 
 	public double getTemperature() {
@@ -50,53 +47,17 @@ public class ForecastBean {
 		this.humidity = humidity;
 	}
 
-	@Override
-	public String toString() {
-		return "ForecastBean [date=" + date + ", temperature=" + temperature + ", weatherName=" + weatherName
-				+ ", weatherDescription=" + weatherDescription + ", humidity=" + humidity + "]";
+	public double getRain() {
+		return rain;
+	}
+	public void setRain(double rain) {
+		this.rain = rain;
 	}
 
-	//	public double getRain() {
-	//		return rain;
-	//	}
-	//	public void setRain(double rain) {
-	//		this.rain = rain;
-	//	}
-	//
-	//	public int getClouds() {
-	//		return clouds;
-	//	}
-	//	public void setClouds(int clouds) {
-	//		this.clouds = clouds;
-	//	}
-	//
-	//	public double getWindSpeed() {
-	//		return windSpeed;
-	//	}
-	//	public void setWindSpeed(double windSpeed) {
-	//		this.windSpeed = windSpeed;
-	//	}
-	//
-	//	public double getWindDirection() {
-	//		return windDirection;
-	//	}
-	//	public void setWindDirection(double windDirection) {
-	//		this.windDirection = windDirection;
-	//	}
-	//
-	//	public double getSnow() {
-	//		return snow;
-	//	}
-	//	public void setSnow(double snow) {
-	//		this.snow = snow;
-	//	}
-
-	//	@Override
-	//	public String toString() {
-	//		return "ForecastBean [date=" + date + ", temperature=" + temperature + ", weatherName=" + weatherName
-	//				+ ", weatherDescription=" + weatherDescription + ", humidity=" + humidity + ", rain=" + rain
-	//				+ ", clouds=" + clouds + ", windSpeed=" + windSpeed + ", windDirection=" + windDirection + ", snow="
-	//				+ snow + "]";
-	//	}
+	@Override
+	public String toString() {
+		return "ForecastBean [instant=" + instant + ", temperature=" + temperature + ", weatherName=" + weatherName
+				+ ", weatherDescription=" + weatherDescription + ", humidity=" + humidity + ", rain=" + rain + "]";
+	}
 
 }
