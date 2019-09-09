@@ -3,6 +3,7 @@ package fr.nextoo.weatherforecast.service.business;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
+import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +72,7 @@ public class WeatherService {
 	 * @param cityName
 	 * @return rainy DailyForecastBean list
 	 */
-	public List<DailyForecastBean> getRainyDaysrByCity(String cityName) {
+	public List<DailyForecastBean> getRainyDaysByCity(String cityName) {
 		// get the dailyForecastList of Weather API
 		List<DailyForecastBean> dailyForecastList = weatherServiceApi.getDailyForecastsByCity(cityName);
 
@@ -84,6 +85,42 @@ public class WeatherService {
 						.anyMatch(forecast -> forecast.getRain() != 0) )
 				.collect(Collectors.toList());
 
+	}
+
+	/**
+	 * Get current humidity for a city
+	 * @param cityName
+	 * @return humidity
+	 */
+	public double getCurrentHumidityByCity(String cityName) {
+		// get the currentForecast of Weather API
+		ForecastBean currentForecast = weatherServiceApi.getCurrentWeatherByCity(cityName);
+		return currentForecast.getHumidity();
+	}
+
+	/**
+	 * Get humidity average of each next days for a city
+	 * @param cityName
+	 * @return list of humidity average
+	 */
+	public List<Double> getHumidityAverageByDayByCity(String cityName) {
+		// get the dailyForecastList of Weather API
+		List<DailyForecastBean> dailyForecastList = weatherServiceApi.getDailyForecastsByCity(cityName);
+
+		// sort day by date
+		// then for each day, get the humidity average
+		// and collect to list the values who existing
+		return dailyForecastList
+				.stream()
+				.sorted(Comparator.comparing(DailyForecastBean::getDay))
+				.map( day -> day.getForecasts()
+						.stream()
+						.mapToInt(ForecastBean::getHumidity)
+						.average()
+						)
+				.filter(OptionalDouble::isPresent)
+				.map(OptionalDouble::getAsDouble)
+				.collect(Collectors.toList());
 	}
 
 }

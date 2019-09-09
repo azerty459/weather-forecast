@@ -46,7 +46,27 @@ public class WeatherController {
 	 */
 	@GetMapping(value="/weather/forecast/rainy-day/{cityName}")
 	public List<DailyForecastBean> rainyDaysByCity(@PathVariable String cityName){
-		return weatherService.getRainyDaysrByCity(cityName);
+		return weatherService.getRainyDaysByCity(cityName);
+	}
+
+	/**
+	 * Get the current humidity value for a city
+	 * @param cityName
+	 * @return
+	 */
+	@GetMapping(value="/weather/humidity/{cityName}")
+	public double currentHumidityByCity(@PathVariable String cityName){
+		return weatherService.getCurrentHumidityByCity(cityName);
+	}
+
+	/**
+	 * Get the list of humidity average of the few next days for a city
+	 * @param cityName
+	 * @return
+	 */
+	@GetMapping(value="/weather/forecast/humidity-average/{cityName}")
+	public Object humidityAverageByDayByCity(@PathVariable String cityName) {
+		return weatherService.getHumidityAverageByDayByCity(cityName);
 	}
 
 }

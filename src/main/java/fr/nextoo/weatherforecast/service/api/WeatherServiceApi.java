@@ -21,6 +21,11 @@ public class WeatherServiceApi {
 	private static final String FORECAST_URL_PATH = "http://api.openweathermap.org/data/2.5/forecast";
 	private static final String WEATHER_URL_PATH = "http://api.openweathermap.org/data/2.5/weather";
 
+	/**
+	 * API HTTP call : GET CurrentForecast for the city
+	 * @param cityName
+	 * @return CurrentForecast
+	 */
 	public ForecastBean getCurrentWeatherByCity(String cityName) {
 		Map<String, String> params = new HashMap<>();
 		params.put("q", cityName);
@@ -52,8 +57,6 @@ public class WeatherServiceApi {
 		if(city5DaysForecastDto == null) {
 			return Collections.emptyList();
 		}
-		System.out.println(city5DaysForecastDto.getCityId());
-		System.out.println(city5DaysForecastDto.getCityName());
 
 		return ForecastMapping.mappingForecastsDtoListToDailyForecastBeanList(city5DaysForecastDto.getForecasts());
 	}
