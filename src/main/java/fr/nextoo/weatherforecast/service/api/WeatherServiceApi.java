@@ -1,6 +1,6 @@
 package fr.nextoo.weatherforecast.service.api;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,8 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import fr.nextoo.weatherforecast.bean.DailyForecastBean;
-import fr.nextoo.weatherforecast.service.api.dto.City5DaysForecastDto;
-import fr.nextoo.weatherforecast.service.api.dto.ForecastDto;
+import fr.nextoo.weatherforecast.bean.ForecastBean;
+import fr.nextoo.weatherforecast.service.api.dto.CurrentForecastDto;
+import fr.nextoo.weatherforecast.service.api.dto.NextDaysForecastsDto;
 import fr.nextoo.weatherforecast.service.api.mapping.ForecastMapping;
 
 @Service
@@ -18,34 +19,43 @@ public class WeatherServiceApi {
 
 	private static final String APP_ID_NUMBER = "16fe170129730a58996ed579c78e01f2";
 	private static final String FORECAST_URL_PATH = "http://api.openweathermap.org/data/2.5/forecast";
+	private static final String WEATHER_URL_PATH = "http://api.openweathermap.org/data/2.5/weather";
 
-	/**
-	 * Get DailyForcasts List for the city converted (bean)
-	 * @param cityName
-	 * @return DailyForecasts list
-	 */
-	public List<DailyForecastBean> getDailyForecastsByCity(String cityName) {
-		return ForecastMapping.mappingForecastsDtoListToDailyForecastBeanList(this.getForecastsByCityApi(cityName));
+	public ForecastBean getCurrentWeatherByCity(String cityName) {
+		Map<String, String> params = new HashMap<>();
+		params.put("q", cityName);
+		params.put("APPID", APP_ID_NUMBER);
+
+		String url = generateUrl(WEATHER_URL_PATH, params);
+		CurrentForecastDto currentForecastDto = new RestTemplate().getForEntity(url, CurrentForecastDto.class).getBody();
+
+		if(currentForecastDto == null) {
+			return new ForecastBean();
+		}
+
+		return ForecastMapping.mappingCurrentForecastDtoToBean(currentForecastDto);
 	}
 
 	/**
 	 * API HTTP call : GET Forecasts for the city
 	 * @param cityName
-	 * @return Forecasts
+	 * @return DailyForecasts list
 	 */
-	private List<ForecastDto> getForecastsByCityApi(String cityName){
+	public List<DailyForecastBean> getDailyForecastsByCity(String cityName) {
 		Map<String, String> params = new HashMap<>();
 		params.put("q", cityName);
 		params.put("APPID", APP_ID_NUMBER);
 
 		String url = generateUrl(FORECAST_URL_PATH, params);
-		City5DaysForecastDto city5DaysForecastDto = new RestTemplate().getForEntity(url, City5DaysForecastDto.class).getBody();
+		NextDaysForecastsDto city5DaysForecastDto = new RestTemplate().getForEntity(url, NextDaysForecastsDto.class).getBody();
 
-		List<ForecastDto> forecastsDto = new ArrayList<>();
-		if(city5DaysForecastDto != null) {
-			forecastsDto = city5DaysForecastDto.getForecasts();
+		if(city5DaysForecastDto == null) {
+			return Collections.emptyList();
 		}
-		return forecastsDto;
+		System.out.println(city5DaysForecastDto.getCityId());
+		System.out.println(city5DaysForecastDto.getCityName());
+
+		return ForecastMapping.mappingForecastsDtoListToDailyForecastBeanList(city5DaysForecastDto.getForecasts());
 	}
 
 	/**
@@ -60,6 +70,7 @@ public class WeatherServiceApi {
 		String pathFormatted = parametersFormatted.length() > 0
 				? new StringBuilder(basePath).append("?").append(parametersFormatted).toString()
 						: basePath;
+
 				return pathFormatted;
 	}
 

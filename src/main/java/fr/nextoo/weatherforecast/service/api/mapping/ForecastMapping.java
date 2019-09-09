@@ -4,15 +4,16 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
 
+import fr.nextoo.weatherforecast.bean.CurrentForecastBean;
 import fr.nextoo.weatherforecast.bean.DailyForecastBean;
 import fr.nextoo.weatherforecast.bean.ForecastBean;
-import fr.nextoo.weatherforecast.service.api.dto.AtmosphereDto;
+import fr.nextoo.weatherforecast.service.api.dto.CurrentForecastDto;
 import fr.nextoo.weatherforecast.service.api.dto.ForecastDto;
-import fr.nextoo.weatherforecast.service.api.dto.SkyDto;
 import fr.nextoo.weatherforecast.utils.DateUtils;
 
 public class ForecastMapping {
@@ -63,21 +64,71 @@ public class ForecastMapping {
 	 * @return ForecastBean
 	 */
 	private static ForecastBean mappingForecastDtoToBean(ForecastDto forecastDto) {
+		Optional<ForecastDto> forecastDtoOptional = Optional.ofNullable(forecastDto);
+
+		if(forecastDtoOptional.isEmpty()) {
+			return new ForecastBean();
+		}
+
 		ForecastBean forecast = new ForecastBean();
 		forecast.setInstant(forecastDto.getInstant());
-		// TODO Optional
-		AtmosphereDto atmosphereDto = forecastDto.getAtmosphere();
-		if (atmosphereDto != null) {
+
+		forecastDtoOptional
+		.map(ForecastDto::getAtmosphere)
+		.ifPresent( atmosphereDto -> {
 			forecast.setTemperature(atmosphereDto.getTemperature());
 			forecast.setHumidity(atmosphereDto.getHumidity());
-		}
-		// TODO Optional
-		List<SkyDto> skyDto = forecastDto.getSky();
-		if(skyDto != null && skyDto.size() > 0) {
-			forecast.setWeatherName(skyDto.get(0).getMain());
-			forecast.setWeatherDescription(skyDto.get(0).getDescription());
-		}
+		});
+
+		forecastDtoOptional
+		.map(ForecastDto::getSky)
+		.ifPresent( skyDtoList -> {
+			skyDtoList.stream().findFirst().ifPresent( skyDto -> {
+				forecast.setWeatherName(skyDto.getMain());
+				forecast.setWeatherDescription(skyDto.getDescription());
+			});
+		});
+
 		forecast.setRain(forecastDto.getRain());
+
+		return forecast;
+	}
+
+	/**
+	 * Map Current Forecast Dto to Bean
+	 * @param currentForecastDto
+	 * @return
+	 */
+	public static CurrentForecastBean mappingCurrentForecastDtoToBean(CurrentForecastDto forecastDto) {
+		Optional<CurrentForecastDto> forecastDtoOptional = Optional.ofNullable(forecastDto);
+
+		if(forecastDtoOptional.isEmpty()) {
+			return new CurrentForecastBean();
+		}
+
+		CurrentForecastBean forecast = new CurrentForecastBean();
+		forecast.setInstant(forecastDto.getInstant());
+
+		forecastDtoOptional
+		.map(CurrentForecastDto::getAtmosphere)
+		.ifPresent( atmosphereDto -> {
+			forecast.setTemperature(atmosphereDto.getTemperature());
+			forecast.setHumidity(atmosphereDto.getHumidity());
+		});
+
+		forecastDtoOptional
+		.map(CurrentForecastDto::getSky)
+		.ifPresent( skyDtoList -> {
+			skyDtoList.stream().findFirst().ifPresent( skyDto -> {
+				forecast.setWeatherName(skyDto.getMain());
+				forecast.setWeatherDescription(skyDto.getDescription());
+			});
+		});
+
+		forecast.setRain(forecastDto.getRain());
+
+		forecast.setCityId(forecastDto.getCityId());
+		forecast.setCityName(forecastDto.getCityName());
 
 		return forecast;
 	}

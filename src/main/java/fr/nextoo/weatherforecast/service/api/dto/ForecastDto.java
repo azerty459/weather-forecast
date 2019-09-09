@@ -4,6 +4,8 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections4.MapUtils;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -25,7 +27,9 @@ public class ForecastDto {
 
 	@JsonProperty("rain")
 	private void unpackNestedRain(Map<String, Object> rain) {
-		this.rain = (double)rain.get("3h");
+		if(MapUtils.isNotEmpty(rain)) {
+			this.rain = (double)rain.get("3h");
+		}
 	}
 
 	@JsonProperty("dt")
