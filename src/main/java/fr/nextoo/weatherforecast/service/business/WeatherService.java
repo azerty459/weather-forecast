@@ -1,6 +1,7 @@
 package fr.nextoo.weatherforecast.service.business;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.OptionalDouble;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import fr.nextoo.weatherforecast.service.api.WeatherServiceApi;
 import fr.nextoo.weatherforecast.utils.DateUtils;
 import fr.nextoo.weatherforecast.web.bean.DayForecastBean;
+import fr.nextoo.weatherforecast.web.bean.DaysListForecastsDetailsBean;
 import fr.nextoo.weatherforecast.web.bean.ForecastsDetailsBean;
 import fr.nextoo.weatherforecast.web.bean.ForecastBean;
 
@@ -39,19 +41,41 @@ public class WeatherService {
 	 * @param cityName
 	 * @return DailyForecastBean List
 	 */
-	public List<ForecastsDetailsBean> getWeatherForecastsDaysList(String cityName) {
+	public DaysListForecastsDetailsBean getWeatherForecastsDaysList(String cityName) {
 		return weatherServiceApi.getDailyForecastsList(cityName);
 	}
 	
-	public ForecastsDetailsBean getWeatherDayDetailed(String cityName) {
-		List<ForecastsDetailsBean> dailyForecastsList = weatherServiceApi.getDailyForecastsList(cityName);
+	/**
+	 * 
+	 * @param cityName
+	 * @return
+	 */
+	public DaysListForecastsDetailsBean getWeatherDayDetailed(String cityName) {
+		DaysListForecastsDetailsBean daysListForecasts = weatherServiceApi.getDailyForecastsList(cityName);
 		
-		return dailyForecastsList
-				.stream()
-				.min(DAILY_FORECAST_COMPARATOR)
-				.get();
+		if (daysListForecasts == null) {
+			return null;
+		}
+
+		ForecastsDetailsBean forecastsDetails = daysListForecasts
+			.getForecastsDetailsList()
+			.stream()
+			.min(DAILY_FORECAST_COMPARATOR)
+			.get();
+		
+		ArrayList<ForecastsDetailsBean> tempList = new ArrayList<>();
+		tempList.add(forecastsDetails);
+		
+		daysListForecasts.setForecastsDetailsList(tempList);
+		
+		return daysListForecasts;
 	}
 
+	/**
+	 * 
+	 * @param cityName
+	 * @return
+	 */
 	public DayForecastBean getWeatherDay(String cityName) {
 		return weatherServiceApi.getCurrentWeather(cityName);
 	}
@@ -63,10 +87,15 @@ public class WeatherService {
 	 */
 	public  ForecastsDetailsBean getDayHottest(String cityName) {
 		// get the dailyForecastList of Weather API
-		List<ForecastsDetailsBean> dailyForecastsList = weatherServiceApi.getDailyForecastsList(cityName);
+		DaysListForecastsDetailsBean daysListForecasts = weatherServiceApi.getDailyForecastsList(cityName);
 
+		if (daysListForecasts == null) {
+			return null;
+		}
+		
 		// find the date of the hottest day
-		LocalDate hottestLocalDate = dailyForecastsList
+		LocalDate hottestLocalDate = daysListForecasts
+				.getForecastsDetailsList()
 				.stream()
 				// get the hottest forecast for each day
 				.map(dailyForecast -> getHottestForecast(dailyForecast))
@@ -77,13 +106,19 @@ public class WeatherService {
 				.get();
 
 		// return the DailyForecastBean with the day is equals of the hottestLocalDate
-		return dailyForecastsList
+		return daysListForecasts
+				.getForecastsDetailsList()
 				.stream()
 				.filter(daily -> daily.getDay().equals(hottestLocalDate))
 				.findFirst()
 				.orElse(null);
 	}
 
+	/**
+	 * 
+	 * @param dailyForecast
+	 * @return
+	 */
 	private ForecastBean getHottestForecast(ForecastsDetailsBean dailyForecast) {
 		return  dailyForecast.getForecasts()
 				.stream()
@@ -98,17 +133,27 @@ public class WeatherService {
 	 */
 	public List<ForecastsDetailsBean> getDaysListRain(String cityName) {
 		// get the dailyForecastList of Weather API
-		List<ForecastsDetailsBean> dailyForecastList = weatherServiceApi.getDailyForecastsList(cityName);
+		DaysListForecastsDetailsBean daysListForecasts = weatherServiceApi.getDailyForecastsList(cityName);
 
+		if (daysListForecasts == null) {
+			return null;
+		}
+		
 		// return rainy days
 		// when a forecast in a day has rain != 0
-		return dailyForecastList
+		return daysListForecasts
+				.getForecastsDetailsList()
 				.stream()
 				.filter(day -> isRainyDay(day) )
 				.collect(Collectors.toList());
 
 	}
 
+	/**
+	 * 
+	 * @param day
+	 * @return
+	 */
 	private boolean isRainyDay(ForecastsDetailsBean day) {
 		return day.getForecasts()
 				.stream()
@@ -133,9 +178,14 @@ public class WeatherService {
 	 */
 	public List<Double> getHumidityAverageByDay(String cityName) {
 		// get the dailyForecastList of Weather API
-		List<ForecastsDetailsBean> dailyForecastList = weatherServiceApi.getDailyForecastsList(cityName);
+		DaysListForecastsDetailsBean daysListForecasts = weatherServiceApi.getDailyForecastsList(cityName);
 
-		return dailyForecastList
+		if (daysListForecasts == null) {
+			return null;
+		}
+		
+		return daysListForecasts
+				.getForecastsDetailsList()
 				.stream()
 				// sort day by date
 				.sorted(DAILY_FORECAST_COMPARATOR)
@@ -147,6 +197,11 @@ public class WeatherService {
 				.collect(Collectors.toList());
 	}
 
+	/**
+	 * 
+	 * @param day
+	 * @return
+	 */
 	private OptionalDouble getHumidityAverage(ForecastsDetailsBean day) {
 		return day.getForecasts()
 				.stream()

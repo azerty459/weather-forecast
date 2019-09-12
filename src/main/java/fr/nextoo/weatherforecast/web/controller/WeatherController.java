@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.nextoo.weatherforecast.service.business.WeatherService;
 import fr.nextoo.weatherforecast.web.bean.DayForecastBean;
+import fr.nextoo.weatherforecast.web.bean.DaysListForecastsDetailsBean;
 import fr.nextoo.weatherforecast.web.bean.ForecastsDetailsBean;
 
 @CrossOrigin(origins = "http://localhost:8080")
@@ -28,17 +29,27 @@ public class WeatherController {
 	 * @return List<DailyForecastBean>
 	 */
 	@GetMapping(value = "/weather/forecast/{cityName}")
-	public List<ForecastsDetailsBean> weatherForecastsDaysList(@PathVariable String cityName) {
+	public DaysListForecastsDetailsBean weatherForecastsDaysList(@PathVariable String cityName) {
 		return weatherService.getWeatherForecastsDaysList(cityName);
 	}
 	
+	/**
+	 * 
+	 * @param cityName
+	 * @return
+	 */
 	@GetMapping(value = "weather/{cityName}")
 	public DayForecastBean weatherDay(@PathVariable String cityName) {
 		return weatherService.getWeatherDay(cityName);
 	}
 
-	@GetMapping(value = "weather/detail/{cityName}")
-	public ForecastsDetailsBean weatherDayDetailed(@PathVariable String cityName) {
+	/**
+	 * 
+	 * @param cityName
+	 * @return
+	 */
+	@GetMapping(value = "weather/details/{cityName}")
+	public DaysListForecastsDetailsBean weatherDayDetailed(@PathVariable String cityName) {
 		return weatherService.getWeatherDayDetailed(cityName);
 	}
 	
@@ -57,7 +68,7 @@ public class WeatherController {
 	 * @param cityName
 	 * @return List<DailyForecastBean>
 	 */
-	@GetMapping(value="/weather/forecast/rainy-day/{cityName}")
+	@GetMapping(value="/weather/forecast/rainy-days/{cityName}")
 	public List<ForecastsDetailsBean> daysListRain(@PathVariable String cityName){
 		return weatherService.getDaysListRain(cityName);
 	}
@@ -78,7 +89,7 @@ public class WeatherController {
 	 * @return
 	 */
 	@GetMapping(value="/weather/forecast/humidity-average/{cityName}")
-	public Object humidityAverageByDay(@PathVariable String cityName) {
+	public List<Double> humidityAverageByDay(@PathVariable String cityName) {
 		return weatherService.getHumidityAverageByDay(cityName);
 	}
 

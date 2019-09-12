@@ -1,8 +1,6 @@
 package fr.nextoo.weatherforecast.service.api;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -12,8 +10,7 @@ import fr.nextoo.weatherforecast.service.api.dto.CurrentForecastDto;
 import fr.nextoo.weatherforecast.service.api.dto.DaysListForecastsDto;
 import fr.nextoo.weatherforecast.service.api.mapping.ForecastMapping;
 import fr.nextoo.weatherforecast.web.bean.DayForecastBean;
-import fr.nextoo.weatherforecast.web.bean.ForecastsDetailsBean;
-import fr.nextoo.weatherforecast.web.bean.ForecastBean;
+import fr.nextoo.weatherforecast.web.bean.DaysListForecastsDetailsBean;
 
 @Service
 public class WeatherServiceApi {
@@ -44,20 +41,16 @@ public class WeatherServiceApi {
 	 * @param cityName
 	 * @return DailyForecasts list
 	 */
-	public List<ForecastsDetailsBean> getDailyForecastsList(String cityName) {
+	public DaysListForecastsDetailsBean getDailyForecastsList(String cityName) {
 		Map<String, String> params = new HashMap<>();
 		params.put("q", cityName);
 		params.put("units", "metric");
 		params.put("APPID", APP_ID_NUMBER);
 
 		String url = generateUrl(FORECAST_URL_PATH, params);
-		DaysListForecastsDto city5DaysForecastDto = new RestTemplate().getForEntity(url, DaysListForecastsDto.class).getBody();
+		DaysListForecastsDto daysListForecastDto = new RestTemplate().getForEntity(url, DaysListForecastsDto.class).getBody();
 
-		if(city5DaysForecastDto == null) {
-			return Collections.emptyList();
-		}
-
-		return ForecastMapping.mappingForecastsDtoListToForecastsDetailsBeanList(city5DaysForecastDto.getForecasts());
+		return daysListForecastDto == null ? null : ForecastMapping.mappingForecastsDtoListToForecastsDetailsBeanList(daysListForecastDto);
 	}
 
 	/**
@@ -73,7 +66,7 @@ public class WeatherServiceApi {
 				? new StringBuilder(basePath).append("?").append(parametersFormatted).toString()
 						: basePath;
 
-				return pathFormatted;
+		return pathFormatted;
 	}
 
 	/**

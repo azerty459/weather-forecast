@@ -1,9 +1,11 @@
 package fr.nextoo.weatherforecast.web.bean;
 
+import java.util.List;
+
 public class DaysListForecastsDetailsBean {
 
 	private CityBean city;
-	private ForecastsDetailsBean dailyForecast;
+	private List<ForecastsDetailsBean> forecastsDetailsList;
 	
 	public CityBean getCity() {
 		return city;
@@ -12,16 +14,16 @@ public class DaysListForecastsDetailsBean {
 		this.city = city;
 	}
 	
-	public ForecastsDetailsBean getDailyForecast() {
-		return dailyForecast;
+	public List<ForecastsDetailsBean> getForecastsDetailsList() {
+		return forecastsDetailsList;
 	}
-	public void setDailyForecast(ForecastsDetailsBean dailyForecast) {
-		this.dailyForecast = dailyForecast;
+	public void setForecastsDetailsList(List<ForecastsDetailsBean> forecastsDetailsList) {
+		this.forecastsDetailsList = forecastsDetailsList;
 	}
 	
 	@Override
 	public String toString() {
-		return "CityDailyForecastBean [city=" + city + ", dailyForecast=" + dailyForecast + "]";
+		return "DaysListForecastsDetailsBean [city=" + city + ", forecastsDetailsList=" + forecastsDetailsList + "]";
 	}
-	
+
 }
