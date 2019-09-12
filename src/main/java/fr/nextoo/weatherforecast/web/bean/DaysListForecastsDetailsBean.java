@@ -1,9 +1,9 @@
-package fr.nextoo.weatherforecast.bean;
+package fr.nextoo.weatherforecast.web.bean;
 
-public class CityDailyForecastBean {
+public class DaysListForecastsDetailsBean {
 
 	private CityBean city;
-	private DailyForecastBean dailyForecast;
+	private ForecastsDetailsBean dailyForecast;
 	
 	public CityBean getCity() {
 		return city;
@@ -12,10 +12,10 @@ public class CityDailyForecastBean {
 		this.city = city;
 	}
 	
-	public DailyForecastBean getDailyForecast() {
+	public ForecastsDetailsBean getDailyForecast() {
 		return dailyForecast;
 	}
-	public void setDailyForecast(DailyForecastBean dailyForecast) {
+	public void setDailyForecast(ForecastsDetailsBean dailyForecast) {
 		this.dailyForecast = dailyForecast;
 	}
 	

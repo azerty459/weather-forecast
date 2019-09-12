@@ -5,25 +5,29 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
 
-import fr.nextoo.weatherforecast.bean.CurrentForecastBean;
-import fr.nextoo.weatherforecast.bean.DailyForecastBean;
-import fr.nextoo.weatherforecast.bean.ForecastBean;
+import fr.nextoo.weatherforecast.service.api.dto.AtmosphereDto;
 import fr.nextoo.weatherforecast.service.api.dto.CurrentForecastDto;
 import fr.nextoo.weatherforecast.service.api.dto.ForecastDto;
+import fr.nextoo.weatherforecast.service.api.dto.SkyDto;
 import fr.nextoo.weatherforecast.utils.DateUtils;
+import fr.nextoo.weatherforecast.web.bean.CityBean;
+import fr.nextoo.weatherforecast.web.bean.DayForecastBean;
+import fr.nextoo.weatherforecast.web.bean.ForecastsDetailsBean;
+import fr.nextoo.weatherforecast.web.bean.ForecastBean;
 
 public class ForecastMapping {
 
 	/**
-	 * Map Forecast Dto list to DailyBean list
+	 * Map Forecast Dto list to ForecastsDetails list
 	 * @param forecastsDto
 	 * @return DailyForecastBean list
 	 */
-	public static List<DailyForecastBean> mappingForecastsDtoListToDailyForecastBeanList(List<ForecastDto> forecastsDto) {
+	public static List<ForecastsDetailsBean> mappingForecastsDtoListToForecastsDetailsBeanList(List<ForecastDto> forecastsDto) {
 		if (CollectionUtils.isEmpty(forecastsDto)) {
 			return Collections.emptyList();
 		}
@@ -43,7 +47,7 @@ public class ForecastMapping {
 		return forecastsByDay
 				.entrySet()
 				.stream()
-				.map(m->new DailyForecastBean(m.getKey(), m.getValue()))
+				.map(m->new ForecastsDetailsBean(m.getKey(), m.getValue()))
 				.collect(Collectors.toList());
 	}
 
@@ -67,7 +71,7 @@ public class ForecastMapping {
 		Optional<ForecastDto> forecastDtoOptional = Optional.ofNullable(forecastDto);
 
 		if(forecastDtoOptional.isEmpty()) {
-			return new ForecastBean();
+			return null;
 		}
 
 		ForecastBean forecast = new ForecastBean();
@@ -75,22 +79,35 @@ public class ForecastMapping {
 
 		forecastDtoOptional
 		.map(ForecastDto::getAtmosphere)
-		.ifPresent( atmosphereDto -> {
-			forecast.setTemperature(atmosphereDto.getTemperature());
-			forecast.setHumidity(atmosphereDto.getHumidity());
-		});
+		.ifPresent(ForecastMapping::mappingAtmosphereDtoIntoForecastBean);
 
 		forecastDtoOptional
 		.map(ForecastDto::getSky)
 		.ifPresent( skyDtoList -> {
-			skyDtoList.stream().findFirst().ifPresent( skyDto -> {
-				forecast.setWeatherName(skyDto.getMain());
-				forecast.setWeatherDescription(skyDto.getDescription());
-			});
+			skyDtoList.stream().findFirst().ifPresent(ForecastMapping::mappingSkyDtoIntoForecastBean);
 		});
 
 		forecast.setRain(forecastDto.getRain());
 
+		return forecast;
+	}
+
+	private static  ForecastBean mappingSkyDtoIntoForecastBean(SkyDto skyDto) {
+		ForecastBean forecast = new ForecastBean();
+		
+		forecast.setWeatherName(skyDto.getMain());
+		forecast.setWeatherDescription(skyDto.getDescription());
+		
+		return forecast;
+	
+	}
+
+	private static ForecastBean mappingAtmosphereDtoIntoForecastBean(AtmosphereDto atmosphereDto) {
+		ForecastBean forecast = new ForecastBean();
+
+		forecast.setTemperature(atmosphereDto.getTemperature());
+		forecast.setHumidity(atmosphereDto.getHumidity());
+		
 		return forecast;
 	}
 
@@ -99,14 +116,14 @@ public class ForecastMapping {
 	 * @param currentForecastDto
 	 * @return
 	 */
-	public static CurrentForecastBean mappingCurrentForecastDtoToBean(CurrentForecastDto forecastDto) {
+	public static DayForecastBean mappingCurrentForecastDtoToBean(CurrentForecastDto forecastDto) {
 		Optional<CurrentForecastDto> forecastDtoOptional = Optional.ofNullable(forecastDto);
 
 		if(forecastDtoOptional.isEmpty()) {
-			return new CurrentForecastBean();
+			return null;
 		}
 
-		CurrentForecastBean forecast = new CurrentForecastBean();
+		DayForecastBean forecast = new DayForecastBean();
 		forecast.setInstant(forecastDto.getInstant());
 
 		forecastDtoOptional
@@ -127,8 +144,10 @@ public class ForecastMapping {
 
 		forecast.setRain(forecastDto.getRain());
 
-		forecast.setCityId(forecastDto.getCityId());
-		forecast.setCityName(forecastDto.getCityName());
+		CityBean city = new CityBean();
+		city.setId(forecastDto.getCityId());
+		city.setName(forecastDto.getCityName());
+		forecast.setCity(city);
 
 		return forecast;
 	}

@@ -1,4 +1,4 @@
-package fr.nextoo.weatherforecast.interfaces;
+package fr.nextoo.weatherforecast.service.api.dto;
 
 public interface City {
 	int getCityId();

@@ -8,10 +8,8 @@ import org.apache.commons.collections4.MapUtils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import fr.nextoo.weatherforecast.interfaces.City;
-
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class NextDaysForecastsDto implements City{
+public class DaysListForecastsDto implements City{
 
 	@JsonProperty("city")
 	private void unpackNestedCity(Map<String, Object> city) {

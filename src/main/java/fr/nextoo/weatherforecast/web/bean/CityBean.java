@@ -1,4 +1,4 @@
-package fr.nextoo.weatherforecast.bean;
+package fr.nextoo.weatherforecast.web.bean;
 
 public class CityBean {
 

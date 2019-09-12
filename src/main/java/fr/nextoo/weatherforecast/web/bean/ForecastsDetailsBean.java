@@ -1,16 +1,16 @@
-package fr.nextoo.weatherforecast.bean;
+package fr.nextoo.weatherforecast.web.bean;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public class DailyForecastBean {
+public class ForecastsDetailsBean {
 
 	private LocalDate day;
 	private List<ForecastBean> forecasts;
 
-	public DailyForecastBean() { }
+	public ForecastsDetailsBean() { }
 
-	public DailyForecastBean(LocalDate day, List<ForecastBean> forecasts) {
+	public ForecastsDetailsBean(LocalDate day, List<ForecastBean> forecasts) {
 		this.day = day;
 		this.forecasts = forecasts;
 	}

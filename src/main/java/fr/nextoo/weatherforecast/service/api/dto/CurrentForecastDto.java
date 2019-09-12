@@ -3,8 +3,6 @@ package fr.nextoo.weatherforecast.service.api.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import fr.nextoo.weatherforecast.interfaces.City;
-
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class CurrentForecastDto extends ForecastDto implements City {
 
@@ -43,7 +41,9 @@ public class CurrentForecastDto extends ForecastDto implements City {
 
 	@Override
 	public String toString() {
-		return "CurrentForecastDto [coordinates=" + coordinates + ", cityId=" + cityId + ", cityName=" + cityName + "]";
+		return "CurrentForecastDto [coordinates=" + coordinates + ", cityId=" + cityId + ", cityName=" + cityName
+				+ ", getSky()=" + getSky() + ", getAtmosphere()=" + getAtmosphere() + ", getWind()=" + getWind()
+				+ ", getRain()=" + getRain() + ", getInstant()=" + getInstant() + "]";
 	}
 
 }

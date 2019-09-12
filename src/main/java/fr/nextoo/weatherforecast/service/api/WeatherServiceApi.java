@@ -8,11 +8,12 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import fr.nextoo.weatherforecast.bean.DailyForecastBean;
-import fr.nextoo.weatherforecast.bean.ForecastBean;
 import fr.nextoo.weatherforecast.service.api.dto.CurrentForecastDto;
-import fr.nextoo.weatherforecast.service.api.dto.NextDaysForecastsDto;
+import fr.nextoo.weatherforecast.service.api.dto.DaysListForecastsDto;
 import fr.nextoo.weatherforecast.service.api.mapping.ForecastMapping;
+import fr.nextoo.weatherforecast.web.bean.DayForecastBean;
+import fr.nextoo.weatherforecast.web.bean.ForecastsDetailsBean;
+import fr.nextoo.weatherforecast.web.bean.ForecastBean;
 
 @Service
 public class WeatherServiceApi {
@@ -26,19 +27,16 @@ public class WeatherServiceApi {
 	 * @param cityName
 	 * @return CurrentForecast
 	 */
-	public ForecastBean getCurrentWeatherByCity(String cityName) {
+	public DayForecastBean getCurrentWeather(String cityName) {
 		Map<String, String> params = new HashMap<>();
 		params.put("q", cityName);
+		params.put("units", "metric");
 		params.put("APPID", APP_ID_NUMBER);
 
 		String url = generateUrl(WEATHER_URL_PATH, params);
 		CurrentForecastDto currentForecastDto = new RestTemplate().getForEntity(url, CurrentForecastDto.class).getBody();
 
-		if(currentForecastDto == null) {
-			return new ForecastBean();
-		}
-
-		return ForecastMapping.mappingCurrentForecastDtoToBean(currentForecastDto);
+		return currentForecastDto == null ? null : ForecastMapping.mappingCurrentForecastDtoToBean(currentForecastDto);
 	}
 
 	/**
@@ -46,19 +44,20 @@ public class WeatherServiceApi {
 	 * @param cityName
 	 * @return DailyForecasts list
 	 */
-	public List<DailyForecastBean> getDailyForecastsByCity(String cityName) {
+	public List<ForecastsDetailsBean> getDailyForecastsList(String cityName) {
 		Map<String, String> params = new HashMap<>();
 		params.put("q", cityName);
+		params.put("units", "metric");
 		params.put("APPID", APP_ID_NUMBER);
 
 		String url = generateUrl(FORECAST_URL_PATH, params);
-		NextDaysForecastsDto city5DaysForecastDto = new RestTemplate().getForEntity(url, NextDaysForecastsDto.class).getBody();
+		DaysListForecastsDto city5DaysForecastDto = new RestTemplate().getForEntity(url, DaysListForecastsDto.class).getBody();
 
 		if(city5DaysForecastDto == null) {
 			return Collections.emptyList();
 		}
 
-		return ForecastMapping.mappingForecastsDtoListToDailyForecastBeanList(city5DaysForecastDto.getForecasts());
+		return ForecastMapping.mappingForecastsDtoListToForecastsDetailsBeanList(city5DaysForecastDto.getForecasts());
 	}
 
 	/**

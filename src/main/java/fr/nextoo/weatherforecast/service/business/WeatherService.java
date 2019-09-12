@@ -9,10 +9,11 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import fr.nextoo.weatherforecast.bean.DailyForecastBean;
-import fr.nextoo.weatherforecast.bean.ForecastBean;
 import fr.nextoo.weatherforecast.service.api.WeatherServiceApi;
 import fr.nextoo.weatherforecast.utils.DateUtils;
+import fr.nextoo.weatherforecast.web.bean.DayForecastBean;
+import fr.nextoo.weatherforecast.web.bean.ForecastsDetailsBean;
+import fr.nextoo.weatherforecast.web.bean.ForecastBean;
 
 @Service
 public class WeatherService {
@@ -26,45 +27,68 @@ public class WeatherService {
 	/**
 	 * ForecastBean Comparator by temperature
 	 */
-	private Comparator<ForecastBean> comparingHottestTemperature = Comparator.comparing(ForecastBean::getTemperature);
+	private static final Comparator<ForecastBean> FORECAST_TEMPERATURE_COMPARATOR = Comparator.comparing(ForecastBean::getTemperature);
 
+	/**
+	 * DailyForecast Comparator by LocaleDate
+	 */
+	private static final Comparator<ForecastsDetailsBean> DAILY_FORECAST_COMPARATOR = Comparator.comparing(ForecastsDetailsBean::getDay);
+	
 	/**
 	 * Get DailyForecast List of the next few days for a city
 	 * @param cityName
 	 * @return DailyForecastBean List
 	 */
-	public List<DailyForecastBean> getDaysWeatherByCity(String cityName) {
-		return weatherServiceApi.getDailyForecastsByCity(cityName);
+	public List<ForecastsDetailsBean> getWeatherForecastsDaysList(String cityName) {
+		return weatherServiceApi.getDailyForecastsList(cityName);
+	}
+	
+	public ForecastsDetailsBean getWeatherDayDetailed(String cityName) {
+		List<ForecastsDetailsBean> dailyForecastsList = weatherServiceApi.getDailyForecastsList(cityName);
+		
+		return dailyForecastsList
+				.stream()
+				.min(DAILY_FORECAST_COMPARATOR)
+				.get();
 	}
 
+	public DayForecastBean getWeatherDay(String cityName) {
+		return weatherServiceApi.getCurrentWeather(cityName);
+	}
+	
 	/**
 	 * Get hottest DailyForecast of the next few days for a city
 	 * @param cityName
 	 * @return Hottest DailyForecastBean
 	 */
-	public  DailyForecastBean getHottestDayByCity(String cityName) {
+	public  ForecastsDetailsBean getDayHottest(String cityName) {
 		// get the dailyForecastList of Weather API
-		List<DailyForecastBean> dailyForecastList = weatherServiceApi.getDailyForecastsByCity(cityName);
+		List<ForecastsDetailsBean> dailyForecastsList = weatherServiceApi.getDailyForecastsList(cityName);
 
 		// find the date of the hottest day
-		// first map()  -> get the hottest forecast for each day
-		// second map() -> get the hottest day, by comparing the result of the previous value
-		LocalDate hottestLocalDate = dailyForecastList
+		LocalDate hottestLocalDate = dailyForecastsList
 				.stream()
-				.map(d -> d.getForecasts()
-						.stream()
-						.max(comparingHottestTemperature)
-						.get())
-				.max(comparingHottestTemperature)
+				// get the hottest forecast for each day
+				.map(dailyForecast -> getHottestForecast(dailyForecast))
+				// get the hottest day
+				.max(FORECAST_TEMPERATURE_COMPARATOR)
+				// get the date of the hottest day
 				.map(forecast -> DateUtils.formattingInstantToLocalDate(forecast.getInstant()))
 				.get();
 
 		// return the DailyForecastBean with the day is equals of the hottestLocalDate
-		return dailyForecastList
+		return dailyForecastsList
 				.stream()
 				.filter(daily -> daily.getDay().equals(hottestLocalDate))
 				.findFirst()
-				.orElse(new DailyForecastBean());
+				.orElse(null);
+	}
+
+	private ForecastBean getHottestForecast(ForecastsDetailsBean dailyForecast) {
+		return  dailyForecast.getForecasts()
+				.stream()
+				.max(FORECAST_TEMPERATURE_COMPARATOR)
+				.get();
 	}
 
 	/**
@@ -72,19 +96,23 @@ public class WeatherService {
 	 * @param cityName
 	 * @return rainy DailyForecastBean list
 	 */
-	public List<DailyForecastBean> getRainyDaysByCity(String cityName) {
+	public List<ForecastsDetailsBean> getDaysListRain(String cityName) {
 		// get the dailyForecastList of Weather API
-		List<DailyForecastBean> dailyForecastList = weatherServiceApi.getDailyForecastsByCity(cityName);
+		List<ForecastsDetailsBean> dailyForecastList = weatherServiceApi.getDailyForecastsList(cityName);
 
 		// return rainy days
 		// when a forecast in a day has rain != 0
 		return dailyForecastList
 				.stream()
-				.filter(day -> day.getForecasts()
-						.stream()
-						.anyMatch(forecast -> forecast.getRain() != 0) )
+				.filter(day -> isRainyDay(day) )
 				.collect(Collectors.toList());
 
+	}
+
+	private boolean isRainyDay(ForecastsDetailsBean day) {
+		return day.getForecasts()
+				.stream()
+				.anyMatch(forecast -> forecast.getRain() != 0);
 	}
 
 	/**
@@ -92,10 +120,10 @@ public class WeatherService {
 	 * @param cityName
 	 * @return humidity
 	 */
-	public double getCurrentHumidityByCity(String cityName) {
+	public Integer getDayHumidityNow(String cityName) {
 		// get the currentForecast of Weather API
-		ForecastBean currentForecast = weatherServiceApi.getCurrentWeatherByCity(cityName);
-		return currentForecast.getHumidity();
+		DayForecastBean currentForecast = weatherServiceApi.getCurrentWeather(cityName);
+		return currentForecast == null ? null : currentForecast.getHumidity();
 	}
 
 	/**
@@ -103,24 +131,27 @@ public class WeatherService {
 	 * @param cityName
 	 * @return list of humidity average
 	 */
-	public List<Double> getHumidityAverageByDayByCity(String cityName) {
+	public List<Double> getHumidityAverageByDay(String cityName) {
 		// get the dailyForecastList of Weather API
-		List<DailyForecastBean> dailyForecastList = weatherServiceApi.getDailyForecastsByCity(cityName);
+		List<ForecastsDetailsBean> dailyForecastList = weatherServiceApi.getDailyForecastsList(cityName);
 
-		// sort day by date
-		// then for each day, get the humidity average
-		// and collect to list the values who existing
 		return dailyForecastList
 				.stream()
-				.sorted(Comparator.comparing(DailyForecastBean::getDay))
-				.map( day -> day.getForecasts()
-						.stream()
-						.mapToInt(ForecastBean::getHumidity)
-						.average()
-						)
+				// sort day by date
+				.sorted(DAILY_FORECAST_COMPARATOR)
+				// for each day, get the humidity average
+				.map( day -> getHumidityAverage(day))
+				// collect to list the values who existing
 				.filter(OptionalDouble::isPresent)
 				.map(OptionalDouble::getAsDouble)
 				.collect(Collectors.toList());
+	}
+
+	private OptionalDouble getHumidityAverage(ForecastsDetailsBean day) {
+		return day.getForecasts()
+				.stream()
+				.mapToInt(ForecastBean::getHumidity)
+				.average();
 	}
 
 }
