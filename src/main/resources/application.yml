@@ -1,0 +1,14 @@
+#Spring configuration
+spring:
+  profiles:
+    active: dev
+#Logger configuration
+logging:
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+  level:
+    org.springframework: DEBUG
+#API properties
+weather:
+  api:
+    key: "b670cef3c92256f201682518bd79e2d5"
