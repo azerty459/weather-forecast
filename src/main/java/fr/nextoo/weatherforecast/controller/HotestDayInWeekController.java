@@ -1,31 +1,28 @@
 package fr.nextoo.weatherforecast.controller;
 
-import fr.nextoo.weatherforecast.dto.WeatherDto;
-import fr.nextoo.weatherforecast.service.WeatherService;
+import fr.nextoo.weatherforecast.service.HotestDayInWeekService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping(
         value = "/",
         headers = "Accept=application/json")
-public class WeatherController {
+public class HotestDayInWeekController {
 
     @Autowired
-    private WeatherService weatherService;
+    private HotestDayInWeekService hotestDayInWeekService;
 
     /**
-     * Nous retourne la méteo pour ville donnée pour les 5 jours a venir
+     * Nous retourne le jour le plus chaud de la semaine pour une ville donnée
      * @param ville
      * @return
      */
-    @GetMapping(value = "weather/{ville}")
-    public List<WeatherDto> getWeatherByCity(@PathVariable String ville) {
-        return weatherService.getWeatherByCity(ville);
+    @GetMapping(value = "weather/hotestDay/{ville}")
+    public String getHotestDayByCity(@PathVariable String ville) {
+        return this.hotestDayInWeekService.getHotestDayByCity(ville);
     }
 }
