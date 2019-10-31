@@ -23,6 +23,6 @@ public class HotestDayInWeekController {
      */
     @GetMapping(value = "weather/hotestDay/{ville}")
     public String getHotestDayByCity(@PathVariable String ville) {
-        return this.hotestDayInWeekService.getHotestDayByCity(ville);
+        return hotestDayInWeekService.getHotestDayByCity(ville);
     }
 }

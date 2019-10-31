@@ -2,6 +2,7 @@ package fr.nextoo.weatherforecast.service.impl;
 
 import fr.nextoo.weatherforecast.dto.WeatherDto;
 import fr.nextoo.weatherforecast.service.HotestDayInWeekService;
+import fr.nextoo.weatherforecast.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ import java.util.List;
 public class HotestDayInWeekServiceImpl implements HotestDayInWeekService {
 
     @Autowired
-    public WeatherServiceImpl weatherService;
+    public WeatherService weatherService;
 
     @Override
     public String getHotestDayByCity(String ville) {
