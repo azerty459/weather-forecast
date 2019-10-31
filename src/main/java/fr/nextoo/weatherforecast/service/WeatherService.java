@@ -1,6 +1,10 @@
 package fr.nextoo.weatherforecast.service;
 
+import fr.nextoo.weatherforecast.dto.WeatherDto;
+
+import java.util.List;
+
 public interface WeatherService<T> {
 
-    public T getWeatherByCity(String ville);
+    public List<WeatherDto> getWeatherByCity(String ville);
 }
