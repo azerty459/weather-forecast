@@ -1,61 +1,33 @@
 package fr.nextoo.weatherforecast.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 public class WeatherDto {
 
-    private String date;
-    private Double temperature_max;
-    private Double temperature_min;
-    private Double humidite;
+    private String main;
+    private String description;
     private Boolean ilPleut;
+    private String icon;
 
-    public WeatherDto(String date, Double temperature_max, Double temperature_min, Double humidite, boolean ilPleut) {
-        this.date = date;
-        this.temperature_max = temperature_max;
-        this.temperature_min = temperature_min;
-        this.humidite = humidite;
-        this.ilPleut = ilPleut;
+    @JsonProperty("meteo")
+    public String getMain() {
+        return main;
     }
 
-    @Override
-    public String toString() {
-        return "WeatherDto{" +
-                ", date='" + date + '\'' +
-                ", temperature_max=" + temperature_max +
-                ", temperature_min=" + temperature_min +
-                ", humidite=" + humidite +
-                ", ilPleut=" + ilPleut +
-                '}';
+    @JsonProperty("main")
+    public void setMain(String main) {
+        this.main = main;
     }
 
-    public String getDate() {
-        return date;
+    @JsonProperty("detailMeteo")
+    public String getDescription() {
+        return description;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public Double getTemperature_max() {
-        return temperature_max;
-    }
-
-    public void setTemperature_max(Double temperature_max) {
-        this.temperature_max = temperature_max;
-    }
-
-    public Double getTemperature_min() {
-        return temperature_min;
-    }
-
-    public void setTemperature_min(Double temperature_min) {
-        this.temperature_min = temperature_min;
-    }
-
-    public Double getHumidite() {
-        return humidite;
-    }
-    public void setHumidite(Double humidite) {
-        this.humidite = humidite;
+    @JsonProperty("description")
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Boolean getIlPleut() {
@@ -64,5 +36,15 @@ public class WeatherDto {
 
     public void setIlPleut(Boolean ilPleut) {
         this.ilPleut = ilPleut;
+    }
+
+    @JsonProperty("icon")
+    public String getIcon() {
+        return icon;
+    }
+
+    @JsonProperty("icon")
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 }

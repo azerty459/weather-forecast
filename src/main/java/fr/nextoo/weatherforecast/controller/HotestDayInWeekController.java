@@ -16,13 +16,8 @@ public class HotestDayInWeekController {
     @Autowired
     private HotestDayInWeekService hotestDayInWeekService;
 
-    /**
-     * Nous retourne le jour le plus chaud de la semaine pour une ville donnée
-     * @param ville
-     * @return
-     */
     @GetMapping(value = "weather/hotestDay/{ville}")
     public String getHotestDayByCity(@PathVariable String ville) {
-        return hotestDayInWeekService.getHotestDayByCity(ville);
+        return hotestDayInWeekService.getHotestDayInWeekByCity(ville);
     }
 }

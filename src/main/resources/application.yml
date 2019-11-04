@@ -7,8 +7,11 @@ logging:
   pattern:
     console: "%d %-5level %logger : %msg%n"
   level:
-    org.springframework: trace
+    org.springframework: debug
 #API properties
 weather:
   api:
     key: "b670cef3c92256f201682518bd79e2d5"
+
+server:
+  port: 8082

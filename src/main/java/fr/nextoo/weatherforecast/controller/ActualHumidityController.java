@@ -1,25 +1,23 @@
 package fr.nextoo.weatherforecast.controller;
 
-import fr.nextoo.weatherforecast.service.RainyDaysService;
+import fr.nextoo.weatherforecast.service.ActualHumidityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping(
         value = "/",
         headers = "Accept=application/json")
-public class RainyDaysController {
+public class ActualHumidityController {
 
     @Autowired
-    private RainyDaysService rainyDaysService;
+    ActualHumidityService actualHumidityService;
 
-    @GetMapping(value = "weather/rainyDays/{ville}")
-    public List<String> getRainyDaysByCity(@PathVariable String ville) {
-        return rainyDaysService.getRainyDaysByCity(ville);
+    @GetMapping(value = "weather/actualHumidity/{ville}")
+    public Integer getActualHumidity(@PathVariable String ville) {
+        return actualHumidityService.getActualHumidity(ville);
     }
 }

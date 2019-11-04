@@ -2,15 +2,17 @@ package fr.nextoo.weatherforecast.service.impl;
 
 import fr.nextoo.weatherforecast.api.service.ForecastServiceApi;
 import fr.nextoo.weatherforecast.dto.ListDto;
-import fr.nextoo.weatherforecast.service.HotestDayInWeekService;
+import fr.nextoo.weatherforecast.dto.MainDto;
+import fr.nextoo.weatherforecast.service.ActualHumidityService;
 import fr.nextoo.weatherforecast.service.util.MappingUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 @Service
-public class HotestDayInWeekServiceImpl implements HotestDayInWeekService {
+public class ActualHumidityServiceImpl implements ActualHumidityService {
 
     @Autowired
     public ForecastServiceApi forecastServiceApi;
@@ -18,12 +20,17 @@ public class HotestDayInWeekServiceImpl implements HotestDayInWeekService {
     public MappingUtility mappingUtility;
 
     @Override
-    public String getHotestDayInWeekByCity(String nomVille) {
+    public Integer getActualHumidity(String nomVille) {
         List<ListDto> listDtoList = mappingUtility.getMappedListList(forecastServiceApi.getForecastByCity(nomVille).getList());
-        Map<String, Integer> tempMax = new HashMap<>();
+        List<MainDto> mainDtoList = new LinkedList<>();
         for (ListDto listDto : listDtoList) {
-            tempMax.put(listDto.getDateTime(), listDto.getListMain().getTemperature_max());
+            mainDtoList.add(listDto.getListMain());
         }
-        return Collections.max(tempMax.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey();
+
+        Integer actualHumidity = mainDtoList.stream()
+                .findFirst()
+                .map(MainDto::getTauxHumidite)
+                .get();
+        return actualHumidity;
     }
 }
