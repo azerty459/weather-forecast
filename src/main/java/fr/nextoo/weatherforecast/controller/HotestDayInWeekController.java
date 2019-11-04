@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
-
 @RestController
 @RequestMapping(
         value = "/",
@@ -25,6 +23,6 @@ public class HotestDayInWeekController {
      */
     @GetMapping(value = "weather/hotestDay/{ville}")
     public String getHotestDayByCity(@PathVariable String ville) {
-        return this.hotestDayInWeekService.getHotestDayInWeekByCity(ville);
+        return hotestDayInWeekService.getHotestDayInWeekByCity(ville);
     }
 }
