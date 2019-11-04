@@ -6,7 +6,7 @@ public class ListDto {
 
     private String dateTime;
     private MainDto listMain;
-    private List<WeatherDto> weather = null;
+    private List<WeatherDto> weather;
     private RainDto rain;
 
     public MainDto getListMain() {

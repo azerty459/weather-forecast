@@ -19,7 +19,7 @@ public class RainyDaysController {
     private RainyDaysService rainyDaysService;
 
     @GetMapping(value = "weather/rainyDays/{ville}")
-    public List<Boolean> getRainyDaysByCity(@PathVariable String ville) {
+    public List<String> getRainyDaysByCity(@PathVariable String ville) {
         return rainyDaysService.getRainyDaysByCity(ville);
     }
 }

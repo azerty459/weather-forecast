@@ -31,11 +31,12 @@ public class MappingUtility {
     }
 
     public ListDto getMappedListData(ListApiDto listApiDto) {
-        ListDto listDto = new ListDto();
+        ListDto listDto;
         Instant dateTime = listApiDto.getDt();
         MainApiDto mainApiDto = listApiDto.getListMain();
         List<WeatherApiDto> weatherApiDtoList = listApiDto.getWeather();
         RainApiDto rainApiDto = listApiDto.getRain();
+        listDto = new ListDto();
         listDto.setDateTime(utility.formatter(dateTime));
         listDto.setListMain(getMappedMainData(mainApiDto));
         listDto.setWeather(getMappedWeatherList(weatherApiDtoList));

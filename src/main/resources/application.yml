@@ -7,7 +7,7 @@ logging:
   pattern:
     console: "%d %-5level %logger : %msg%n"
   level:
-    org.springframework: DEBUG
+    org.springframework: debug
 #API properties
 weather:
   api:

@@ -8,10 +8,7 @@ import fr.nextoo.weatherforecast.service.util.MappingUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,21 +20,27 @@ public class RainyDaysServiceIpml implements RainyDaysService {
     public MappingUtility mappingUtility;
 
     @Override
-    public List<Boolean> getRainyDaysByCity(String nomVille) {
+    public List<String> getRainyDaysByCity(String nomVille) {
         List<ListDto> listDtoList = mappingUtility.getMappedListList(forecastServiceApi.getForecastByCity(nomVille).getList());
         Map<String, List<WeatherDto>> weatherDto = new HashMap<>();
         for (ListDto listDto : listDtoList) {
             weatherDto.put(listDto.getDateTime(), listDto.getWeather());
         }
-        List<WeatherDto> total = weatherDto.values().stream()
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
 
-        List<Boolean> jour = total.stream()
-                .filter(WeatherDto::getIlPleut)
-                .map(WeatherDto::getIlPleut)
-                .collect(Collectors.toList());
+        Map<String, List<WeatherDto>> result = weatherDto.entrySet().stream()
+                .filter(i -> !i.getValue().isEmpty())
+                .collect(Collectors.toMap(Map.Entry::getKey,
+                        i -> i.getValue().stream()
+                                .filter(WeatherDto::getIlPleut)
+                                .collect(Collectors.toList())));
 
-        return jour;
+        Map<String, List<WeatherDto>> rainyDays = result.entrySet().stream()
+                .filter(i -> !i.getValue().isEmpty())
+                .collect(Collectors.toMap(Map.Entry::getKey,
+                        i -> i.getValue().stream()
+                                .filter(Objects::nonNull)
+                                .collect(Collectors.toList())));
+
+        return new ArrayList<>(rainyDays.keySet());
     }
 }
