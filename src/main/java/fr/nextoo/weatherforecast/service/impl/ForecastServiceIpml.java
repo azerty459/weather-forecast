@@ -1,16 +1,22 @@
-package fr.nextoo.weatherforecast.service;
+package fr.nextoo.weatherforecast.service.impl;
 
-import fr.nextoo.weatherforecast.api.service.WeatherServiceApi;
+import fr.nextoo.weatherforecast.api.service.ForecastServiceApi;
 import fr.nextoo.weatherforecast.dto.ForecastDto;
+import fr.nextoo.weatherforecast.service.ForecastService;
+import fr.nextoo.weatherforecast.service.util.MappingUtility;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public class WeatherServiceIpml implements WeatherService {
+@Service
+public class ForecastServiceIpml implements ForecastService {
 
     @Autowired
-    public WeatherServiceApi weatherServiceApi;
+    public ForecastServiceApi forecastServiceApi;
+    @Autowired
+    public MappingUtility mappingUtility;
 
     @Override
     public ForecastDto getForecastByCity(String nomVille) {
-        return null;
+        return mappingUtility.getMappedForecastData(forecastServiceApi.getForecastByCity(nomVille));
     }
 }
