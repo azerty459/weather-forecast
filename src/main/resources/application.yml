@@ -12,3 +12,6 @@ logging:
 weather:
   api:
     key: "b670cef3c92256f201682518bd79e2d5"
+
+server:
+  port: 8082

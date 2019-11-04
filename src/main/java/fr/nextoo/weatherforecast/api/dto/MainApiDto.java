@@ -4,48 +4,48 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class MainApiDto {
 
-    private Float temp;
-    private Float temp_min;
-    private Float temp_max;
-    private Integer humidity;
+    private Double temp;
+    private Double temp_min;
+    private Double temp_max;
+    private Double humidity;
 
     @JsonProperty("temperature")
-    public Float getTemp() {
+    public Double getTemp() {
         return temp;
     }
 
     @JsonProperty("temp")
-    public void setTemp(Float temp) {
+    public void setTemp(Double temp) {
         this.temp = temp;
     }
 
     @JsonProperty("temperature_minimal")
-    public Float getTemp_min() {
+    public Double getTemp_min() {
         return temp_min;
     }
 
     @JsonProperty("temp_min")
-    public void setTemp_min(Float temp_min) {
+    public void setTemp_min(Double temp_min) {
         this.temp_min = temp_min;
     }
 
     @JsonProperty("temperature_maximal")
-    public Float getTemp_max() {
+    public Double getTemp_max() {
         return temp_max;
     }
 
     @JsonProperty("temp_max")
-    public void setTemp_max(Float temp_max) {
+    public void setTemp_max(Double temp_max) {
         this.temp_max = temp_max;
     }
 
     @JsonProperty("humidite")
-    public Integer getHumidity() {
+    public Double getHumidity() {
         return humidity;
     }
 
     @JsonProperty("humidity")
-    public void setHumidity(Integer humidity) {
+    public void setHumidity(Double humidity) {
         this.humidity = humidity;
     }
 }

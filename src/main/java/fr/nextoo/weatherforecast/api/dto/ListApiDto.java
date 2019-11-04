@@ -1,7 +1,7 @@
 package fr.nextoo.weatherforecast.api.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import fr.nextoo.weatherforecast.dto.RainDto;
 
 import java.time.Instant;
 import java.time.ZoneId;
@@ -10,7 +10,6 @@ import java.time.format.FormatStyle;
 import java.util.List;
 import java.util.Locale;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ListApiDto {
 
     private Instant dt;
@@ -18,12 +17,7 @@ public class ListApiDto {
     private java.util.List<WeatherApiDto> weather = null;
     private RainApiDto rain;
 
-    DateTimeFormatter formatter =
-            DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT )
-                    .withLocale( Locale.UK )
-                    .withZone( ZoneId.systemDefault() );
-
-    @JsonProperty("info")
+    @JsonProperty("main")
     public MainApiDto getListMain() {
         return listMain;
     }
@@ -33,9 +27,9 @@ public class ListApiDto {
         this.listMain = listMain;
     }
 
-    @JsonProperty("dateTime")
-    public String getDt() {
-        return formatter.format(dt);
+    @JsonProperty("dt")
+    public Instant getDt() {
+        return dt;
     }
 
     @JsonProperty("dt")
@@ -53,9 +47,9 @@ public class ListApiDto {
         this.weather = weather;
     }
 
-    @JsonProperty("precipitation")
+    @JsonProperty("rain")
     public RainApiDto getRain() {
-        return rain;
+        return (rain == null) ? new RainApiDto() : rain;
     }
 
     @JsonProperty("rain")
