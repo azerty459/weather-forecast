@@ -8,18 +8,18 @@ import java.util.List;
 public class PrevisionApiDto {
 
     private Instant dt;
-    private MainApiDto listMain;
+    private DetailPrevisionApiDto listDetailPrevision;
     private java.util.List<WeatherApiDto> weather = null;
     private RainApiDto rain;
 
     @JsonProperty("main")
-    public MainApiDto getListMain() {
-        return listMain;
+    public DetailPrevisionApiDto getListDetailPrevision() {
+        return listDetailPrevision;
     }
 
     @JsonProperty("main")
-    public void setListMain(MainApiDto listMain) {
-        this.listMain = listMain;
+    public void setListDetailPrevision(DetailPrevisionApiDto listDetailPrevision) {
+        this.listDetailPrevision = listDetailPrevision;
     }
 
     @JsonProperty("dt")

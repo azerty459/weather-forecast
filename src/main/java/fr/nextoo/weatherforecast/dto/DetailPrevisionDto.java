@@ -1,7 +1,7 @@
 package fr.nextoo.weatherforecast.dto;
 
 
-public class MainDto {
+public class DetailPrevisionDto {
 
     private Integer temperature_max;
     private Integer tauxHumidite;

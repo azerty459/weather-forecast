@@ -1,7 +1,7 @@
 package fr.nextoo.weatherforecast.controller;
 
 import fr.nextoo.weatherforecast.dto.ForecastDto;
-import fr.nextoo.weatherforecast.dto.MainDto;
+import fr.nextoo.weatherforecast.dto.DetailPrevisionDto;
 import fr.nextoo.weatherforecast.dto.PrevisionDto;
 import fr.nextoo.weatherforecast.service.ForecastService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class ForecastController {
 
     @CrossOrigin
     @GetMapping(value = "weather/actualHumidity/{ville}")
-    public MainDto getActualHumidity(@PathVariable String ville) {
+    public DetailPrevisionDto getActualHumidity(@PathVariable String ville) {
         return forecastService.getActualHumidity(ville);
     }
 

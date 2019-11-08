@@ -1,9 +1,7 @@
 package fr.nextoo.weatherforecast.api.service.impl;
 
 import fr.nextoo.weatherforecast.api.dto.ForecastApiDto;
-import fr.nextoo.weatherforecast.api.dto.MainApiDto;
 import fr.nextoo.weatherforecast.api.service.ForecastServiceApi;
-import fr.nextoo.weatherforecast.dto.MainDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

@@ -2,7 +2,7 @@ package fr.nextoo.weatherforecast.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class MainApiDto {
+public class DetailPrevisionApiDto {
 
     private Double temp;
     private Double temp_min;

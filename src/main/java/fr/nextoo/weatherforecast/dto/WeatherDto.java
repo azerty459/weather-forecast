@@ -1,24 +1,11 @@
 package fr.nextoo.weatherforecast.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 public class WeatherDto {
 
-    private String main;
     private String description;
-    private Boolean ilPleut;
-    private String icon;
-
-    @JsonProperty("meteo")
-    public String getMain() {
-        return main;
-    }
-
-    @JsonProperty("main")
-    public void setMain(String main) {
-        this.main = main;
-    }
+    private Boolean isRainning;
 
     @JsonProperty("detailMeteo")
     public String getDescription() {
@@ -30,21 +17,12 @@ public class WeatherDto {
         this.description = description;
     }
 
-    public Boolean getIlPleut() {
-        return ilPleut;
+    public Boolean getIsRainning() {
+        return isRainning;
     }
 
-    public void setIlPleut(Boolean ilPleut) {
-        this.ilPleut = ilPleut;
+    public void setIsRainning(Boolean isRainning) {
+        this.isRainning = isRainning;
     }
 
-    @JsonProperty("icon")
-    public String getIcon() {
-        return icon;
-    }
-
-    @JsonProperty("icon")
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
 }

@@ -19,7 +19,7 @@ public class MappingUtility {
     public ForecastDto getMappedForecastData(ForecastApiDto forecastApiDto) {
         ForecastDto forecastDto = new ForecastDto();
         forecastDto.setVille(getMappedCityData(forecastApiDto));
-        forecastDto.setDetailForecast(getMappedListList(forecastApiDto.getList()));
+        forecastDto.setDetailForecast(getMappedPrevisionList(forecastApiDto.getList()));
         return forecastDto;
     }
 
@@ -30,34 +30,32 @@ public class MappingUtility {
         return cityDto;
     }
 
-    public PrevisionDto getMappedListData(PrevisionApiDto previsionApiDto) {
+    public PrevisionDto getMappedPrevisionData(PrevisionApiDto previsionApiDto) {
         PrevisionDto previsionDto;
         Instant dateTime = previsionApiDto.getDt();
-        MainApiDto mainApiDto = previsionApiDto.getListMain();
+        DetailPrevisionApiDto detailPrevisionApiDto = previsionApiDto.getListDetailPrevision();
         List<WeatherApiDto> weatherApiDtoList = previsionApiDto.getWeather();
         RainApiDto rainApiDto = previsionApiDto.getRain();
         previsionDto = new PrevisionDto();
         previsionDto.setDateTime(utility.formatter(dateTime));
-        previsionDto.setListMain(getMappedMainData(mainApiDto));
+        previsionDto.setListDetailPrevision(getMappedDetailPrevisionData(detailPrevisionApiDto));
         previsionDto.setWeather(getMappedWeatherList(weatherApiDtoList));
         previsionDto.setRain(getMappedRainData(rainApiDto));
         return previsionDto;
     }
 
-    public List<PrevisionDto> getMappedListList(List<PrevisionApiDto> listApiDtoPrevision) {
+    public List<PrevisionDto> getMappedPrevisionList(List<PrevisionApiDto> listApiDtoPrevision) {
         List<PrevisionDto> detailForecastList = new LinkedList<>();
         for (PrevisionApiDto previsionApiDto : listApiDtoPrevision) {
-            detailForecastList.add(getMappedListData(previsionApiDto));
+            detailForecastList.add(getMappedPrevisionData(previsionApiDto));
         }
         return detailForecastList;
     }
 
     public WeatherDto getMappedWeatherData(WeatherApiDto weatherApiDto) {
         WeatherDto weatherDto = new WeatherDto();
-        weatherDto.setMain(weatherApiDto.getMain());
         weatherDto.setDescription(weatherApiDto.getDescription());
-        weatherDto.setIlPleut(weatherApiDto.getDescription().contains("rain"));
-        weatherDto.setIcon(weatherApiDto.getIcon());
+        weatherDto.setIsRainning(weatherApiDto.getDescription().contains("rain"));
         return weatherDto;
     }
 
@@ -71,14 +69,14 @@ public class MappingUtility {
 
     public RainDto getMappedRainData(RainApiDto rainApiDto) {
         RainDto rainDto = new RainDto();
-        rainDto.setTauxPrecipitation(rainApiDto.get_3h());
+        rainDto.setTauxPrecipitation(rainApiDto.getTauxPrecipitation());
         return rainDto;
     }
 
-    public MainDto getMappedMainData(MainApiDto mainApiDto) {
-        MainDto mainDto = new MainDto();
-        mainDto.setTemperature_max(mainApiDto.getTemp_max().intValue());
-        mainDto.setTauxHumidite(mainApiDto.getHumidity().intValue());
-        return mainDto;
+    public DetailPrevisionDto getMappedDetailPrevisionData(DetailPrevisionApiDto detailPrevisionApiDto) {
+        DetailPrevisionDto detailPrevisionDto = new DetailPrevisionDto();
+        detailPrevisionDto.setTemperature_max(detailPrevisionApiDto.getTemp_max().intValue());
+        detailPrevisionDto.setTauxHumidite(detailPrevisionApiDto.getHumidity().intValue());
+        return detailPrevisionDto;
     }
 }

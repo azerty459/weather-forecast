@@ -5,16 +5,16 @@ import java.util.List;
 public class PrevisionDto {
 
     private String dateTime;
-    private MainDto listMain;
+    private DetailPrevisionDto listDetailPrevision;
     private List<WeatherDto> weather;
     private RainDto rain;
 
-    public MainDto getListMain() {
-        return listMain;
+    public DetailPrevisionDto getListDetailPrevision() {
+        return listDetailPrevision;
     }
 
-    public void setListMain(MainDto listMain) {
-        this.listMain = listMain;
+    public void setListDetailPrevision(DetailPrevisionDto listDetailPrevision) {
+        this.listDetailPrevision = listDetailPrevision;
     }
 
     public String getDateTime() {
