@@ -2,7 +2,7 @@ package fr.nextoo.weatherforecast.dto;
 
 import java.util.List;
 
-public class ListDto {
+public class PrevisionDto {
 
     private String dateTime;
     private MainDto listMain;

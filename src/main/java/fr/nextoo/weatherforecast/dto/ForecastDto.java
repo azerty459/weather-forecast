@@ -4,14 +4,14 @@ import java.util.List;
 
 public class ForecastDto {
 
-    private List<ListDto> detailForecast = null;
+    private List<PrevisionDto> detailForecast = null;
     private CityDto ville;
 
-    public List<ListDto> getDetailForecast() {
+    public List<PrevisionDto> getDetailForecast() {
         return detailForecast;
     }
 
-    public void setDetailForecast(List<ListDto> detailForecast) {
+    public void setDetailForecast(List<PrevisionDto> detailForecast) {
         this.detailForecast = detailForecast;
     }
 

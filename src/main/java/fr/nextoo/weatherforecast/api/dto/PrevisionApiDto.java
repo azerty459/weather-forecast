@@ -1,16 +1,11 @@
 package fr.nextoo.weatherforecast.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import fr.nextoo.weatherforecast.dto.RainDto;
 
 import java.time.Instant;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.List;
-import java.util.Locale;
 
-public class ListApiDto {
+public class PrevisionApiDto {
 
     private Instant dt;
     private MainApiDto listMain;

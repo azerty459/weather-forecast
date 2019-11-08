@@ -30,24 +30,24 @@ public class MappingUtility {
         return cityDto;
     }
 
-    public ListDto getMappedListData(ListApiDto listApiDto) {
-        ListDto listDto;
-        Instant dateTime = listApiDto.getDt();
-        MainApiDto mainApiDto = listApiDto.getListMain();
-        List<WeatherApiDto> weatherApiDtoList = listApiDto.getWeather();
-        RainApiDto rainApiDto = listApiDto.getRain();
-        listDto = new ListDto();
-        listDto.setDateTime(utility.formatter(dateTime));
-        listDto.setListMain(getMappedMainData(mainApiDto));
-        listDto.setWeather(getMappedWeatherList(weatherApiDtoList));
-        listDto.setRain(getMappedRainData(rainApiDto));
-        return listDto;
+    public PrevisionDto getMappedListData(PrevisionApiDto previsionApiDto) {
+        PrevisionDto previsionDto;
+        Instant dateTime = previsionApiDto.getDt();
+        MainApiDto mainApiDto = previsionApiDto.getListMain();
+        List<WeatherApiDto> weatherApiDtoList = previsionApiDto.getWeather();
+        RainApiDto rainApiDto = previsionApiDto.getRain();
+        previsionDto = new PrevisionDto();
+        previsionDto.setDateTime(utility.formatter(dateTime));
+        previsionDto.setListMain(getMappedMainData(mainApiDto));
+        previsionDto.setWeather(getMappedWeatherList(weatherApiDtoList));
+        previsionDto.setRain(getMappedRainData(rainApiDto));
+        return previsionDto;
     }
 
-    public List<ListDto> getMappedListList(List<ListApiDto> listApiDtoList) {
-        List<ListDto> detailForecastList = new LinkedList<>();
-        for (ListApiDto listApiDto : listApiDtoList) {
-            detailForecastList.add(getMappedListData(listApiDto));
+    public List<PrevisionDto> getMappedListList(List<PrevisionApiDto> listApiDtoPrevision) {
+        List<PrevisionDto> detailForecastList = new LinkedList<>();
+        for (PrevisionApiDto previsionApiDto : listApiDtoPrevision) {
+            detailForecastList.add(getMappedListData(previsionApiDto));
         }
         return detailForecastList;
     }
@@ -77,8 +77,6 @@ public class MappingUtility {
 
     public MainDto getMappedMainData(MainApiDto mainApiDto) {
         MainDto mainDto = new MainDto();
-        mainDto.setTemperature(mainApiDto.getTemp().intValue());
-        mainDto.setTemperature_min(mainApiDto.getTemp_min().intValue());
         mainDto.setTemperature_max(mainApiDto.getTemp_max().intValue());
         mainDto.setTauxHumidite(mainApiDto.getHumidity().intValue());
         return mainDto;
