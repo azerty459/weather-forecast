@@ -22,7 +22,7 @@ public class WeatherInfo {
 	@JsonProperty("temp_max")
 	private Double temperatureMaximum;
 	
-	private Double presure;
+	private Double pressure;
 	
 	private Integer humidity;
 	
