@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nextoo.meteo.dto.ForecastWrapper;
+import com.nextoo.meteo.api.dto.ForecastWrapper;
 
 @Component
 public class WeatherApiImpl implements WeatherApi {

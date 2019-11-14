@@ -1,4 +1,4 @@
-package com.nextoo.meteo.dto;
+package com.nextoo.meteo.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -10,9 +10,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Coordinate {
-	
-	private Double lat;
-	private Double lon;
+public class Weather {
+
+	private String description;
 
 }

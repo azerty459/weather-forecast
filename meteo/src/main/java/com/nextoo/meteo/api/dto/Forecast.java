@@ -1,4 +1,4 @@
-package com.nextoo.meteo.dto;
+package com.nextoo.meteo.api.dto;
 
 import java.util.List;
 
@@ -12,14 +12,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@JsonIgnoreProperties({ "sys", "dt", "clouds", "wind", "snow" })
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Forecast {
-	
+
 	@JsonProperty("main")
 	private WeatherInfo weatherInfo;
-	
+
 	private List<Weather> weather;
-	
+
 	@JsonProperty("dt_txt")
 	private String datetime;
 

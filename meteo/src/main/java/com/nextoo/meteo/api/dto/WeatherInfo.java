@@ -1,4 +1,4 @@
-package com.nextoo.meteo.dto;
+package com.nextoo.meteo.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@JsonIgnoreProperties({ "sea_level", "grnd_level", "temp_kf" })
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class WeatherInfo {
 	
 	@JsonProperty("temp")

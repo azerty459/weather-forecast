@@ -1,7 +1,8 @@
-package com.nextoo.meteo.dto;
+package com.nextoo.meteo.api.dto;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;
@@ -11,15 +12,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ForecastWrapper {
 
 	@JsonProperty("cod")
 	private Integer code;
 	private String message;
-	@JsonProperty("cnt")
-	private Integer count;
 	@JsonProperty("list")
 	private List<Forecast> forcast;
-	private City city;
 
 }
