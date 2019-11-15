@@ -33,7 +33,7 @@ public class ForecastTransformer {
 				.pressionAtmospherique(forecast.getWeatherInfo().getPressure()).build();
 	}
 
-	private List<NextooForecast> toNextoo(List<Forecast> forecast) {
+	public List<NextooForecast> toNextoo(List<Forecast> forecast) {
 		return forecast.stream().map(this::toNextoo).collect(Collectors.toList());
 	}
 
