@@ -64,9 +64,9 @@ public class ForecastController {
 
 	@GetMapping("/forecast/{city}/humidity")
 	public ResponseEntity<NextooHumidityForecast> himidityAnalyse(@PathVariable() String city) throws ApiException {
-		ForecastWrapper forecast = weatherApi.forecastCity(city).orElseThrow(ApiException::new);
+		ForecastWrapper forecast = weatherApi.forecastAndNow(city).orElseThrow(ApiException::new);
 
-		Integer actualHumidity = weatherApi.actualWeather(city).orElseThrow(ApiException::new).getWeatherInfo().getHumidity();
+		Integer actualHumidity = forecast.getActually().getWeatherInfo().getHumidity();
 
 		Map<String, List<Forecast>> daily = forecast.getForcast().stream().map(f -> f.getDatetime().substring(0, 10))
 				.distinct()
