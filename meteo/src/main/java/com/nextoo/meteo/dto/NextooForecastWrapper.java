@@ -17,6 +17,8 @@ public class NextooForecastWrapper {
 	
 	private String ville;
 	
+	private NextooForecast actuellement;
+
 	private List<NextooForecast> previsions;
 
 }

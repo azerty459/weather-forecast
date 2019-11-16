@@ -20,7 +20,8 @@ public class ForecastTransformer {
 		if (forecast.getCode() != 200)
 			return Optional.empty();
 		else
-			return Optional.of(NextooForecastWrapper.builder().previsions(toNextoo(forecast.getForcast())).build());
+			return Optional.of(NextooForecastWrapper.builder().actuellement(toNextoo(forecast.getActually()))
+					.previsions(toNextoo(forecast.getForcast())).build());
 	}
 
 	public NextooForecast toNextoo(Forecast forecast) {

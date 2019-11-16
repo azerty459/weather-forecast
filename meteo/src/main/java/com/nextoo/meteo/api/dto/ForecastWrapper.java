@@ -18,6 +18,8 @@ public class ForecastWrapper {
 	@JsonProperty("cod")
 	private Integer code;
 	private String message;
+	@JsonProperty(required = false)
+	private Forecast actually;
 	@JsonProperty("list")
 	private List<Forecast> forcast;
 

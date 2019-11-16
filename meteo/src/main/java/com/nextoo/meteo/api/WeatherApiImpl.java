@@ -54,7 +54,7 @@ public class WeatherApiImpl implements WeatherApi {
 			return Optional.empty();
 		}
 		
-		forecast.get().getForcast().add(0, now.get());
+		forecast.get().setActually(now.get());
 		return forecast;
 	}
 
