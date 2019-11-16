@@ -33,7 +33,7 @@ public class ForecastController {
 
 	@GetMapping("/forecast/{city}")
 	public ResponseEntity<NextooForecastWrapper> forecastCity(@PathVariable() String city) throws ApiException {
-		ForecastWrapper forecast = weatherApi.forecastCity(city).orElseThrow(ApiException::new);
+		ForecastWrapper forecast = weatherApi.forecastAndNow(city).orElseThrow(ApiException::new);
 		NextooForecastWrapper nextooForecast = forecastTransformer.toNextoo(forecast).orElseThrow(ApiException::new);
 		nextooForecast.setVille(city);
 		return ResponseEntity.ok(nextooForecast);
@@ -41,7 +41,7 @@ public class ForecastController {
 
 	@GetMapping("/forecast/{city}/hotest")
 	public ResponseEntity<NextooForecast> hotestDay(@PathVariable() String city) throws ApiException {
-		ForecastWrapper forecast = weatherApi.forecastCity(city).orElseThrow(ApiException::new);
+		ForecastWrapper forecast = weatherApi.forecastAndNow(city).orElseThrow(ApiException::new);
 		Forecast hotest = forecast.getForcast().stream()
 				.max(Comparator.comparing(f -> f.getWeatherInfo().getTemperature())).orElseThrow(ApiException::new);
 
@@ -50,7 +50,7 @@ public class ForecastController {
 
 	@GetMapping("/forecast/{city}/raining")
 	public ResponseEntity<NextooForecastWrapper> rainyDay(@PathVariable() String city) throws ApiException {
-		ForecastWrapper forecast = weatherApi.forecastCity(city).orElseThrow(ApiException::new);
+		ForecastWrapper forecast = weatherApi.forecastAndNow(city).orElseThrow(ApiException::new);
 		List<Forecast> raining = forecast.getForcast().stream()
 				.filter(f -> f.getWeather().stream().anyMatch(w -> w.getDescription().contains("pluie")))
 				.collect(Collectors.toList());
@@ -66,8 +66,7 @@ public class ForecastController {
 	public ResponseEntity<NextooHumidityForecast> himidityAnalyse(@PathVariable() String city) throws ApiException {
 		ForecastWrapper forecast = weatherApi.forecastCity(city).orElseThrow(ApiException::new);
 
-		Integer actualHumidity = forecast.getForcast().stream().min(Comparator.comparing(Forecast::getDatetime))
-				.orElseThrow(ApiException::new).getWeatherInfo().getHumidity();
+		Integer actualHumidity = weatherApi.actualWeather(city).orElseThrow(ApiException::new).getWeatherInfo().getHumidity();
 
 		Map<String, List<Forecast>> daily = forecast.getForcast().stream().map(f -> f.getDatetime().substring(0, 10))
 				.distinct()
