@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.nextoo.meteo.api.WeatherApi;
 import com.nextoo.meteo.api.dto.Forecast;
@@ -18,6 +19,7 @@ import com.nextoo.meteo.transformer.ForecastTransformer;
 import com.nextoo.meteo.utils.KeyPair;
 import com.nextoo.meteo.utils.StreamUtils;
 
+@Component
 public class ForecastServiceImpl implements ForecastService {
 
 	@Autowired
