@@ -1,5 +1,9 @@
 package com.nextoo.meteo.controllers;
 
+
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,7 +34,7 @@ public class ForecastController {
 	}
 
 	@GetMapping("/forecast/{city}/raining")
-	public ResponseEntity<NextooForecastWrapper> rainyDay(@PathVariable() String city) {
+	public ResponseEntity<List<String>> rainyDay(@PathVariable() String city) {
 		return ResponseEntity.of(forecastService.rainingDays(city));
 	}
 

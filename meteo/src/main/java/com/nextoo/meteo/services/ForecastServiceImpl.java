@@ -52,12 +52,7 @@ public class ForecastServiceImpl implements ForecastService {
 
 		Integer actualHumidity = forecast.get().getActually().getWeatherInfo().getHumidity();
 
-		Map<String, List<Forecast>> daily = forecast.get().getForcast().stream()
-				.map(f -> f.getDatetime().substring(0, 10)).distinct()
-				.map(day -> new KeyPair<>(day,
-						forecast.get().getForcast().stream().filter(f -> f.getDatetime().startsWith(day))
-								.collect(Collectors.toList())))
-				.collect(Collectors.toMap(KeyPair::getKey, KeyPair::getValue));
+		Map<String, List<Forecast>> daily = groupByDay(forecast.get());
 
 		Map<String, Double> dailyAverage = StreamUtils.stream(daily)
 				.map(kv -> new KeyPair<String, Double>(kv.getKey(),
@@ -93,23 +88,26 @@ public class ForecastServiceImpl implements ForecastService {
 	}
 
 	@Override
-	public Optional<NextooForecastWrapper> rainingDays(String city) {
+	public Optional<List<String>> rainingDays(String city) {
 		Optional<ForecastWrapper> forecast = weatherApi.forecastAndNow(city);
 		if (forecast.isEmpty())
 			return Optional.empty();
+		
+		Map<String, List<Forecast>> daily = groupByDay(forecast.get());
 
-		List<Forecast> raining = forecast.get().getForcast().stream()
-				.filter(f -> f.getWeather().stream().anyMatch(w -> w.getDescription().contains("pluie")))
-				.collect(Collectors.toList());
+		return Optional.of(StreamUtils.stream(daily)
+				.filter(kv -> kv.getValue().stream().anyMatch(
+						f -> f.getWeather().stream().anyMatch(w -> w.getDescription().contains("pluie"))))
+						.map(KeyPair::getKey)
+						.collect(Collectors.toList()));
+	}
 
-		forecast.get().setForcast(raining);
-
-		Optional<NextooForecastWrapper> nextooForecast = forecastTransformer.toNextoo(forecast.get());
-		if (nextooForecast.isEmpty())
-			return Optional.empty();
-
-		nextooForecast.get().setVille(city);
-		return nextooForecast;
+	private Map<String, List<Forecast>> groupByDay(ForecastWrapper forecast) {
+		return forecast.getForcast().stream().map(f -> f.getDatetime().substring(0, 10)).distinct()
+				.map(day -> new KeyPair<String, List<Forecast>>(day,
+						forecast.getForcast().stream().filter(f -> f.getDatetime().startsWith(day))
+								.collect(Collectors.toList())))
+				.collect(Collectors.toMap(KeyPair::getKey, KeyPair::getValue));
 	}
 
 }

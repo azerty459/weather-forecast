@@ -1,8 +1,7 @@
 package com.nextoo.meteo.services;
 
+import java.util.List;
 import java.util.Optional;
-
-import org.springframework.stereotype.Component;
 
 import com.nextoo.meteo.dto.NextooForecast;
 import com.nextoo.meteo.dto.NextooForecastWrapper;
@@ -15,9 +14,8 @@ public interface ForecastService {
 	
 	Optional<NextooForecast> hotestDay(String city);
 		
-	Optional<NextooForecastWrapper> rainingDays(String city);
+	Optional<List<String>> rainingDays(String city);
 
 	Optional<NextooHumidityForecast> humidityAnalyse(String city);
-
 	
 }
