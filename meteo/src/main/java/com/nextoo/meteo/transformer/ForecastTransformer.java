@@ -37,5 +37,4 @@ public class ForecastTransformer {
 	public List<NextooForecast> toNextoo(List<Forecast> forecast) {
 		return forecast.stream().map(this::toNextoo).collect(Collectors.toList());
 	}
-
 }
