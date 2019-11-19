@@ -1,0 +1,17 @@
+/home/nextoo/Téléchargements/meteo/meteo/src/main/java/com/nextoo/meteo/exception/ApiException.java
+/home/nextoo/Téléchargements/meteo/meteo/src/main/java/com/nextoo/meteo/utils/StreamUtils.java
+/home/nextoo/Téléchargements/meteo/meteo/src/main/java/com/nextoo/meteo/api/dto/WeatherDto.java
+/home/nextoo/Téléchargements/meteo/meteo/src/main/java/com/nextoo/meteo/dto/NextooHumidityForecast.java
+/home/nextoo/Téléchargements/meteo/meteo/src/main/java/com/nextoo/meteo/controllers/ForecastController.java
+/home/nextoo/Téléchargements/meteo/meteo/src/main/java/com/nextoo/meteo/api/dto/ForecastWrapperDto.java
+/home/nextoo/Téléchargements/meteo/meteo/src/main/java/com/nextoo/meteo/services/ForecastService.java
+/home/nextoo/Téléchargements/meteo/meteo/src/main/java/com/nextoo/meteo/api/WeatherApiImpl.java
+/home/nextoo/Téléchargements/meteo/meteo/src/main/java/com/nextoo/meteo/api/dto/WeatherInfoDto.java
+/home/nextoo/Téléchargements/meteo/meteo/src/main/java/com/nextoo/meteo/services/ForecastServiceImpl.java
+/home/nextoo/Téléchargements/meteo/meteo/src/main/java/com/nextoo/meteo/dto/NextooForecast.java
+/home/nextoo/Téléchargements/meteo/meteo/src/main/java/com/nextoo/meteo/utils/KeyPair.java
+/home/nextoo/Téléchargements/meteo/meteo/src/main/java/com/nextoo/meteo/MeteoApplication.java
+/home/nextoo/Téléchargements/meteo/meteo/src/main/java/com/nextoo/meteo/dto/NextooForecastWrapper.java
+/home/nextoo/Téléchargements/meteo/meteo/src/main/java/com/nextoo/meteo/transformer/ForecastTransformer.java
+/home/nextoo/Téléchargements/meteo/meteo/src/main/java/com/nextoo/meteo/api/dto/ForecastDto.java
+/home/nextoo/Téléchargements/meteo/meteo/src/main/java/com/nextoo/meteo/api/WeatherApi.java
