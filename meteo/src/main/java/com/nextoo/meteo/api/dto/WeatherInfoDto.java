@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class WeatherInfo {
+public class WeatherInfoDto {
 
 	@JsonProperty("temp")
 	private Double temperature;
@@ -19,11 +19,11 @@ public class WeatherInfo {
 
 	private Integer humidity;
 
-	public WeatherInfo() {
+	public WeatherInfoDto() {
 
 	}
 
-	public WeatherInfo(Double temperature, Double temperatureMinimum, Double temperatureMaximum, Double pressure,
+	public WeatherInfoDto(Double temperature, Double temperatureMinimum, Double temperatureMaximum, Double pressure,
 			Integer humidity) {
 		super();
 		this.temperature = temperature;

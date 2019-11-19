@@ -3,15 +3,15 @@ package com.nextoo.meteo.api.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Weather {
+public class WeatherDto {
 
 	private String description;
 
-	public Weather() {
+	public WeatherDto() {
 
 	}
 
-	public Weather(String description) {
+	public WeatherDto(String description) {
 		super();
 		this.description = description;
 	}

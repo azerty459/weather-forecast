@@ -6,20 +6,20 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ForecastWrapper {
+public class ForecastWrapperDto {
 
 	@JsonProperty("cod")
 	private Integer code;
 	private String message;
 	@JsonProperty(required = false)
-	private Forecast actually;
+	private ForecastDto actually;
 	@JsonProperty("list")
-	private List<Forecast> forcast;
+	private List<ForecastDto> forcast;
 	
-	public ForecastWrapper() {
+	public ForecastWrapperDto() {
 	}
 	
-	public ForecastWrapper(Integer code, String message, Forecast actually, List<Forecast> forcast) {
+	public ForecastWrapperDto(Integer code, String message, ForecastDto actually, List<ForecastDto> forcast) {
 		super();
 		this.code = code;
 		this.message = message;
@@ -39,16 +39,16 @@ public class ForecastWrapper {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public Forecast getActually() {
+	public ForecastDto getActually() {
 		return actually;
 	}
-	public void setActually(Forecast actually) {
+	public void setActually(ForecastDto actually) {
 		this.actually = actually;
 	}
-	public List<Forecast> getForcast() {
+	public List<ForecastDto> getForcast() {
 		return forcast;
 	}
-	public void setForcast(List<Forecast> forcast) {
+	public void setForcast(List<ForecastDto> forcast) {
 		this.forcast = forcast;
 	}
 	

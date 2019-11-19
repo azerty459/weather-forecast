@@ -6,23 +6,23 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Forecast {
+public class ForecastDto {
 
 	@JsonProperty("main")
-	private WeatherInfo weatherInfo;
+	private WeatherInfoDto weatherInfo;
 
-	private List<Weather> weather;
+	private List<WeatherDto> weather;
 
 	@JsonProperty("dt_txt")
 	private String datetime;
 	
 	
-	public Forecast() {
+	public ForecastDto() {
 
 	}
 
 
-	public Forecast(WeatherInfo weatherInfo, List<Weather> weather, String datetime) {
+	public ForecastDto(WeatherInfoDto weatherInfo, List<WeatherDto> weather, String datetime) {
 		super();
 		this.weatherInfo = weatherInfo;
 		this.weather = weather;
@@ -30,22 +30,22 @@ public class Forecast {
 	}
 
 
-	public WeatherInfo getWeatherInfo() {
+	public WeatherInfoDto getWeatherInfo() {
 		return weatherInfo;
 	}
 
 
-	public void setWeatherInfo(WeatherInfo weatherInfo) {
+	public void setWeatherInfo(WeatherInfoDto weatherInfo) {
 		this.weatherInfo = weatherInfo;
 	}
 
 
-	public List<Weather> getWeather() {
+	public List<WeatherDto> getWeather() {
 		return weather;
 	}
 
 
-	public void setWeather(List<Weather> weather) {
+	public void setWeather(List<WeatherDto> weather) {
 		this.weather = weather;
 	}
 

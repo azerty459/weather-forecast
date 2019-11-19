@@ -3,25 +3,18 @@ package com.nextoo.meteo.dto;
 import java.util.List;
 import java.util.Map;
 
-import com.nextoo.meteo.dto.NextooForecastWrapper.NextooForecastWrapperBuilder;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Builder
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class NextooHumidityForecast {
 
 	private String ville;
 	private Integer humiditeActuelle;
 	private Map<String, Double> humiditeMoyen;
-	private List<NextooForecast> lePluSec;
+	private List<NextooForecast> lePlusSec;
 
 	public NextooHumidityForecast() {
 
@@ -33,7 +26,7 @@ public class NextooHumidityForecast {
 		this.ville = ville;
 		this.humiditeActuelle = humiditeActuelle;
 		this.humiditeMoyen = humiditeMoyen;
-		this.lePluSec = lePluSec;
+		this.lePlusSec = lePluSec;
 	}
 
 	public String getVille() {
@@ -60,12 +53,12 @@ public class NextooHumidityForecast {
 		this.humiditeMoyen = humiditeMoyen;
 	}
 
-	public List<NextooForecast> getLePluSec() {
-		return lePluSec;
+	public List<NextooForecast> getLePlusSec() {
+		return lePlusSec;
 	}
 
-	public void setLePluSec(List<NextooForecast> lePluSec) {
-		this.lePluSec = lePluSec;
+	public void setLePlusSec(List<NextooForecast> lePluSec) {
+		this.lePlusSec = lePluSec;
 	}
 
 	public static NextooHumidityForecastBuilder builder() {
@@ -100,7 +93,7 @@ public class NextooHumidityForecast {
 		}
 
 		public NextooHumidityForecastBuilder lePluSec(List<NextooForecast> lePluSec) {
-			forecast.lePluSec = lePluSec;
+			forecast.lePlusSec = lePluSec;
 			return this;
 		}
 	}

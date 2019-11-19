@@ -1,5 +1,6 @@
 package com.nextoo.meteo.utils;
 
+
 public class KeyPair<K, V> {
 
 	private K key;

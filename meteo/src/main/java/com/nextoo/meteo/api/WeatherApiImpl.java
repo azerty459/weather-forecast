@@ -9,8 +9,8 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nextoo.meteo.api.dto.Forecast;
-import com.nextoo.meteo.api.dto.ForecastWrapper;
+import com.nextoo.meteo.api.dto.ForecastDto;
+import com.nextoo.meteo.api.dto.ForecastWrapperDto;
 
 @Component
 public class WeatherApiImpl implements WeatherApi {
@@ -26,31 +26,31 @@ public class WeatherApiImpl implements WeatherApi {
 	private ObjectMapper objectMapper;
 	
 	@Override
-	public Optional<Forecast> actualWeather(String city) {
+	public Optional<ForecastDto> actualWeather(String city) {
 		ResponseEntity<String> response = restTemplate.getForEntity(API_WEATHER_URL + "&q=" + city , String.class);
 		try {
-			return Optional.of(objectMapper.readValue(response.getBody(), Forecast.class));
+			return Optional.of(objectMapper.readValue(response.getBody(), ForecastDto.class));
 		} catch (JsonProcessingException e) {
 			return Optional.empty();
 		}
 	}
 
 	@Override
-	public Optional<ForecastWrapper> forecastCity(String city) {
+	public Optional<ForecastWrapperDto> forecastCity(String city) {
 		ResponseEntity<String> response = restTemplate.getForEntity(API_FORECAST_URL + "&q=" + city , String.class);
 		try {
-			return Optional.of(objectMapper.readValue(response.getBody(), ForecastWrapper.class));
+			return Optional.of(objectMapper.readValue(response.getBody(), ForecastWrapperDto.class));
 		} catch (JsonProcessingException e) {
 			return Optional.empty();
 		}
 	}
 	
 	@Override
-	public Optional<ForecastWrapper> forecastAndNow(String city) {
-		Optional<Forecast> now = actualWeather(city);
-		Optional<ForecastWrapper> forecast = forecastCity(city);
+	public Optional<ForecastWrapperDto> forecastAndNow(String city) {
+		Optional<ForecastDto> now = actualWeather(city);
+		Optional<ForecastWrapperDto> forecast = forecastCity(city);
 		
-		if (now.isEmpty() || forecast.isEmpty() || forecast.get().getCode() != 200) {
+		if (!now.isPresent() || !forecast.isPresent() || forecast.get().getCode() != 200) {
 			return Optional.empty();
 		}
 		
