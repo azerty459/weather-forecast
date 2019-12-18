@@ -6,7 +6,16 @@ public class PrevisionHoraire {
 
     private String condition;
     private Integer tauxHumidite;
+    private Integer heurePrevisionHoraire ;
 
+
+    public Integer getHeurePrevisionHoraire() {
+        return heurePrevisionHoraire;
+    }
+
+    public void setHeurePrevisionHoraire(Integer heurePrevisionHoraire) {
+        this.heurePrevisionHoraire = heurePrevisionHoraire;
+    }
 
     public String getCondition() {
         return condition;

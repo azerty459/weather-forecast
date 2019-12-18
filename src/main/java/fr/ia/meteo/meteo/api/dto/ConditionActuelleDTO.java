@@ -1,15 +1,16 @@
-package fr.ia.meteo.meteo.job;
+package fr.ia.meteo.meteo.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class ConditionActuelle {
+public class ConditionActuelleDTO {
 
 
     @JsonProperty("date")
     private LocalDate date;
+    @JsonProperty("tmp")
     private Integer temp;
     @JsonProperty("humidity")
     private Integer tauxHumidite;

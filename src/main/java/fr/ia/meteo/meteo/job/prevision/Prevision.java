@@ -5,18 +5,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.List;
 
-public class Prevision {
+public class Prevision implements Comparable<Prevision>{
 
     private LocalDate date;
-
     private Integer tempMin;
-
     private Integer tempMax;
-
     private String condition;
-
-    private HashMap<String, PrevisionHoraire> previsionHoraireList ;
+    private List<PrevisionHoraire> previsionHoraireList ;
 
 
 
@@ -26,8 +23,12 @@ public class Prevision {
     }
 
 
-    public String getDate() {
+    public String getDateString() {
         return date.toString();
+    }
+
+    public LocalDate getDate() {
+        return date;
     }
 
     public String getCondition() {
@@ -58,12 +59,17 @@ public class Prevision {
         this.date = date;
     }
 
-    public HashMap<String, PrevisionHoraire> getPrevisionHoraireList() {
+    public List<PrevisionHoraire> getPrevisionHoraireList() {
         return previsionHoraireList;
     }
 
-    public void setPrevisionHoraireList(HashMap<String, PrevisionHoraire> previsionHoraireList) {
+    public void setPrevisionHoraireList(List<PrevisionHoraire> previsionHoraireList) {
         this.previsionHoraireList = previsionHoraireList;
+    }
+
+    @Override
+    public int compareTo(Prevision o) {
+        return this.getDate().compareTo(o.getDate());
     }
 
     @Override

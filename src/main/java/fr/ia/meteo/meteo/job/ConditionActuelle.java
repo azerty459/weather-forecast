@@ -8,10 +8,8 @@ import java.time.format.DateTimeFormatter;
 public class ConditionActuelle {
 
 
-    @JsonProperty("date")
     private LocalDate date;
     private Integer temp;
-    @JsonProperty("humidity")
     private Integer tauxHumidite;
     private String condition;
 
@@ -28,6 +26,7 @@ public class ConditionActuelle {
     public Integer getTemp() {
         return temp;
     }
+
 
     public void setTemp(Integer temp) {
         this.temp = temp;

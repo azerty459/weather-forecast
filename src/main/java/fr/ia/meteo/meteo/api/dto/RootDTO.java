@@ -10,7 +10,7 @@ import java.util.List;
 public class RootDTO {
 
     private Ville ville;
-    private ConditionActuelle conditionActuelle;
+    private ConditionActuelleDTO conditionActuelleDTO;
     private List<PrevisionDTO> previsionDTOList = new ArrayList<>();
 
 
@@ -40,12 +40,22 @@ public class RootDTO {
     }
 
 
-    public ConditionActuelle getConditionActuelle() {
-        return conditionActuelle;
+    public ConditionActuelleDTO getConditionActuelleDTO() {
+        return conditionActuelleDTO;
     }
 
     @JsonProperty("current_condition")
-    public void setConditionActuelle(ConditionActuelle conditionActuelle) {
-        this.conditionActuelle = conditionActuelle;
+    public void setConditionActuelleDTO(ConditionActuelleDTO conditionActuelleDTO) {
+        this.conditionActuelleDTO = conditionActuelleDTO;
+    }
+
+
+    @Override
+    public String toString() {
+        return "RootDTO{" +
+                "ville=" + ville +
+                ", conditionActuelle=" + conditionActuelleDTO +
+                ", previsionDTOList=" + previsionDTOList +
+                '}';
     }
 }

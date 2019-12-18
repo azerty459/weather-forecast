@@ -9,6 +9,7 @@ public class PrevisionHoraireDTO {
 
     @JsonProperty("RH2m")
     private Integer tauxHumidite;
+    private Integer heurePrevisionHoraire ;
 
 
     public String getCondition() {
@@ -25,6 +26,15 @@ public class PrevisionHoraireDTO {
 
     public void setTauxHumidite(Integer tauxHumidite) {
         this.tauxHumidite = tauxHumidite;
+    }
+
+
+    public Integer getHeurePrevisionHoraire() {
+        return heurePrevisionHoraire;
+    }
+
+    public void setHeurePrevisionHoraire(Integer heurePrevisionHoraire) {
+        this.heurePrevisionHoraire = heurePrevisionHoraire;
     }
 
     @Override

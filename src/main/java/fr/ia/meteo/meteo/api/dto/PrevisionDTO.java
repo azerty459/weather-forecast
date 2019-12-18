@@ -28,9 +28,12 @@ public class PrevisionDTO {
         this.date = LocalDate.parse(date, formatter);
     }
 
-
-    public String getDate() {
+    public String getDateString() {
         return date.toString();
+    }
+
+    public LocalDate getDate() {
+        return date;
     }
 
     public String getCondition() {
