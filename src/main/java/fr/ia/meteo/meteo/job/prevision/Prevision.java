@@ -1,5 +1,6 @@
 package fr.ia.meteo.meteo.job.prevision;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
@@ -7,14 +8,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 
-public class Prevision implements Comparable<Prevision>{
+public class Prevision implements Comparable<Prevision> {
 
     private LocalDate date;
     private Integer tempMin;
     private Integer tempMax;
     private String condition;
-    private List<PrevisionHoraire> previsionHoraireList ;
-
+    private List<PrevisionHoraire> previsionHoraireList;
 
 
     public void setDate(String date) {
@@ -22,7 +22,7 @@ public class Prevision implements Comparable<Prevision>{
         this.date = LocalDate.parse(date, formatter);
     }
 
-
+    @JsonIgnore
     public String getDateString() {
         return date.toString();
     }

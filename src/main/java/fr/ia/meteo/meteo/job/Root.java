@@ -1,5 +1,6 @@
 package fr.ia.meteo.meteo.job;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.ia.meteo.meteo.job.prevision.Prevision;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ public class Root {
 
 
     private List<Prevision> previsionList = new ArrayList<>();
+    @JsonIgnore
     private ConditionActuelle conditionActuelle;
 
     public ConditionActuelle getConditionActuelle() {

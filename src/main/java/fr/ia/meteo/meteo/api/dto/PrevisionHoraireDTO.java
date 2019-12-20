@@ -9,7 +9,7 @@ public class PrevisionHoraireDTO {
 
     @JsonProperty("RH2m")
     private Integer tauxHumidite;
-    private Integer heurePrevisionHoraire ;
+    private Integer heurePrevisionHoraire;
 
 
     public String getCondition() {

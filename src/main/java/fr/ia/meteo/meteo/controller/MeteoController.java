@@ -6,10 +6,7 @@ import fr.ia.meteo.meteo.api.ApiService;
 import fr.ia.meteo.meteo.job.prevision.Prevision;
 import fr.ia.meteo.meteo.service.MeteoService;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -17,6 +14,7 @@ import java.util.stream.Collectors;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
 @RequestMapping(value = "/previsions")
 public class MeteoController {
 

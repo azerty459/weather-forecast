@@ -1,13 +1,15 @@
 package fr.ia.meteo.meteo.api.dto;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class PrevisionDTO {
 
-    @JsonProperty("date")
     private LocalDate date;
 
     @JsonProperty("tmin")
@@ -22,18 +24,17 @@ public class PrevisionDTO {
     @JsonProperty("hourly_data")
     private PrevisionHoraireListDTO previsionHoraireListDTO;
 
-
+    @JsonSetter("date")
     public void setDate(String date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        this.date = LocalDate.parse(date, formatter);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy").withLocale(Locale.FRANCE);
+        this.date = LocalDate.parse(date,formatter);
     }
 
-    public String getDateString() {
-        return date.toString();
-    }
-
-    public LocalDate getDate() {
-        return date;
+    @JsonGetter("date")
+    public String getDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy").withLocale(Locale.FRANCE);
+        String dateString = date.format(formatter);
+        return dateString;
     }
 
     public String getCondition() {
