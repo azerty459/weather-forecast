@@ -1,33 +1,43 @@
-package fr.ia.meteo.meteo.api;
+package fr.ia.meteo.meteo.api.dto;
 
-import fr.ia.meteo.meteo.api.dto.PrevisionDTO;
-import fr.ia.meteo.meteo.api.dto.PrevisionHoraireDTO;
-import fr.ia.meteo.meteo.api.dto.RootDTO;
-import fr.ia.meteo.meteo.job.ConditionActuelle;
-import fr.ia.meteo.meteo.job.Root;
-import fr.ia.meteo.meteo.job.prevision.Prevision;
-import fr.ia.meteo.meteo.job.prevision.PrevisionHoraire;
+import fr.ia.meteo.meteo.api.dto.prevision.PrevisionDTO;
+import fr.ia.meteo.meteo.api.dto.prevision.PrevisionHoraireDTO;
+import fr.ia.meteo.meteo.entity.ConditionActuelle;
+import fr.ia.meteo.meteo.entity.Root;
+import fr.ia.meteo.meteo.entity.prevision.Prevision;
+import fr.ia.meteo.meteo.entity.prevision.PrevisionHoraire;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class DtoToDoConverter {
 
-    private PrevisionDTO PrevisionDTO;
-    private ModelMapper modelMapper = new ModelMapper();
+    @Autowired
+    private ModelMapper modelMapper;
+
+//    @Autowired
+//    public DtoToDoConverter( ModelMapper modelMapper) {
+//        this.modelMapper = modelMapper;
+//    }
 
     public Root convertDtoToDo(RootDTO rootDto) {
+        if(rootDto == null) {
+            return null;
+        }
 
         Root root = new Root();
         List<PrevisionDTO> previsionDTOList = rootDto.getPrevisionDTOList();
         List<Prevision> previsionList = previsionDTOList.stream()
-                .map(source -> mapPrevisionDtoToDo(source))
+                .map(this::mapPrevisionDtoToDo)
                 .collect(Collectors.toList());
         root.setPrevisionList(previsionList);
         root.setConditionActuelle(modelMapper.map(rootDto.getConditionActuelleDTO(), ConditionActuelle.class));
 
         return root;
-
     }
 
 
@@ -35,7 +45,7 @@ public class DtoToDoConverter {
         Prevision prevision = modelMapper.map(previsionDTO, Prevision.class);
         List<PrevisionHoraireDTO> previsionHoraireDTOList = previsionDTO.getPrevisionHoraireListDTO().getPrevisionHoraireList();
         List<PrevisionHoraire> previsionHoraireList = previsionHoraireDTOList.stream()
-                .map(x -> mapPrevisionHoraireDTOToDo(x))
+                .map(this::mapPrevisionHoraireDTOToDo)
                 .collect(Collectors.toList());
         prevision.setPrevisionHoraireList(previsionHoraireList);
         prevision.setDate(previsionDTO.getDate());

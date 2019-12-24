@@ -1,8 +1,8 @@
 package fr.ia.meteo.meteo.api.dto;
 
 import com.fasterxml.jackson.annotation.*;
-import fr.ia.meteo.meteo.job.ConditionActuelle;
-import fr.ia.meteo.meteo.job.Ville;
+import fr.ia.meteo.meteo.api.dto.prevision.PrevisionDTO;
+import fr.ia.meteo.meteo.entity.Ville;
 
 import java.util.ArrayList;
 import java.util.List;

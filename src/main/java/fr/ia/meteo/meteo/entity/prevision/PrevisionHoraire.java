@@ -1,6 +1,4 @@
-package fr.ia.meteo.meteo.job.prevision;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
+package fr.ia.meteo.meteo.entity.prevision;
 
 public class PrevisionHoraire {
 

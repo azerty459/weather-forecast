@@ -1,7 +1,7 @@
-package fr.ia.meteo.meteo.job;
+package fr.ia.meteo.meteo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import fr.ia.meteo.meteo.job.prevision.Prevision;
+import fr.ia.meteo.meteo.entity.prevision.Prevision;
 
 import java.util.ArrayList;
 import java.util.List;

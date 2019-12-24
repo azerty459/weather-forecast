@@ -1,10 +1,9 @@
-package fr.ia.meteo.meteo.api.dto;
+package fr.ia.meteo.meteo.api.dto.prevision;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class PrevisionHoraireListDTO {

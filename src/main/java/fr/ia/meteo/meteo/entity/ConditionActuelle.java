@@ -1,4 +1,4 @@
-package fr.ia.meteo.meteo.job;
+package fr.ia.meteo.meteo.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

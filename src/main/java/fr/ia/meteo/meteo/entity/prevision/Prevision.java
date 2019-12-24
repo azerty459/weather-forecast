@@ -1,11 +1,9 @@
-package fr.ia.meteo.meteo.job.prevision;
+package fr.ia.meteo.meteo.entity.prevision;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.List;
 
 public class Prevision implements Comparable<Prevision> {

@@ -1,20 +1,38 @@
 package fr.ia.meteo.meteo.service;
 
 import fr.ia.meteo.meteo.api.ApiService;
-import fr.ia.meteo.meteo.job.prevision.Prevision;
-import fr.ia.meteo.meteo.job.prevision.PrevisionHoraire;
+import fr.ia.meteo.meteo.entity.Root;
+import fr.ia.meteo.meteo.entity.prevision.Prevision;
+import fr.ia.meteo.meteo.entity.prevision.PrevisionHoraire;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.swing.text.html.parser.Entity;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.stream.Collectors;
 
+/***
+ * fournit des services utilisés par le MeteoController
+ */
+
+@Service
 public class MeteoService {
 
+    @Autowired
+    private ApiService apiService;
 
+    public List<Prevision> getPrevisionsWithPluie(String nomVille) {
+        List<Prevision> listPrevision = apiService.getPrevisionsMeteo(nomVille).getPrevisionList();
+        return getPrevisionsWithPluie(listPrevision);
+    }
+
+    /***
+     * Filtre la liste des prévisions pour obtenir les journées de pluie
+     * @param listPrevision
+     * @return liste des prévisions contenant pluie
+     */
     public static List<Prevision> getPrevisionsWithPluie(List<Prevision> listPrevision) {
         return listPrevision.stream()
                 .filter(prevision -> prevision.getCondition().contains("Pluie"))
@@ -22,33 +40,61 @@ public class MeteoService {
     }
 
 
-    public static Prevision getJourneeHumiditeMini(@PathVariable String nomVille, TreeMap<LocalDate, Double> mapDateHumiditeMoyenne) {
-        Double humiditeMin = mapDateHumiditeMoyenne.values().stream().min(Double::compareTo).get();
-        LocalDate dateJourHumiditeMin = mapDateHumiditeMoyenne.entrySet().stream().filter(x->x.getValue().equals(humiditeMin)).findFirst().get().getKey();
-        List<Prevision> listPrevision = ApiService.getPrevisionsMeteo(nomVille).getPrevisionList();
+    public Prevision getJourneeHumiditeMini(@PathVariable String nomVille) {
+        List<Prevision> listPrevision = apiService.getPrevisionsMeteo(nomVille).getPrevisionList();
+        Map<LocalDate, Double> mapDateHumiditeMoyenne = getMapHumiditeMoyenne(nomVille);
+        Double humiditeMin = mapDateHumiditeMoyenne.values().stream()
+                .min(Double::compareTo)
+                .orElse(null);
+        Map.Entry<LocalDate, Double> jourMin = mapDateHumiditeMoyenne.
+                entrySet()
+                .stream()
+                .min(Comparator.comparing(Map.Entry::getValue))
+                .orElse(null);
         return listPrevision.stream()
-                .filter(previsionDTO -> previsionDTO.getDate().equals(dateJourHumiditeMin)).findAny().orElse(null);
+                .filter(previsionDTO -> {
+                    assert jourMin != null;
+                    return previsionDTO.getDate().equals(jourMin.getKey());
+                })
+                .findAny()
+                .orElse(null);
     }
 
-    public static Double calculerMoyenne(Prevision prevision) {
+    /***
+     * Fournit l'humidité moyenne de la liste de prévisions horaires
+     * @param prevision
+     * @return humidité moyenne
+     */
+    public Double calculerMoyenne(Prevision prevision) {
 
         List<PrevisionHoraire> PrevisionHoraireList = prevision.getPrevisionHoraireList();
         return PrevisionHoraireList.stream()
                 .mapToInt(PrevisionHoraire::getTauxHumidite)
-                .average().orElse(0);
-
+                .average()
+                .orElse(0);
     }
 
-
-    public static TreeMap<LocalDate, Double> getMapHumiditeMoyenne(List<Prevision> listPrevision) {
-        HashMap<LocalDate,Double > mapDateHumiditeMoyenne = new HashMap<>();
-        List<Double> listhumiditeMoyenne = new ArrayList<>();
-        listPrevision.stream()
+    /***
+     * fournit une map contenant date et humidite moyenne pour une liste de prévisions
+     * @param nomVille
+     * @return
+     */
+    public Map<LocalDate, Double> getMapHumiditeMoyenne(String nomVille) {
+        List<Prevision> listPrevision = apiService.getPrevisionsMeteo(nomVille).getPrevisionList();
+        SortedMap<LocalDate, Double> mapDateHumiditeMoyenne = new TreeMap<>();
+        listPrevision
                 .forEach(
-                        x -> mapDateHumiditeMoyenne.put(x.getDate(), MeteoService.calculerMoyenne(x) )
+                        x -> mapDateHumiditeMoyenne.put(x.getDate(), calculerMoyenne(x))
                 );
-        TreeMap<LocalDate,Double> mapSorted = new TreeMap<>();
-        mapSorted.putAll(mapDateHumiditeMoyenne);
-        return mapSorted;
+        return mapDateHumiditeMoyenne;
+    }
+
+    public Prevision getJourneePlusChaud(String nomVille) {
+        Root listPrevision = apiService.getPrevisionsMeteo(nomVille);
+        Prevision previsionJourTempMax = listPrevision.getPrevisionList()
+                .stream()
+                .max(Comparator.comparing(Prevision::getTempMax))
+                .orElse(null);
+        return previsionJourTempMax;
     }
 }

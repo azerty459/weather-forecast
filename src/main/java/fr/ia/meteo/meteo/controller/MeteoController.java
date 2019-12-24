@@ -1,82 +1,114 @@
 package fr.ia.meteo.meteo.controller;
 
-import fr.ia.meteo.meteo.job.ConditionActuelle;
-import fr.ia.meteo.meteo.job.Root;
+import fr.ia.meteo.meteo.entity.ConditionActuelle;
+import fr.ia.meteo.meteo.entity.Root;
 import fr.ia.meteo.meteo.api.ApiService;
-import fr.ia.meteo.meteo.job.prevision.Prevision;
+import fr.ia.meteo.meteo.entity.prevision.Prevision;
 import fr.ia.meteo.meteo.service.MeteoService;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
 
+/**
+ * @author aioossen
+ * Controller rest prévisions météo
+ */
 
 @RestController
 @CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
 @RequestMapping(value = "/previsions")
 public class MeteoController {
 
+    @Autowired
+    private ApiService apiService;
+    @Autowired
+    private MeteoService meteoService;
 
+    /***
+     * Fournit la liste des prévisions météo de la ville
+     * @param nomVille
+     * @return entity Root
+     */
     @GetMapping(value = "{nomVille}")
     @ApiOperation("Retourne la liste des prévisions de la ville")
     public Root getAllPrevisions(@PathVariable String nomVille) {
 
-        Root response = ApiService.getPrevisionsMeteo(nomVille);
-        return  response;
+        Root response = apiService.getPrevisionsMeteo(nomVille);
+        return response;
 
     }
 
+    /***
+     * Fournit la journée la plus chaude de la ville
+     *
+     * @param nomVille
+     * @return Prevision
+     */
 
     @GetMapping(value = "{nomVille}/jourpluschaud")
     public Prevision getJourPlusChaud(@PathVariable String nomVille) {
 
-        Root listPrevision = ApiService.getPrevisionsMeteo(nomVille);
-        Prevision previsionJourTempMax = listPrevision.getPrevisionList().stream()
-                .max(Comparator.comparing(Prevision::getTempMax)).get();
-
-        return previsionJourTempMax;
+        return meteoService.getJourneePlusChaud(nomVille);
 
     }
 
-
+    /***
+     *Fournit la liste des journées avec pluie
+     *
+     * @param nomVille
+     * @return Liste de prévision
+     */
     @GetMapping(value = "{nomVille}/avecpluie")
     public List<Prevision> getListJourWithPluie(@PathVariable String nomVille) {
 
-        List<Prevision> listPrevision = ApiService.getPrevisionsMeteo(nomVille).getPrevisionList();
-        List<Prevision> listPrevisionWithPluie = MeteoService.getPrevisionsWithPluie(listPrevision);
+        List<Prevision> listPrevisionWithPluie = meteoService.getPrevisionsWithPluie(nomVille);
 
         return listPrevisionWithPluie;
     }
 
 
-
+    /***
+     * Fournit l'humidité actuelle de la ville
+     *
+     * @param nomVille
+     * @return taux humidité
+     */
     @GetMapping(value = "{nomVille}/humidite/actuelle")
     public Integer getHumiditeActuelle(@PathVariable String nomVille) {
-        ConditionActuelle conditionActuelle = ApiService.getPrevisionsMeteo(nomVille).getConditionActuelle();
+        ConditionActuelle conditionActuelle = apiService.getPrevisionsMeteo(nomVille).getConditionActuelle();
         return conditionActuelle.getTauxHumidite();
     }
 
+    /***
+     * Fournit l'humidité moyenne des prévisions  de la ville
+     *
+     * @param nomVille
+     * @return map (date + humidité)
+     */
     @GetMapping(value = "{nomVille}/humidite/moyenne")
-    public TreeMap<LocalDate, Double> getHumiditeMoyenne(@PathVariable String nomVille) {
+    public Map<LocalDate, Double> getHumiditeMoyenne(@PathVariable String nomVille) {
 
-        List<Prevision> listPrevision = ApiService.getPrevisionsMeteo(nomVille).getPrevisionList();
-        TreeMap<LocalDate, Double> mapSorted = MeteoService.getMapHumiditeMoyenne(listPrevision);
+
+        Map<LocalDate, Double> mapSorted = meteoService.getMapHumiditeMoyenne(nomVille);
         return mapSorted;
     }
 
-
+    /***
+     * Fournit la journée relative à l'humidité minimale
+     *
+     * @param nomVille
+     * @return Prevision
+     */
     @GetMapping(value = "{nomVille}/humidite/min")
     public Prevision getJourhumiditeMinimal(@PathVariable String nomVille) {
 
-        TreeMap<LocalDate, Double> mapDateHumiditeMoyenne = getHumiditeMoyenne(nomVille);
-        Prevision previsionAvecMinHumidite = MeteoService.getJourneeHumiditeMini(nomVille, mapDateHumiditeMoyenne);
+        Prevision previsionAvecMinHumidite = meteoService.getJourneeHumiditeMini(nomVille);
 
         return previsionAvecMinHumidite;
     }
-
-
 
 
 }

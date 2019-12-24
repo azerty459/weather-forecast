@@ -1,13 +1,6 @@
-package fr.ia.meteo.meteo.job;
+package fr.ia.meteo.meteo.entity;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.annotation.JsonSetter;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.io.Serializable;
 
 public class Ville {
 
