@@ -5,6 +5,8 @@ public class PrevisionHoraire {
     private String condition;
     private Integer tauxHumidite;
     private Integer heurePrevisionHoraire ;
+    private Integer qtePrecipitation;
+
 
 
     public Integer getHeurePrevisionHoraire() {
@@ -29,6 +31,14 @@ public class PrevisionHoraire {
 
     public void setTauxHumidite(Integer tauxHumidite) {
         this.tauxHumidite = tauxHumidite;
+    }
+
+    public Integer getQtePrecipitation() {
+        return qtePrecipitation;
+    }
+
+    public void setQtePrecipitation(Integer qtePrecipitation) {
+        this.qtePrecipitation = qtePrecipitation;
     }
 
     @Override

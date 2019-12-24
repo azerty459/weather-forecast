@@ -9,7 +9,12 @@ public class PrevisionHoraireDTO {
 
     @JsonProperty("RH2m")
     private Integer tauxHumidite;
+
+   @JsonProperty("APCPsfc")
+   private Integer qtePrecipitation;
+
     private Integer heurePrevisionHoraire;
+
 
 
     public String getCondition() {
@@ -35,6 +40,14 @@ public class PrevisionHoraireDTO {
 
     public void setHeurePrevisionHoraire(Integer heurePrevisionHoraire) {
         this.heurePrevisionHoraire = heurePrevisionHoraire;
+    }
+
+    public Integer getQtePrecipitation() {
+        return qtePrecipitation;
+    }
+
+    public void setQtePrecipitation(Integer qtePrecipitation) {
+        this.qtePrecipitation = qtePrecipitation;
     }
 
     @Override

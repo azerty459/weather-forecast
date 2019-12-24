@@ -80,4 +80,6 @@ public class Prevision implements Comparable<Prevision> {
                 ", previsionHoraireList=" + previsionHoraireList +
                 '}';
     }
+
+
 }

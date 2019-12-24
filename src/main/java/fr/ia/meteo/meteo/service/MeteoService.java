@@ -33,19 +33,24 @@ public class MeteoService {
      * @param listPrevision
      * @return liste des prévisions contenant pluie
      */
-    public static List<Prevision> getPrevisionsWithPluie(List<Prevision> listPrevision) {
+
+    public List<Prevision> getPrevisionsWithPluie(List<Prevision> listPrevision) {
         return listPrevision.stream()
-                .filter(prevision -> prevision.getCondition().contains("Pluie"))
+                .filter(this::isListPrevisionHoraireWithPluie)
                 .collect(Collectors.toList());
+
+    }
+
+    private boolean isListPrevisionHoraireWithPluie(Prevision prevision) {
+        boolean isListPrevisionHoraireWithPluie = prevision.getPrevisionHoraireList().stream()
+                .anyMatch(previsionHoraire -> previsionHoraire.getQtePrecipitation() > 0);
+        return isListPrevisionHoraireWithPluie;
     }
 
 
     public Prevision getJourneeHumiditeMini(@PathVariable String nomVille) {
         List<Prevision> listPrevision = apiService.getPrevisionsMeteo(nomVille).getPrevisionList();
         Map<LocalDate, Double> mapDateHumiditeMoyenne = getMapHumiditeMoyenne(nomVille);
-        Double humiditeMin = mapDateHumiditeMoyenne.values().stream()
-                .min(Double::compareTo)
-                .orElse(null);
         Map.Entry<LocalDate, Double> jourMin = mapDateHumiditeMoyenne.
                 entrySet()
                 .stream()
