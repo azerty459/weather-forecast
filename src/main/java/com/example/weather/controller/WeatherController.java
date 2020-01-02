@@ -31,4 +31,19 @@ public class WeatherController {
     public List<Day> rainyDays (@RequestParam String city){
         return weatherService.getRainyDays(city);
     }
+
+    @RequestMapping ("/actualHumidity")
+    public Integer actualHumidity(@RequestParam String city){
+        return weatherService.getActualHumidity(city);
+    }
+
+    @RequestMapping("/humidityPerDay")
+    public List<Double> humidityPerDay(@RequestParam String city){
+        return weatherService.getHumidityPerDay(city);
+    }
+
+    @RequestMapping("/sunniestDay")
+    public Day sunniestDay(@RequestParam String city){
+        return weatherService.getSunniestDay(city);
+    }
 }

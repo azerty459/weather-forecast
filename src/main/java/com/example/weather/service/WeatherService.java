@@ -1,6 +1,7 @@
 package com.example.weather.service;
 
 import model.Day;
+import model.Hour;
 import model.Root;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -39,5 +40,30 @@ public class WeatherService {
         List<Day>  rainyDays = days.stream().filter(d -> d.getCondition().contains(RAIN)).
                 collect(Collectors.toList());
         return rainyDays;
+    }
+
+    public Integer getActualHumidity(String city){
+        Root result = restTemplate.getForObject("https://www.prevision-meteo.ch/services/json/"+city, Root.class);
+        return result.getCurrentCondition().getHumidity();
+    }
+
+    public List<Double> getHumidityPerDay(String city){
+        List<Day> days = getWeather(city);
+        List<Double> averages = new ArrayList<>();
+        days.stream().forEach(day -> averages.add(day.getHours().values().stream().
+                mapToDouble(Hour::getHumidity).
+                average().
+                getAsDouble()));
+        return averages;
+    }
+
+    public Day getSunniestDay(String city){
+        List<Day> days = getWeather(city);
+        Day sunniestDay = days.stream().
+                min(Comparator.comparingDouble(day -> day.getHours().values().stream().
+                        mapToDouble(Hour::getPrecipitation).
+                        sum())).
+                get();
+        return sunniestDay;
     }
 }

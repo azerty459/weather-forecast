@@ -2,6 +2,9 @@ package model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.HashMap;
+import java.util.List;
+
 public class Day {
 
     private String date;
@@ -12,6 +15,9 @@ public class Day {
     @JsonProperty("tmax")
     private Integer tempMax;
     private String condition;
+    @JsonProperty("hourly_data")
+    private HashMap<String,Hour> hours;
+
 
     public String getDate() {
         return date;
@@ -51,5 +57,13 @@ public class Day {
 
     public void setCondition(String condition) {
         this.condition = condition;
+    }
+
+    public HashMap<String, Hour> getHours() {
+        return hours;
+    }
+
+    public void setHours(HashMap<String, Hour> hours) {
+        this.hours = hours;
     }
 }
