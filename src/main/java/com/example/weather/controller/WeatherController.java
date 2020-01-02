@@ -20,4 +20,11 @@ public class WeatherController {
     public List<Day> getWeather(@RequestParam String city){
         return weatherService.getWeather(city);
     }
+
+    @RequestMapping("/hotestDay")
+    public Day hotestDay(@RequestParam String city){
+        return weatherService.getHotestDay(city);
+
+    }
+    
 }

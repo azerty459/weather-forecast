@@ -19,8 +19,15 @@ public class WeatherService {
          days.add(result.getDay0());
          days.add(result.getDay1());
          days.add(result.getDay2());
-        days.add(result.getDay3());
-        days.add(result.getDay4());
+         days.add(result.getDay3());
+         days.add(result.getDay4());
         return days;
+    }
+
+    public Day getHotestDay(String city){
+        Day day = new Day();
+        List<Day> days = getWeather(city);
+        day = days.stream().max((d0,d1) -> Integer.compare(d0.getTempMax(),d1.getTempMax())).get();
+        return day;
     }
 }
