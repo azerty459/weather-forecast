@@ -26,5 +26,9 @@ public class WeatherController {
         return weatherService.getHotestDay(city);
 
     }
-    
+
+    @RequestMapping("/rainyDays")
+    public List<Day> rainyDays (@RequestParam String city){
+        return weatherService.getRainyDays(city);
+    }
 }
