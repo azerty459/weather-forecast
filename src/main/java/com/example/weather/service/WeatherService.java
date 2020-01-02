@@ -1,8 +1,8 @@
 package com.example.weather.service;
 
-import model.Day;
-import model.Hour;
-import model.Root;
+import com.example.weather.model.Day;
+import com.example.weather.model.Hour;
+import com.example.weather.model.Root;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 

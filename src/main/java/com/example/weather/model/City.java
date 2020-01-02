@@ -1,6 +1,4 @@
-package model;
-
-import com.fasterxml.jackson.annotation.JsonAlias;
+package com.example.weather.model;
 
 public class City {
 

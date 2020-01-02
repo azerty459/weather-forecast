@@ -1,6 +1,5 @@
-package model;
+package com.example.weather.model;
 
-import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Hour {
