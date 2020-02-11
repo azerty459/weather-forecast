@@ -16,6 +16,13 @@ public class MeteoServiceTest {
         }
 
         System.out.println(service.getPrevisionsForCity("Lille"));
+        System.out.println(service.getHottestDayForCity("Lille"));
+    }
+
+    @Test
+    public void testPourApprendre(){
+        double a = - 0.3;
+        System.out.println((int)Math.signum(a));
     }
 
 }

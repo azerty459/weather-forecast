@@ -13,9 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
-public class MeteoServiceImpl implements MeteoService{
+public class MeteoServiceImpl extends MeteoService{
 
     DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -71,5 +72,6 @@ public class MeteoServiceImpl implements MeteoService{
         }
         return listeARendre;
     }
+
 
 }
