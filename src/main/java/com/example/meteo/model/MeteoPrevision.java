@@ -7,7 +7,7 @@ import org.joda.time.format.DateTimeFormatter;
 import org.json.JSONObject;
 
 
-public class MeteoInfo {
+public class MeteoPrevision {
 
     public String date;
     public String description;
@@ -15,7 +15,7 @@ public class MeteoInfo {
     public double humidity;
 
 
-    public MeteoInfo(String dateAsString, String description, double temperature, double humidity) {
+    public MeteoPrevision(String dateAsString, String description, double temperature, double humidity) {
         this.description = description;
         this.temperature = temperature;
         this.humidity = humidity;

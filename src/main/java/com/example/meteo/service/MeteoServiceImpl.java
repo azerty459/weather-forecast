@@ -1,8 +1,7 @@
-package com.example.meteo.restapi;
+package com.example.meteo.service;
 
 import com.example.meteo.helper.Helper;
-import com.example.meteo.helper.URLReader;
-import com.example.meteo.model.MeteoInfo;
+import com.example.meteo.model.MeteoPrevision;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -10,32 +9,29 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 
-
-@RestController
-@RequestMapping("/api")
-public class MeteoController {
+@Service
+public class MeteoServiceImpl implements MeteoService{
 
     DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
+    @Override
+    public ArrayList<MeteoPrevision> getPrevisionsForCity(String city) throws JSONException {
+        //Obtenir les données sous forme de String
+        String url = "http://api.openweathermap.org/data/2.5/forecast?q="+city+"&appid=9a1ff30ffb4e8712900a02e4d5b8f182&units=metric&lang=fr";
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
-    @GetMapping("/meteo/{ville}")
-    public ResponseEntity<ArrayList<MeteoInfo>> getInfos(@PathVariable(value = "ville") String ville) throws Exception {
-
-        //obtenir les données sous forme de string
-        String url = "http://api.openweathermap.org/data/2.5/forecast?q="+ville+"&appid=9a1ff30ffb4e8712900a02e4d5b8f182&units=metric&lang=fr";
-        String res = URLReader.getContent(url);
+        String dataAsString = response.getBody();
 
         //Les parser en JSONObject
         JSONObject jsonObject = null;
         try {
-            jsonObject = new JSONObject(res);
+            jsonObject = new JSONObject(dataAsString);
         }catch (JSONException err){
             System.err.println(err.toString());
         }
@@ -44,7 +40,7 @@ public class MeteoController {
         JSONArray listOfForecasts = (JSONArray)jsonObject.get("list");
 
         //Initialiser liste a rendre
-        ArrayList<MeteoInfo> listeARendre = new ArrayList<>();
+        ArrayList<MeteoPrevision> listeARendre = new ArrayList<>();
 
         //parcourir la liste, transformer les JSONObject contenus dans la liste en MeteoInfo
         //ajouter les previsions voulues dans la listeARendre
@@ -64,18 +60,16 @@ public class MeteoController {
 
             //Si premiere prevision, ou bien jour suivant heure = midi, alors ajouter a la liste à rendre
             if (n==0 || (dateTime.getHourOfDay()==12 && dateTime.getDayOfYear()>datePremierePrev.getDayOfYear())) {
-                MeteoInfo meteoInfo = new MeteoInfo(
+                MeteoPrevision meteoPrev = new MeteoPrevision(
                         (String) object.get("dt_txt"),
                         (String)((JSONObject) ((JSONArray)object.get("weather")).get(0)).get("description"),
                         Helper.returnAsDouble(((JSONObject)object.get("main")).get("temp")),
                         Helper.returnAsDouble(((JSONObject)object.get("main")).get("humidity"))
                 );
-                listeARendre.add(meteoInfo);
+                listeARendre.add(meteoPrev);
             }
         }
-
-        //renvoyer le resultat
-        return ResponseEntity.ok().body(listeARendre);
-
+        return listeARendre;
     }
+
 }
