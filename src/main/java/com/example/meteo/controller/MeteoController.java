@@ -39,8 +39,7 @@ public class MeteoController {
         return ResponseEntity.ok().body(rainyDays);
     }
 
-    @GetMapping("/meteo/{ville}/" +
-            "")
+    @GetMapping("/meteo/{ville}/")
     public ResponseEntity<HumidityStats> getHumidityStats(@PathVariable(value = "ville") String ville) throws Exception {
         HumidityStats humidityStatsForCity = service.getHumidityStatsForCity(ville);
         return ResponseEntity.ok().body(humidityStatsForCity);
