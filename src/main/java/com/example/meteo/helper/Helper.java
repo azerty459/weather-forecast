@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Helper {
@@ -44,7 +46,7 @@ public class Helper {
     }
 
     public static List<JSONObject> getJSONArrayAsListOfJsonObjects(JSONArray jsonArray) throws JSONException {
-        ArrayList<JSONObject> listToReturn = new ArrayList<>();
+        List<JSONObject> listToReturn = new ArrayList<>();
         for (int i=0; i<jsonArray.length(); i++)
         {
             listToReturn.add(jsonArray.getJSONObject(i));

@@ -4,6 +4,7 @@ import com.example.meteo.model.HumidityStats;
 import com.example.meteo.model.MeteoPrevision;
 import com.example.meteo.service.MeteoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,8 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class MeteoController {
 
-    //TO DO - gerer les exceptions pour renvoyer message d'erreur approprié
+    //TODO - gerer les exceptions pour renvoyer message d'erreur approprié
+    //FIXME - gerer les exceptions pour renvoyer message d'erreur approprié
 
     @Autowired
     MeteoService service;
